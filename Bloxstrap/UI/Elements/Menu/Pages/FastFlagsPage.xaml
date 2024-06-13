@@ -124,6 +124,12 @@
             <ui:ToggleSwitch IsChecked="{Binding AlternateGraphicsSelectorEnabled, Mode=TwoWay}" />
         </controls:OptionControl>
         
+        <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_PreloadFonts_Title}" 
+            Description="{x:Static resources:Strings.Menu_FastFlags_Presets_PreloadFonts_Description}">
+            <ui:ToggleSwitch IsChecked="{Binding PreloadFontsEnabled, Mode=TwoWay}" />
+        </controls:OptionControl>
+        
         <ui:CardAction Margin="0,24,0,0" Icon="EditSettings24" Command="{Binding OpenFastFlagEditorCommand}">
             <StackPanel>
                 <TextBlock FontSize="14" Text="{x:Static resources:Strings.Menu_FastFlagEditor_Title}" />

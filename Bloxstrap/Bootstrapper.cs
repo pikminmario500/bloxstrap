@@ -556,7 +556,7 @@ namespace Bloxstrap
                     File.Delete(oldMenuShortcut);
             }
 
-            Utility.Shortcut.Create(Paths.Application, "", Path.Combine(Paths.StartMenu, "Play Roblox.lnk"));
+            Utility.Shortcut.Create(Paths.Application, "", Path.Combine(Paths.StartMenu, $"Roblox Player ({App.ProjectName}).lnk"));
             Utility.Shortcut.Create(Paths.Application, "-menu", Path.Combine(Paths.StartMenu, $"{App.ProjectName} Menu.lnk"));
 #if STUDIO_FEATURES
             Utility.Shortcut.Create(Paths.Application, "-ide", Path.Combine(Paths.StartMenu, $"Roblox Studio ({App.ProjectName}).lnk"));
@@ -566,7 +566,7 @@ namespace Bloxstrap
             {
                 try
                 {
-                    Utility.Shortcut.Create(Paths.Application, "", Path.Combine(Paths.Desktop, "Play Roblox.lnk"));
+                    Utility.Shortcut.Create(Paths.Application, "", Path.Combine(Paths.Desktop, $"Roblox Player ({App.ProjectName}).lnk"));
 
                     // one-time toggle, set it back to false
                     App.Settings.Prop.CreateDesktopIcon = false;
@@ -763,7 +763,7 @@ namespace Bloxstrap
             {
                 () => Registry.CurrentUser.DeleteSubKey($@"Software\{App.ProjectName}"),
                 () => Directory.Delete(Paths.StartMenu, true),
-                () => File.Delete(Path.Combine(Paths.Desktop, "Play Roblox.lnk")),
+                () => File.Delete(Path.Combine(Paths.Desktop, $"Roblox Player ({App.ProjectName}).lnk")),
                 () => Registry.CurrentUser.DeleteSubKey($@"Software\Microsoft\Windows\CurrentVersion\Uninstall\{App.ProjectName}")
             };
 

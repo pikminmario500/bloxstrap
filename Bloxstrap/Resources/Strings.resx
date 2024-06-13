@@ -1041,4 +1041,13 @@ Selecting 'No' will ignore this warning and continue installation.</value>
   <data name="Menu.Title" xml:space="preserve">
     <value>Bloxstrap Menu</value>
   </data>
+  <data name="Enums.FlagPresets.RenderingMode.Metal" xml:space="preserve">
+    <value>Metal</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.PreloadFonts.Description" xml:space="preserve">
+    <value>Preloads fonts before usage.</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.PreloadFonts.Title" xml:space="preserve">
+    <value>Preload fonts</value>
+  </data>
 </root>

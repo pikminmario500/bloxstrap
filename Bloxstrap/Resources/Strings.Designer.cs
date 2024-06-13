@@ -2764,5 +2764,32 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.Title", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Metal.
+        /// </summary>
+        public static string Enums_FlagPresets_RenderingMode_Metal {
+            get {
+                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Metal", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle between using the consolidated 1-10 / fine-grained 1-21 graphics quality slider..
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Description {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle between using the consolidated 1-10 / fine-grained 1-21 graphics quality slider..
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Title", resourceCulture);
+            }
+        }
     }
 }
