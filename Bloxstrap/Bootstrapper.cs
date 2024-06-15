@@ -725,7 +725,7 @@ namespace Bloxstrap
             {
                 // revert launch uri handler to stock bootstrapper
 
-                string bootstrapperLocation = (string?)bootstrapperKey.GetValue("InstallLocation") + "RobloxPlayerLauncher.exe";
+                string bootstrapperLocation = (string?)bootstrapperKey.GetValue("InstallLocation") + "\\RobloxPlayerLauncher.exe";
 
                 ProtocolHandler.Register("roblox", "Roblox", bootstrapperLocation);
                 ProtocolHandler.Register("roblox-player", "Roblox", bootstrapperLocation);
