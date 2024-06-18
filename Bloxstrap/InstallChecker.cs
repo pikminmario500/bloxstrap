@@ -246,13 +246,6 @@ namespace Bloxstrap
                     if (App.Settings.Prop.BootstrapperStyle == BootstrapperStyle.ClassicFluentDialog)
                         App.Settings.Prop.BootstrapperStyle = BootstrapperStyle.FluentDialog;
 
-                    _ = int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate"), out int x);
-                    if (x == 0)
-                    {
-                        App.FastFlags.SetPreset("Rendering.Framerate", null);
-                        App.FastFlags.Save();
-                    }
-
                     App.Settings.Save();
                 }
             }

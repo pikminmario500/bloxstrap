@@ -2068,24 +2068,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use a large number like 9999 for no limit. Set as 0 for defaults..
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FPSLimit_Description {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FPSLimit.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Framerate limit.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FPSLimit_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FPSLimit.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Toggled with [keyboard shortcuts]({0}). Only works if you&apos;re in the [Bloxstrap group]({1})..
         /// </summary>
         public static string Menu_FastFlags_Presets_HideGuis_Description {
