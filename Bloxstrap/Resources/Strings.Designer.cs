@@ -2801,5 +2801,32 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.Title", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Metal.
+        /// </summary>
+        public static string Enums_FlagPresets_RenderingMode_Metal {
+            get {
+                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Metal", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Preloads fonts before usage..
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Description {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Preload fonts.
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Title", resourceCulture);
+            }
+        }
     }
 }
