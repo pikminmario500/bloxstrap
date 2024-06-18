@@ -79,15 +79,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bloxstrap was unable to auto-update to {0}. Please update it manually by downloading and running the latest release from the GitHub page..
-        /// </summary>
-        public static string Bootstrapper_AutoUpdateFailed {
-            get {
-                return ResourceManager.GetString("Bootstrapper.AutoUpdateFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Roblox is currently running, and launching another instance will close it. Are you sure you want to continue launching?.
         /// </summary>
         public static string Bootstrapper_ConfirmLaunch {
@@ -1622,24 +1613,6 @@ namespace Bloxstrap.Resources {
         public static string Menu_Appearance_Title {
             get {
                 return ResourceManager.GetString("Menu.Appearance.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bloxstrap will automatically check and update itself when launching Roblox..
-        /// </summary>
-        public static string Menu_Behaviour_AutoUpdate_Description {
-            get {
-                return ResourceManager.GetString("Menu.Behaviour.AutoUpdate.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Automatically update Bloxstrap.
-        /// </summary>
-        public static string Menu_Behaviour_AutoUpdate_Title {
-            get {
-                return ResourceManager.GetString("Menu.Behaviour.AutoUpdate.Title", resourceCulture);
             }
         }
         
