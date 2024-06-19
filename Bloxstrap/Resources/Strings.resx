@@ -1061,4 +1061,13 @@ Selecting 'No' will ignore this warning and continue installation.</value>
   <data name="Bootstrapper.ClipboardCopyFailed" xml:space="preserve">
     <value>Failed to copy to the clipboard: {0}</value>
   </data>
+  <data name="Bootstrapper.ChangedRenderingMode" xml:space="preserve">
+    <value>Now using {0} rendering!</value>
+  </data>
+  <data name="Bootstrapper.ChangedRenderingMode.Hardware" xml:space="preserve">
+    <value>Hardware</value>
+  </data>
+  <data name="Bootstrapper.ChangedRenderingMode.Software" xml:space="preserve">
+    <value>Software</value>
+  </data>
 </root>

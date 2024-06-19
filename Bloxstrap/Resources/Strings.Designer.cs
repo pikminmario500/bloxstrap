@@ -2819,5 +2819,32 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Bootstrapper.ClipboardCopyFailed", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Now using {0} rendering!.
+        /// </summary>
+        public static string Bootstrapper_ChangedRenderingMode {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ChangedRenderingMode", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Hardware.
+        /// </summary>
+        public static string Bootstrapper_ChangedRenderingMode_Hardware {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ChangedRenderingMode.Hardware", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Software.
+        /// </summary>
+        public static string Bootstrapper_ChangedRenderingMode_Software {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ChangedRenderingMode.Software", resourceCulture);
+            }
+        }
     }
 }
