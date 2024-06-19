@@ -11,12 +11,6 @@
             set => App.Settings.Prop.CreateDesktopIcon = value;
         }
 
-        public bool UpdateCheckingEnabled
-        {
-            get => App.Settings.Prop.CheckForUpdates;
-            set => App.Settings.Prop.CheckForUpdates = value;
-        }
-
         public bool ConfirmLaunches
         {
             get => App.Settings.Prop.ConfirmLaunches;

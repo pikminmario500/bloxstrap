@@ -40,8 +40,6 @@ namespace Bloxstrap
         public string[] Args { get; private set; }
 
         private Dictionary<string, PropertyInfo>? _flagMap;
-
-        private string? _robloxArg;
         
         // pizzaboxer wanted this
         private void ParseLaunchFlagProps()
@@ -81,14 +79,8 @@ namespace Bloxstrap
             }
         }
 
-        // private void ParseRoblox(string arg, ref int i)
-        public void ParseRoblox()
+        public void ParseRoblox(string arg, ref int i)
         {
-            string? arg = _robloxArg;
-
-            if (arg is null)
-                return;
-
             if (arg.StartsWith("roblox-player:"))
             {
                 RobloxLaunchArgs = ProtocolHandler.ParseUri(arg);
@@ -102,7 +94,6 @@ namespace Bloxstrap
 
                 RobloxLaunchMode = LaunchMode.Player;
             }
-#if STUDIO_FEATURES
             else if (arg.StartsWith("roblox-studio:"))
             {
                 RobloxLaunchArgs = ProtocolHandler.ParseUri(arg);
@@ -133,7 +124,6 @@ namespace Bloxstrap
                     RobloxLaunchArgs = $"-task EditFile -localPlaceFile \"{pathArg}\"";
                 }
             }
-#endif
         }
 
         private void Parse()
@@ -158,8 +148,7 @@ namespace Bloxstrap
             // check & handle roblox arg
             if (!firstArg.StartsWith('-') || firstArg == "-ide")
             {
-                // ParseRoblox(firstArg, ref idx);
-                _robloxArg = firstArg;
+                ParseRoblox(firstArg, ref idx);
                 idx++; // roblox arg
             }
 

@@ -163,11 +163,6 @@ namespace Bloxstrap
                 App.Logger.WriteLine(LOG_IDENT, "Connectivity check finished");
             }
 
-#if !DEBUG
-            if (!App.IsFirstRun && App.Settings.Prop.CheckForUpdates)
-                await CheckForUpdates();
-#endif
-
             // ensure only one instance of the bootstrapper is running at the time
             // so that we don't have stuff like two updates happening simultaneously
 
@@ -517,14 +512,12 @@ namespace Bloxstrap
 
             ProtocolHandler.Register("roblox", "Roblox", Paths.Application);
             ProtocolHandler.Register("roblox-player", "Roblox", Paths.Application);
-#if STUDIO_FEATURES
             ProtocolHandler.Register("roblox-studio", "Roblox", Paths.Application);
             ProtocolHandler.Register("roblox-studio-auth", "Roblox", Paths.Application);
 
             ProtocolHandler.RegisterRobloxPlace(Paths.Application);
             ProtocolHandler.RegisterExtension(".rbxl");
             ProtocolHandler.RegisterExtension(".rbxlx");
-#endif
 
             if (Environment.ProcessPath is not null && Environment.ProcessPath != Paths.Application)
             {
@@ -558,9 +551,7 @@ namespace Bloxstrap
 
             Utility.Shortcut.Create(Paths.Application, "", Path.Combine(Paths.StartMenu, $"Roblox Player ({App.ProjectName}).lnk"));
             Utility.Shortcut.Create(Paths.Application, "-menu", Path.Combine(Paths.StartMenu, $"{App.ProjectName} Menu.lnk"));
-#if STUDIO_FEATURES
             Utility.Shortcut.Create(Paths.Application, "-ide", Path.Combine(Paths.StartMenu, $"Roblox Studio ({App.ProjectName}).lnk"));
-#endif
 
             if (App.Settings.Prop.CreateDesktopIcon)
             {
@@ -575,92 +566,6 @@ namespace Bloxstrap
                 {
                     // suppress, we likely just don't have write perms for the desktop folder
                 }
-            }
-        }
-
-        private async Task CheckForUpdates()
-        {
-            const string LOG_IDENT = "Bootstrapper::CheckForUpdates";
-            
-            // don't update if there's another instance running (likely running in the background)
-            if (Process.GetProcessesByName(App.ProjectName).Count() > 1)
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"More than one Bloxstrap instance running, aborting update check");
-                return;
-            }
-
-            App.Logger.WriteLine(LOG_IDENT, $"Checking for updates...");
-
-            GithubRelease? releaseInfo;
-            try
-            {
-                releaseInfo = await Http.GetJson<GithubRelease>($"https://api.github.com/repos/{App.ProjectRepository}/releases/latest");
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"Failed to fetch releases: {ex}");
-                return;
-            }
-
-            if (releaseInfo is null || releaseInfo.Assets is null)
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"No updates found");
-                return;
-            }
-
-            int versionComparison = Utilities.CompareVersions(App.Version, releaseInfo.TagName);
-
-            // check if we aren't using a deployed build, so we can update to one if a new version comes out
-            if (versionComparison == 0 && App.BuildMetadata.CommitRef.StartsWith("tag") || versionComparison == 1)
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"No updates found");
-                return;
-            }
-
-            SetStatus(Resources.Strings.Bootstrapper_Status_UpgradingBloxstrap);
-            
-            try
-            {
-                // 64-bit is always the first option
-                GithubReleaseAsset asset = releaseInfo.Assets[0];
-                string downloadLocation = Path.Combine(Paths.LocalAppData, "Temp", asset.Name);
-
-                App.Logger.WriteLine(LOG_IDENT, $"Downloading {releaseInfo.TagName}...");
-                
-                if (!File.Exists(downloadLocation))
-                {
-                    var response = await App.HttpClient.GetAsync(asset.BrowserDownloadUrl);
-
-                    await using var fileStream = new FileStream(downloadLocation, FileMode.CreateNew);
-                    await response.Content.CopyToAsync(fileStream);
-                }
-
-                App.Logger.WriteLine(LOG_IDENT, $"Starting {releaseInfo.TagName}...");
-
-                ProcessStartInfo startInfo = new()
-                {
-                    FileName = downloadLocation,
-                };
-
-                foreach (string arg in App.LaunchSettings.Args)
-                    startInfo.ArgumentList.Add(arg);
-                
-                App.Settings.Save();
-                App.ShouldSaveConfigs = false;
-                
-                Process.Start(startInfo);
-
-                App.Terminate();
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteLine(LOG_IDENT, "An exception occurred when running the auto-updater");
-                App.Logger.WriteException(LOG_IDENT, ex);
-
-                Frontend.ShowMessageBox(
-                    string.Format(Resources.Strings.Bootstrapper_AutoUpdateFailed, releaseInfo.TagName),
-                    MessageBoxImage.Information
-                );
             }
         }
 
@@ -690,13 +595,11 @@ namespace Bloxstrap
                         process.Close();
                     }
 
-#if STUDIO_FEATURES
                     foreach (Process process in Process.GetProcessesByName(App.RobloxStudioAppName))
                     {
                         process.Kill();
                         process.Close();
                     }
-#endif
                 }
                 catch (Exception ex)
                 {
@@ -731,7 +634,6 @@ namespace Bloxstrap
                 ProtocolHandler.Register("roblox-player", "Roblox", bootstrapperLocation);
             }
 
-#if STUDIO_FEATURES
             using RegistryKey? studioBootstrapperKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall\roblox-studio");
             if (studioBootstrapperKey is null)
             {
@@ -752,7 +654,6 @@ namespace Bloxstrap
 
                 ProtocolHandler.RegisterRobloxPlace(studioLocation);
             }
-#endif
 
             // if the folder we're installed to does not end with "Bloxstrap", we're installed to a user-selected folder
             // in which case, chances are they chose to install to somewhere they didn't really mean to (prior to the added warning in 2.4.0)
@@ -956,11 +857,7 @@ namespace Bloxstrap
             // delete any old version folders
             // we only do this if roblox isnt running just in case an update happened
             // while they were launching a second instance or something idk
-#if STUDIO_FEATURES
             if (!Process.GetProcessesByName(App.RobloxPlayerAppName).Any() && !Process.GetProcessesByName(App.RobloxStudioAppName).Any())
-#else
-            if (!Process.GetProcessesByName(App.RobloxPlayerAppName).Any())
-#endif
             {
                 foreach (DirectoryInfo dir in new DirectoryInfo(Paths.Versions).GetDirectories())
                 {
