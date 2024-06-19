@@ -1058,4 +1058,7 @@ Selecting 'No' will ignore this warning and continue installation.</value>
   <data name="Menu.FastFlags.Presets.PreloadFonts.Title" xml:space="preserve">
     <value>Preload fonts</value>
   </data>
+  <data name="Bootstrapper.ClipboardCopyFailed" xml:space="preserve">
+    <value>Failed to copy to the clipboard: {0}</value>
+  </data>
 </root>
