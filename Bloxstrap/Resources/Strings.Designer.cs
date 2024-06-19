@@ -2783,5 +2783,14 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Title", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to copy to the clipboard: {0}.
+        /// </summary>
+        public static string Bootstrapper_ClipboardCopyFailed {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ClipboardCopyFailed", resourceCulture);
+            }
+        }
     }
 }
