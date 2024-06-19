@@ -16,7 +16,7 @@ jobs:
 
     - uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '8.0.x'
 
     - name: Restore dependencies
       run: dotnet restore
@@ -32,7 +32,7 @@ jobs:
       with:
         name: Bloxstrap (${{ matrix.configuration }})
         path: |
-          .\Bloxstrap\bin\${{ matrix.configuration }}\net6.0-windows\win-x64\publish\*
+          .\Bloxstrap\bin\${{ matrix.configuration }}\net8.0-windows\win-x64\publish\*
 
   release:
     needs: build

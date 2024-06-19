@@ -7,7 +7,7 @@
             get => string.Format(
                         Resources.Strings.Menu_PreInstall_Info_2,
                         "https://www.github.com/pizzaboxer/bloxstrap/wiki",
-                        "https://www.github.com/pizzaboxer/bloxstrap/issues",
+                        "https://www.github.com/pikminmario500/bloxstrap/issues",
                         "https://discord.gg/nKjV3mGq6R");
         }
     }

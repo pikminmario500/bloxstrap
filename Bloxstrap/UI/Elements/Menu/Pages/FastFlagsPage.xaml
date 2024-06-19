@@ -48,13 +48,6 @@
         <controls:MarkdownTextBlock MarkdownText="{Binding Source={x:Static resources:Strings.Menu_FastFlags_Presets_D3DExclusiveFullscreenInfo}, Converter={StaticResource StringFormatConverter}, ConverterParameter='https://github.com/pizzaboxer/bloxstrap/wiki/A-guide-to-FastFlags#exclusive-fullscreen'}"  Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_FPSLimit_Title}" 
-            Description="{x:Static resources:Strings.Menu_FastFlags_Presets_FPSLimit_Description}" 
-            HelpLink="https://github.com/pizzaboxer/bloxstrap/wiki/A-guide-to-FastFlags#framerate-limit">
-            <ui:TextBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" Text="{Binding FramerateLimit, Mode=TwoWay}" PreviewTextInput="ValidateInt32" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_LightingTechnology_Title}" 
             Description="{x:Static resources:Strings.Menu_FastFlags_Presets_LightingTechnology_Description}">
             <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" ItemsSource="{Binding LightingModes.Keys, Mode=OneTime}" Text="{Binding SelectedLightingMode, Mode=TwoWay}">
@@ -109,6 +102,12 @@
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_AltGraphicsSelector_Title}" 
             Description="{x:Static resources:Strings.Menu_FastFlags_Presets_AltGraphicsSelector_Description}">
             <ui:ToggleSwitch IsChecked="{Binding AlternateGraphicsSelectorEnabled, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_PreloadFonts_Title}" 
+            Description="{x:Static resources:Strings.Menu_FastFlags_Presets_PreloadFonts_Description}">
+            <ui:ToggleSwitch IsChecked="{Binding PreloadFontsEnabled, Mode=TwoWay}" />
         </controls:OptionControl>
         
         <ui:CardAction Margin="0,24,0,0" Icon="EditSettings24" Command="{Binding OpenFastFlagEditorCommand}">

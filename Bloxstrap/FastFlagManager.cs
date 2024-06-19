@@ -27,7 +27,6 @@ namespace Bloxstrap
             { "HTTP.Proxy.Address.3", "DFStringHttpCurlProxyHostAndPortForExternalUrl" },
 #endif
 
-            { "Rendering.Framerate", "DFIntTaskSchedulerTargetFps" },
             { "Rendering.ManualFullscreen", "FFlagHandleAltEnterFullscreenManually" },
             { "Rendering.DisableScaling", "DFFlagDisableDPIScale" },
 
@@ -58,17 +57,22 @@ namespace Bloxstrap
             { "UI.Menu.Style.ABTest.1", "FFlagEnableMenuControlsABTest" },
             { "UI.Menu.Style.ABTest.2", "FFlagEnableMenuModernizationABTest" },
             { "UI.Menu.Style.ABTest.3", "FFlagEnableMenuModernizationABTest2" },
-            { "UI.Menu.Style.ABTest.4", "FFlagEnableV3MenuABTest3" }
+            { "UI.Menu.Style.ABTest.4", "FFlagEnableV3MenuABTest3" },
+
+            { "Rendering.DisableD3D", "FFlagDebugGraphicsDisableDirect3D11" },
+            { "Rendering.Mode.Metal", "FFlagDebugGraphicsPreferMetal" },
+            { "UI.Menu.PreloadFonts", "FFlagPreloadAllFonts" }
         };
 
         // only one missing here is Metal because lol
         public static IReadOnlyDictionary<RenderingMode, string> RenderingModes => new Dictionary<RenderingMode, string>
         {
             { RenderingMode.Default, "None" },
-            // { RenderingMode.Vulkan, "Vulkan" },
+            { RenderingMode.Vulkan, "Vulkan" },
             { RenderingMode.D3D11, "D3D11" },
             { RenderingMode.D3D10, "D3D10" },
-            // { RenderingMode.OpenGL, "OpenGL" }
+            { RenderingMode.OpenGL, "OpenGL" },
+            { RenderingMode.Metal, "Metal" }
         };
 
         public static IReadOnlyDictionary<LightingMode, string> LightingModes => new Dictionary<LightingMode, string>
@@ -222,6 +226,14 @@ namespace Bloxstrap
                 SetPreset("Rendering.ManualFullscreen", "False");
         }
 
+        public void DisableD3D()
+        {
+            if (GetPreset("Rendering.Mode.Vulkan") == "True" || GetPreset("Rendering.Mode.OpenGL") == "True" || GetPreset("Rendering.Mode.Metal") == "True")
+                SetPreset("Rendering.DisableD3D", "True");
+            else
+                SetPreset("Rendering.DisableD3D", null);
+        }
+        
         public override void Save()
         {
             // convert all flag values to strings before saving
