@@ -13,6 +13,7 @@ namespace Bloxstrap.Models
         public bool CheckForUpdates { get; set; } = true;
         public bool CreateDesktopIcon { get; set; } = true;
         public bool ConfirmLaunches { get; set; } = false;
+        public bool SoftwareRenderingEnabled { get; set; } = false;
         public string Locale { get; set; } = "nil";
         public bool ForceRobloxLanguage { get; set; } = false;
         public bool UseFastFlagManager { get; set; } = true;
