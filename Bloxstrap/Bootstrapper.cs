@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿#define STUDIO_FEATURES
+
+using System.Windows;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
@@ -293,7 +295,7 @@ namespace Bloxstrap
                 _launchCommandLine = _launchCommandLine.Replace("LAUNCHTIMEPLACEHOLDER", DateTimeOffset.Now.ToUnixTimeMilliseconds().ToString());
 
 
-                if (_launchCommandLine.StartsWith("roblox-player:1"))
+                if (_launchCommandLine.StartsWith("roblox-player:1") || _launchCommandLine.StartsWith("roblox-studio:1"))
                     _launchCommandLine += "+channel:";
                 else
                     _launchCommandLine += " -channel ";
@@ -564,7 +566,7 @@ namespace Bloxstrap
                     File.Delete(oldMenuShortcut);
             }
 
-            Utility.Shortcut.Create(Paths.Application, "", Path.Combine(Paths.StartMenu, "Play Roblox.lnk"));
+            Utility.Shortcut.Create(Paths.Application, "", Path.Combine(Paths.StartMenu, $"Roblox Player ({App.ProjectName}).lnk"));
             Utility.Shortcut.Create(Paths.Application, "-menu", Path.Combine(Paths.StartMenu, $"{App.ProjectName} Menu.lnk"));
 #if STUDIO_FEATURES
             Utility.Shortcut.Create(Paths.Application, "-ide", Path.Combine(Paths.StartMenu, $"Roblox Studio ({App.ProjectName}).lnk"));
@@ -574,7 +576,7 @@ namespace Bloxstrap
             {
                 try
                 {
-                    Utility.Shortcut.Create(Paths.Application, "", Path.Combine(Paths.Desktop, "Play Roblox.lnk"));
+                    Utility.Shortcut.Create(Paths.Application, "", Path.Combine(Paths.Desktop, $"Roblox Player ({App.ProjectName}).lnk"));
 
                     // one-time toggle, set it back to false
                     App.Settings.Prop.CreateDesktopIcon = false;
@@ -733,7 +735,7 @@ namespace Bloxstrap
             {
                 // revert launch uri handler to stock bootstrapper
 
-                string bootstrapperLocation = (string?)bootstrapperKey.GetValue("InstallLocation") + "RobloxPlayerLauncher.exe";
+                string bootstrapperLocation = (string?)bootstrapperKey.GetValue("InstallLocation") + "\\RobloxPlayerLauncher.exe";
 
                 ProtocolHandler.Register("roblox", "Roblox", bootstrapperLocation);
                 ProtocolHandler.Register("roblox-player", "Roblox", bootstrapperLocation);
@@ -771,7 +773,7 @@ namespace Bloxstrap
             {
                 () => Registry.CurrentUser.DeleteSubKey($@"Software\{App.ProjectName}"),
                 () => Directory.Delete(Paths.StartMenu, true),
-                () => File.Delete(Path.Combine(Paths.Desktop, "Play Roblox.lnk")),
+                () => File.Delete(Path.Combine(Paths.Desktop, $"Roblox Player ({App.ProjectName}).lnk")),
                 () => Registry.CurrentUser.DeleteSubKey($@"Software\Microsoft\Windows\CurrentVersion\Uninstall\{App.ProjectName}")
             };
 

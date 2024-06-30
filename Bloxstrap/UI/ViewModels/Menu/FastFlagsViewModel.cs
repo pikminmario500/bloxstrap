@@ -68,12 +68,6 @@ namespace Bloxstrap.UI.ViewModels.Menu
             set => App.FastFlags.SetPreset("UI.FlagState", String.IsNullOrEmpty(value) ? null : value);
         }
 
-        public int FramerateLimit
-        {
-            get => int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate"), out int x) ? x : 0;
-            set => App.FastFlags.SetPreset("Rendering.Framerate", value == 0 ? null : value);
-        }
-
         public IReadOnlyDictionary<MSAAMode, string?> MSAALevels => FastFlagManager.MSAAModes;
 
         public MSAAMode SelectedMSAALevel
@@ -91,6 +85,7 @@ namespace Bloxstrap.UI.ViewModels.Menu
             {
                 App.FastFlags.SetPresetEnum("Rendering.Mode", RenderingModes[value], "True");
                 App.FastFlags.CheckManualFullscreenPreset();
+                App.FastFlags.DisableD3D();
             }
         }
 
@@ -158,6 +153,12 @@ namespace Bloxstrap.UI.ViewModels.Menu
         {
             get => App.FastFlags.GetPreset("UI.Hide") == "32380007";
             set => App.FastFlags.SetPreset("UI.Hide", value ? "32380007" : null);
+        }
+
+        public bool PreloadFontsEnabled
+        {
+            get => App.FastFlags.GetPreset("UI.Menu.PreloadFonts") == "True";
+            set => App.FastFlags.SetPreset("UI.Menu.PreloadFonts", value ? "True" : null);
         }
 
         public IReadOnlyDictionary<TextureQuality, string?> TextureQualities => FastFlagManager.TextureQualityLevels;

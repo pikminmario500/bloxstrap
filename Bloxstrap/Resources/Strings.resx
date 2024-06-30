@@ -744,12 +744,6 @@ Do NOT use this to import large "flag lists" made by other people that promise t
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Title" xml:space="preserve">
     <value>Preserve rendering quality with display scaling</value>
   </data>
-  <data name="Menu.FastFlags.Presets.FPSLimit.Description" xml:space="preserve">
-    <value>Set to 0 for defaults if you want to use Roblox's native framerate unlocker.</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.FPSLimit.Title" xml:space="preserve">
-    <value>Framerate limit</value>
-  </data>
   <data name="Menu.FastFlags.Presets.HideGuis.Description" xml:space="preserve">
     <value>Toggled with [keyboard shortcuts]({0}). Only works if you're in the [Bloxstrap group]({1}).</value>
   </data>
@@ -1060,5 +1054,26 @@ Scroll for more languages.</value>
   </data>
   <data name="Menu.FastFlags.Presets.DisableTerrainTextures.Title" xml:space="preserve">
     <value>Disable terrain textures</value>
+  </data>
+  <data name="Enums.FlagPresets.RenderingMode.Metal" xml:space="preserve">
+    <value>Metal</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.PreloadFonts.Description" xml:space="preserve">
+    <value>Preloads fonts before usage.</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.PreloadFonts.Title" xml:space="preserve">
+    <value>Preload fonts</value>
+  </data>
+  <data name="Bootstrapper.ClipboardCopyFailed" xml:space="preserve">
+    <value>Failed to copy to the clipboard: {0}</value>
+  </data>
+  <data name="Bootstrapper.ChangedRenderingMode" xml:space="preserve">
+    <value>Now using {0} rendering!</value>
+  </data>
+  <data name="Bootstrapper.ChangedRenderingMode.Hardware" xml:space="preserve">
+    <value>Hardware</value>
+  </data>
+  <data name="Bootstrapper.ChangedRenderingMode.Software" xml:space="preserve">
+    <value>Software</value>
   </data>
 </root>
