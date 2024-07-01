@@ -165,11 +165,6 @@ namespace Bloxstrap
                 App.Logger.WriteLine(LOG_IDENT, "Connectivity check finished");
             }
 
-#if !DEBUG
-            if (!App.IsFirstRun && App.Settings.Prop.CheckForUpdates)
-                await CheckForUpdates();
-#endif
-
             // ensure only one instance of the bootstrapper is running at the time
             // so that we don't have stuff like two updates happening simultaneously
 
@@ -586,92 +581,6 @@ namespace Bloxstrap
                 {
                     // suppress, we likely just don't have write perms for the desktop folder
                 }
-            }
-        }
-
-        private async Task CheckForUpdates()
-        {
-            const string LOG_IDENT = "Bootstrapper::CheckForUpdates";
-            
-            // don't update if there's another instance running (likely running in the background)
-            if (Process.GetProcessesByName(App.ProjectName).Count() > 1)
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"More than one Bloxstrap instance running, aborting update check");
-                return;
-            }
-
-            App.Logger.WriteLine(LOG_IDENT, $"Checking for updates...");
-
-            GithubRelease? releaseInfo;
-            try
-            {
-                releaseInfo = await Http.GetJson<GithubRelease>($"https://api.github.com/repos/{App.ProjectRepository}/releases/latest");
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"Failed to fetch releases: {ex}");
-                return;
-            }
-
-            if (releaseInfo is null || releaseInfo.Assets is null)
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"No updates found");
-                return;
-            }
-
-            int versionComparison = Utilities.CompareVersions(App.Version, releaseInfo.TagName);
-
-            // check if we aren't using a deployed build, so we can update to one if a new version comes out
-            if (versionComparison == 0 && App.BuildMetadata.CommitRef.StartsWith("tag") || versionComparison == 1)
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"No updates found");
-                return;
-            }
-
-            SetStatus(Resources.Strings.Bootstrapper_Status_UpgradingBloxstrap);
-            
-            try
-            {
-                // 64-bit is always the first option
-                GithubReleaseAsset asset = releaseInfo.Assets[0];
-                string downloadLocation = Path.Combine(Paths.LocalAppData, "Temp", asset.Name);
-
-                App.Logger.WriteLine(LOG_IDENT, $"Downloading {releaseInfo.TagName}...");
-                
-                if (!File.Exists(downloadLocation))
-                {
-                    var response = await App.HttpClient.GetAsync(asset.BrowserDownloadUrl);
-
-                    await using var fileStream = new FileStream(downloadLocation, FileMode.CreateNew);
-                    await response.Content.CopyToAsync(fileStream);
-                }
-
-                App.Logger.WriteLine(LOG_IDENT, $"Starting {releaseInfo.TagName}...");
-
-                ProcessStartInfo startInfo = new()
-                {
-                    FileName = downloadLocation,
-                };
-
-                foreach (string arg in App.LaunchSettings.Args)
-                    startInfo.ArgumentList.Add(arg);
-                
-                App.Settings.Save();
-                App.ShouldSaveConfigs = false;
-                
-                Process.Start(startInfo);
-
-                App.Terminate();
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteLine(LOG_IDENT, "An exception occurred when running the auto-updater");
-                App.Logger.WriteException(LOG_IDENT, ex);
-
-                Frontend.ShowMessageBox(
-                    string.Format(Resources.Strings.Bootstrapper_AutoUpdateFailed, releaseInfo.TagName),
-                    MessageBoxImage.Information
-                );
             }
         }
 

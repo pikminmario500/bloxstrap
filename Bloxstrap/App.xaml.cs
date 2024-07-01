@@ -207,11 +207,6 @@ namespace Bloxstrap
             if (!LaunchSettings.IsUninstall && !LaunchSettings.IsMenuLaunch)
                 NotifyIcon = new();
 
-#if !DEBUG
-            if (!LaunchSettings.IsUninstall && !IsFirstRun)
-                InstallChecker.CheckUpgrade();
-#endif
-
             if (LaunchSettings.IsMenuLaunch)
             {
                 Process? menuProcess = Utilities.GetProcessesSafe().Where(x => x.MainWindowTitle == $"{ProjectName} Menu").FirstOrDefault();
