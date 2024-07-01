@@ -2102,24 +2102,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set to 0 for defaults if you want to use Roblox&apos;s native framerate unlocker..
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FPSLimit_Description {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FPSLimit.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Framerate limit.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FPSLimit_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FPSLimit.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Stops it from showing whenever you move your mouse to the top of the screen..
         /// </summary>
         public static string Menu_FastFlags_Presets_FullscreenTitlebar_Description {
@@ -2842,6 +2824,60 @@ namespace Bloxstrap.Resources {
         public static string Menu_Title {
             get {
                 return ResourceManager.GetString("Menu.Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Metal.
+        /// </summary>
+        public static string Enums_FlagPresets_RenderingMode_Metal {
+            get {
+                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Metal", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Preloads fonts before usage..
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Description {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Preload fonts.
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Now using {0} rendering!.
+        /// </summary>
+        public static string Bootstrapper_ChangedRenderingMode {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ChangedRenderingMode", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Hardware.
+        /// </summary>
+        public static string Bootstrapper_ChangedRenderingMode_Hardware {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ChangedRenderingMode.Hardware", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Software.
+        /// </summary>
+        public static string Bootstrapper_ChangedRenderingMode_Software {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ChangedRenderingMode.Software", resourceCulture);
             }
         }
     }

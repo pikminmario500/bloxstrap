@@ -34,7 +34,7 @@ namespace Bloxstrap.UI.Elements.Menu
             AlreadyRunningSnackbar.Show();
         }
 
-        public void OpenWiki(object? sender, EventArgs e) => Utilities.ShellExecute($"https://github.com/{App.ProjectRepository}/wiki");
+        public void OpenWiki(object? sender, EventArgs e) => Utilities.ShellExecute($"https://github.com/pizzaboxer/bloxstrap/wiki");
 
         #region INavigationWindow methods
 

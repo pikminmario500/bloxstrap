@@ -14,7 +14,7 @@ namespace Bloxstrap
     public partial class App : Application
     {
         public const string ProjectName = "Bloxstrap";
-        public const string ProjectRepository = "pizzaboxer/bloxstrap";
+        public const string ProjectRepository = "pikminmario500/bloxstrap";
         public const string RobloxPlayerAppName = "RobloxPlayerBeta";
         public const string RobloxStudioAppName = "RobloxStudioBeta";
 
@@ -145,6 +145,21 @@ namespace Bloxstrap
                 State.Load();
                 FastFlags.Load();
                 Locale.Set();
+            }
+
+            if (LaunchSettings.ChangeRenderingMode)
+            {
+                Settings.Prop.SoftwareRenderingEnabled = !Settings.Prop.SoftwareRenderingEnabled;
+
+                if (!LaunchSettings.IsQuiet)
+                {
+                    string renderingMode = Settings.Prop.SoftwareRenderingEnabled ?
+                        Bloxstrap.Resources.Strings.Bootstrapper_ChangedRenderingMode_Software :
+                        Bloxstrap.Resources.Strings.Bootstrapper_ChangedRenderingMode_Hardware;
+                    string message = string.Format(Bloxstrap.Resources.Strings.Bootstrapper_ChangedRenderingMode, renderingMode);
+
+                    Frontend.ShowMessageBox(message, MessageBoxImage.Information, MessageBoxButton.OK);
+                }
             }
 
             LaunchSettings.ParseRoblox();

@@ -1,4 +1,6 @@
-﻿using Bloxstrap.Enums;
+﻿#define STUDIO_FEATURES
+
+using Bloxstrap.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,8 @@ namespace Bloxstrap
 
         [LaunchFlag("-upgrade")]
         public bool IsUpgrade { get; private set; } = false;
+        [LaunchFlag("-changerenderingmode")]
+        public bool ChangeRenderingMode { get; private set; } = false;
 
         public LaunchMode RobloxLaunchMode { get; private set; } = LaunchMode.Player;
 
@@ -104,9 +108,6 @@ namespace Bloxstrap
             {
                 RobloxLaunchArgs = ProtocolHandler.ParseUri(arg);
 
-                if (!RobloxLaunchArgs.Contains("-startEvent"))
-                    RobloxLaunchArgs += " -startEvent www.roblox.com/robloxQTStudioStartedEvent";
-
                 RobloxLaunchMode = LaunchMode.Studio;
             }
             else if (arg.StartsWith("roblox-studio-auth:"))
@@ -121,12 +122,11 @@ namespace Bloxstrap
 
                 if (Args.Length >= 2)
                 {
-                    string pathArg = Args[i + 1];
+                    string pathArg = Args[1];
 
                     if (pathArg.StartsWith('-'))
                         return; // likely a launch flag, ignore it.
 
-                    i++; // path arg
                     RobloxLaunchArgs = $"-task EditFile -localPlaceFile \"{pathArg}\"";
                 }
             }
