@@ -79,15 +79,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bloxstrap was unable to auto-update to {0}. Please update it manually by downloading and running the latest release from the GitHub page..
-        /// </summary>
-        public static string Bootstrapper_AutoUpdateFailed {
-            get {
-                return ResourceManager.GetString("Bootstrapper.AutoUpdateFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Roblox is currently running, and launching another instance will close it. Are you sure you want to continue launching?.
         /// </summary>
         public static string Bootstrapper_ConfirmLaunch {
@@ -1482,24 +1473,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bloxstrap will automatically check and update itself when launching Roblox..
-        /// </summary>
-        public static string Menu_Behaviour_AutoUpdate_Description {
-            get {
-                return ResourceManager.GetString("Menu.Behaviour.AutoUpdate.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Automatically update Bloxstrap.
-        /// </summary>
-        public static string Menu_Behaviour_AutoUpdate_Title {
-            get {
-                return ResourceManager.GetString("Menu.Behaviour.AutoUpdate.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Prevent against closures of your existing game from accidentally launching another one..
         /// </summary>
         public static string Menu_Behaviour_ConfirmLaunches_Description {
@@ -1974,24 +1947,6 @@ namespace Bloxstrap.Resources {
         public static string Menu_FastFlags_Presets_FontPadding_Title {
             get {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.FontPadding.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set to 0 for defaults if you want to use Roblox&apos;s native framerate unlocker..
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FPSLimit_Description {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FPSLimit.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Framerate limit.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FPSLimit_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FPSLimit.Title", resourceCulture);
             }
         }
         
@@ -2718,6 +2673,123 @@ namespace Bloxstrap.Resources {
         public static string Menu_Title {
             get {
                 return ResourceManager.GetString("Menu.Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Now using {0} rendering!.
+        /// </summary>
+        public static string Bootstrapper_ChangedRenderingMode {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ChangedRenderingMode", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to hardware.
+        /// </summary>
+        public static string Bootstrapper_ChangedRenderingMode_Hardware {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ChangedRenderingMode.Hardware", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to software.
+        /// </summary>
+        public static string Bootstrapper_ChangedRenderingMode_Software {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ChangedRenderingMode.Software", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Show account on profile.
+        /// </summary>
+        public static string Menu_Integrations_ShowAccountOnProfile_Title {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.ShowAccountOnProfile.Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Shows what Roblox account your using on your Discord profile.
+        /// </summary>
+        public static string Menu_Integrations_ShowAccountOnProfile_Description {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.ShowAccountOnProfile.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Metal.
+        /// </summary>
+        public static string Enums_FlagPresets_RenderingMode_Metal {
+            get {
+                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Metal", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to OpenGL.
+        /// </summary>
+        public static string Enums_FlagPresets_RenderingMode_OpenGL {
+            get {
+                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.OpenGL", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Vulkan.
+        /// </summary>
+        public static string Enums_FlagPresets_RenderingMode_Vulkan {
+            get {
+                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Vulkan", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Preloads fonts before usage..
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Description {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Preload fonts.
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Force low quality.
+        /// </summary>
+        public static string Menu_FastFlags_Presets_ForceLowQuality_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.ForceLowQuality.Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Choose if Roblox should use Hardware or Software rendering..
+        /// </summary>
+        public static string Menu_Behaviour_SoftwareRendering_Description {
+            get {
+                return ResourceManager.GetString("Menu.Behaviour.SoftwareRendering.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Software Rendering.
+        /// </summary>
+        public static string Menu_Behaviour_SoftwareRendering_Title {
+            get {
+                return ResourceManager.GetString("Menu.Behaviour.SoftwareRendering.Title", resourceCulture);
             }
         }
     }

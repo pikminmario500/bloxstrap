@@ -160,7 +160,7 @@ namespace Bloxstrap
             MessageBoxResult result;
 
             // silently upgrade version if the command line flag is set or if we're launching from an auto update
-            if (App.LaunchSettings.IsUpgrade || isAutoUpgrade)
+            if (App.LaunchSettings.IsUpgrade)
             {
                 result = MessageBoxResult.Yes;
             }
@@ -247,22 +247,11 @@ namespace Bloxstrap
                     if (App.Settings.Prop.BootstrapperStyle == BootstrapperStyle.ClassicFluentDialog)
                         App.Settings.Prop.BootstrapperStyle = BootstrapperStyle.FluentDialog;
 
-                    _ = int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate"), out int x);
-                    if (x == 0)
-                    {
-                        App.FastFlags.SetPreset("Rendering.Framerate", null);
-                        App.FastFlags.Save();
-                    }
-
                     App.Settings.Save();
                 }
             }
 
-            if (isAutoUpgrade)
-            {
-                Utilities.ShellExecute($"https://github.com/{App.ProjectRepository}/wiki/Release-notes-for-Bloxstrap-v{currentVersionInfo.ProductVersion}");
-            }
-            else if (!App.LaunchSettings.IsQuiet)
+            if (!App.LaunchSettings.IsQuiet)
             {
                 Frontend.ShowMessageBox(
                     string.Format(Resources.Strings.InstallChecker_Updated, currentVersionInfo.ProductVersion),

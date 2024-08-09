@@ -11,16 +11,16 @@
             set => App.Settings.Prop.CreateDesktopIcon = value;
         }
 
-        public bool UpdateCheckingEnabled
-        {
-            get => App.Settings.Prop.CheckForUpdates;
-            set => App.Settings.Prop.CheckForUpdates = value;
-        }
-
         public bool ConfirmLaunches
         {
             get => App.Settings.Prop.ConfirmLaunches;
             set => App.Settings.Prop.ConfirmLaunches = value;
+        }
+
+        public bool SoftwareRenderingEnabled
+        {
+            get => App.Settings.Prop.SoftwareRenderingEnabled;
+            set => App.Settings.Prop.SoftwareRenderingEnabled = value;
         }
 
         public bool ForceRobloxLanguage

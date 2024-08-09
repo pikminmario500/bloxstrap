@@ -123,9 +123,6 @@
   <data name="ActivityTracker.LookupFailed" xml:space="preserve">
     <value>lookup failed</value>
   </data>
-  <data name="Bootstrapper.AutoUpdateFailed" xml:space="preserve">
-    <value>Bloxstrap was unable to auto-update to {0}. Please update it manually by downloading and running the latest release from the GitHub page.</value>
-  </data>
   <data name="Bootstrapper.ConfirmLaunch" xml:space="preserve">
     <value>Roblox is currently running, and launching another instance will close it. Are you sure you want to continue launching?</value>
   </data>
@@ -545,12 +542,6 @@ Would you like to upgrade your currently installed version?</value>
   <data name="Menu.Appearance.Title" xml:space="preserve">
     <value>Appearance</value>
   </data>
-  <data name="Menu.Behaviour.AutoUpdate.Description" xml:space="preserve">
-    <value>Bloxstrap will automatically check and update itself when launching Roblox.</value>
-  </data>
-  <data name="Menu.Behaviour.AutoUpdate.Title" xml:space="preserve">
-    <value>Automatically update Bloxstrap</value>
-  </data>
   <data name="Menu.Behaviour.ConfirmLaunches.Description" xml:space="preserve">
     <value>Prevent against closures of your existing game from accidentally launching another one.</value>
   </data>
@@ -676,12 +667,6 @@ Do NOT use this to import large "flag lists" made by other people that promise t
   </data>
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Title" xml:space="preserve">
     <value>Preserve rendering quality with display scaling</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.FPSLimit.Description" xml:space="preserve">
-    <value>Set to 0 for defaults if you want to use Roblox's native framerate unlocker.</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.FPSLimit.Title" xml:space="preserve">
-    <value>Framerate limit</value>
   </data>
   <data name="Menu.FastFlags.Presets.HideGuis.Description" xml:space="preserve">
     <value>Toggled with [keyboard shortcuts]({0}). Only works if you're in the [Bloxstrap group]({1}).</value>
@@ -1026,5 +1011,44 @@ Selecting 'No' will ignore this warning and continue installation.</value>
   </data>
   <data name="ContextMenu.RobloxNotRunning" xml:space="preserve">
     <value>Roblox is still launching. A log file will only be available once Roblox launches.</value>
+  </data>
+  <data name="Bootstrapper.ChangedRenderingMode" xml:space="preserve">
+    <value>Now using {0} rendering!</value>
+  </data>
+  <data name="Bootstrapper.ChangedRenderingMode.Hardware" xml:space="preserve">
+    <value>Hardware</value>
+  </data>
+  <data name="Bootstrapper.ChangedRenderingMode.Software" xml:space="preserve">
+    <value>Software</value>
+  </data>
+  <data name="Menu.Integrations.ShowAccountOnProfile.Description" xml:space="preserve">
+    <value>Shows which Roblox account you are using on your Discord profile.</value>
+  </data>
+  <data name="Menu.Integrations.ShowAccountOnProfile.Title" xml:space="preserve">
+    <value>Show account on profile</value>
+  </data>
+  <data name="Enums.FlagPresets.RenderingMode.Metal" xml:space="preserve">
+    <value>Metal</value>
+  </data>
+  <data name="Enums.FlagPresets.RenderingMode.OpenGL" xml:space="preserve">
+    <value>OpenGL</value>
+  </data>
+  <data name="Enums.FlagPresets.RenderingMode.Vulkan" xml:space="preserve">
+    <value>Vulkan</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.PreloadFonts.Description" xml:space="preserve">
+    <value>Preloads fonts before usage.</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.PreloadFonts.Title" xml:space="preserve">
+    <value>Preload fonts</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.ForceLowQuality.Title" xml:space="preserve">
+    <value>Force low quality</value>
+  </data>
+  <data name="Menu.Behaviour.SoftwareRendering.Title" xml:space="preserve">
+    <value>Software Rendering</value>
+  </data>
+  <data name="Menu.Behaviour.SoftwareRendering.Description" xml:space="preserve">
+    <value>Choose if Roblox should use Hardware or Software rendering.</value>
   </data>
 </root>
