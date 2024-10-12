@@ -51,6 +51,12 @@
 
         public bool IsDisposed = false;
 
+        public ActivityWatcher(string? logFile = null)
+        {
+            if (!String.IsNullOrEmpty(logFile))
+                LogLocation = logFile;
+        }
+
         public async void Start()
         {
             const string LOG_IDENT = "ActivityWatcher::Start";
@@ -65,74 +71,58 @@
             // - check for leaves/disconnects with 'Time to disconnect replication data: {{TIME}}' entry
             //
             // we'll tail the log file continuously, monitoring for any log entries that we need to determine the current game activity
+            
+            FileInfo logFileInfo;
 
-            string logDirectory = Path.Combine(Paths.LocalAppData, "Roblox\\logs");
-
-            if (!Directory.Exists(logDirectory))
-                return;
-
-            // we need to make sure we're fetching the absolute latest log file
-            // if roblox doesn't start quickly enough, we can wind up fetching the previous log file
-            // good rule of thumb is to find a log file that was created in the last 15 seconds or so
-
-            App.Logger.WriteLine(LOG_IDENT, "Opening Roblox log file...");
-
-            string logPath = "";
-
-            // check if log file was created before the tracker launched
-            FileInfo logFileInfo = new DirectoryInfo(logDirectory)
-                .GetFiles()
-                .Where(x => x.Name.Contains("Player", StringComparison.OrdinalIgnoreCase) && x.CreationTime <= DateTime.Now)
-                .OrderByDescending(x => x.CreationTime)
-                .First();
-
-            // is 15s too much?
-            if (logFileInfo.CreationTime.AddSeconds(15) < DateTime.Now)
+            if (String.IsNullOrEmpty(LogLocation))
             {
-                // wait for the log file
-                using (FileSystemWatcher watcher = new FileSystemWatcher())
-                using (AutoResetEvent waitEvent = new AutoResetEvent(false))
+                string logDirectory = Path.Combine(Paths.LocalAppData, "Roblox\\logs");
+
+                if (!Directory.Exists(logDirectory))
+                    return;
+
+                // we need to make sure we're fetching the absolute latest log file
+                // if roblox doesn't start quickly enough, we can wind up fetching the previous log file
+                // good rule of thumb is to find a log file that was created in the last 15 seconds or so
+
+                App.Logger.WriteLine(LOG_IDENT, "Opening Roblox log file...");
+
+                while (true)
                 {
-                    watcher.Path = logDirectory;
-                    watcher.Created += (s, e) => logPath = e.FullPath; waitEvent.Set();
-                    watcher.EnableRaisingEvents = true;
+                    logFileInfo = new DirectoryInfo(logDirectory)
+                        .GetFiles()
+                        .Where(x => x.Name.Contains("Player", StringComparison.OrdinalIgnoreCase) && x.CreationTime <= DateTime.Now)
+                        .OrderByDescending(x => x.CreationTime)
+                        .First();
 
-                    App.Logger.WriteLine(LOG_IDENT, "Waiting for log file.");
+                    if (logFileInfo.CreationTime.AddSeconds(15) > DateTime.Now)
+                        break;
 
-                    waitEvent.WaitOne();
+                    App.Logger.WriteLine(LOG_IDENT, $"Could not find recent enough log file, waiting... (newest is {logFileInfo.Name})");
+                    await Task.Delay(1000);
                 }
+
+                OnLogOpen?.Invoke(this, EventArgs.Empty);
+
+                LogLocation = logFileInfo.FullName;
             }
             else
             {
-                logPath = logFileInfo.FullName;
-                App.Logger.WriteLine(LOG_IDENT, "Found recent log file.");
+                logFileInfo = new FileInfo(LogLocation);
             }
 
-            App.Logger.WriteLine(LOG_IDENT, $"Got log file: {Path.GetFileName(logPath)}");
+            var logFileStream = logFileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
-            OnLogOpen?.Invoke(this, EventArgs.Empty);
+            App.Logger.WriteLine(LOG_IDENT, $"Opened {LogLocation}");
 
-            LogLocation = logPath;
-            FileStream logFileStream = File.Open(logPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            App.Logger.WriteLine(LOG_IDENT, $"Opened {logPath}");
-
-            var logUpdatedEvent = new AutoResetEvent(false);
-            var logWatcher = new FileSystemWatcher()
-            {
-                Path = logDirectory,
-                Filter = Path.GetFileName(logPath),
-                EnableRaisingEvents = true
-            };
-            logWatcher.Changed += (s, e) => logUpdatedEvent.Set();
-
-            using var sr = new StreamReader(logFileStream);
+            using var streamReader = new StreamReader(logFileStream);
 
             while (!IsDisposed)
             {
-                string? log = await sr.ReadLineAsync();
+                string? log = await streamReader.ReadLineAsync();
 
                 if (log is null)
-                    logUpdatedEvent.WaitOne(250);
+                    await Task.Delay(1000);
                 else
                     ReadLogEntry(log);
             }
@@ -281,7 +271,7 @@
                     InGame = true;
                     Data.TimeJoined = DateTime.Now;
 
-                    OnGameJoin?.Invoke(this, new EventArgs());
+                    OnGameJoin?.Invoke(this, EventArgs.Empty);
                 }
             }
             else if (InGame && Data.PlaceId != 0)
@@ -298,7 +288,7 @@
                     InGame = false;
                     Data = new();
 
-                    OnGameLeave?.Invoke(this, new EventArgs());
+                    OnGameLeave?.Invoke(this, EventArgs.Empty);
                 }
                 else if (entry.Contains(GameTeleportingEntry))
                 {
