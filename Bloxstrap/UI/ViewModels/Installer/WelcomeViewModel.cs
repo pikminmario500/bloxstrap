@@ -22,7 +22,7 @@
 
             if (releaseInfo is not null)
             {
-                if (App.ShortCommitHash == releaseInfo.TagName)
+                if (App.ShortCommitHash != releaseInfo.TagName)
                 {
                     VersionNotice = String.Format(Strings.Installer_Welcome_UpdateNotice, App.ShortCommitHash, releaseInfo.TagName);
                     OnPropertyChanged(nameof(VersionNotice));
