@@ -393,7 +393,7 @@ If not, then please report this exception through a [GitHub issue]({1}) along wi
     <value>Light</value>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Bloxstrap has been upgraded to v{0}</value>
+    <value>Bloxstrap has been upgraded to {0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
     <value>The version of Bloxstrap you've launched is different to the version you currently have installed.

@@ -1364,7 +1364,7 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bloxstrap has been upgraded to v{0}.
+        ///   Looks up a localized string similar to Bloxstrap has been upgraded to {0}.
         /// </summary>
         public static string InstallChecker_Updated {
             get {
