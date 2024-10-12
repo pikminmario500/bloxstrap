@@ -1,3 +1,7 @@
 [submodule "wpfui"]
 	path = wpfui
-	url = https://github.com/bloxstraplabs/wpfui.git
+	url = https://github.com/pikminmario500/wpfui.git
+
+[submodule "DiscordRPC"]
+	path = discord-rpc-csharp
+	url = https://github.com/Lachee/discord-rpc-csharp.git

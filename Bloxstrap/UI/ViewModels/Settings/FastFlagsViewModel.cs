@@ -25,12 +25,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.Settings.Prop.UseFastFlagManager = value;
         }
 
-        public int FramerateLimit
-        {
-            get => int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate"), out int x) ? x : 0;
-            set => App.FastFlags.SetPreset("Rendering.Framerate", value == 0 ? null : value);
-        }
-
         public IReadOnlyDictionary<MSAAMode, string?> MSAALevels => FastFlagManager.MSAAModes;
 
         public MSAAMode SelectedMSAALevel
@@ -39,12 +33,22 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.FastFlags.SetPreset("Rendering.MSAA", MSAALevels[value]);
         }
 
+        public bool ForceLowQualityEnabled
+        {
+            get => App.FastFlags.GetPreset("Rendering.ForceLowQuality") == "1";
+            set => App.FastFlags.SetPreset("Rendering.ForceLowQuality", value ? "1" : null);
+        }
+
         public IReadOnlyDictionary<RenderingMode, string> RenderingModes => FastFlagManager.RenderingModes;
 
         public RenderingMode SelectedRenderingMode
         {
             get => App.FastFlags.GetPresetEnum(RenderingModes, "Rendering.Mode", "True");
-            set => App.FastFlags.SetPresetEnum("Rendering.Mode", RenderingModes[value], "True");
+            set
+            {
+                App.FastFlags.SetPresetEnum("Rendering.Mode", RenderingModes[value], "True");
+                App.FastFlags.CheckManualFullscreenPreset();
+            }
         }
 
         public bool FixDisplayScaling
@@ -99,6 +103,12 @@ namespace Bloxstrap.UI.ViewModels.Settings
         {
             get => int.TryParse(App.FastFlags.GetPreset("UI.FullscreenTitlebarDelay"), out int x) && x > 5000;
             set => App.FastFlags.SetPreset("UI.FullscreenTitlebarDelay", value ? "3600000" : null);
+        }
+
+        public bool PreloadFontsEnabled
+        {
+            get => App.FastFlags.GetPreset("UI.Menu.PreloadFonts") == "True";
+            set => App.FastFlags.SetPreset("UI.Menu.PreloadFonts", value ? "True" : null);
         }
 
         public bool GuiHidingEnabled

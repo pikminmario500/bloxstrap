@@ -577,18 +577,11 @@ namespace Bloxstrap
 
             App.SendStat("installAction", "upgrade");
 
-            if (isAutoUpgrade)
-            {
-                Utilities.ShellExecute($"https://github.com/{App.ProjectRepository}/wiki/Release-notes-for-Bloxstrap-v{currentVer}");
-            }
-            else
-            {
-                Frontend.ShowMessageBox(
-                    string.Format(Strings.InstallChecker_Updated, currentVer),
-                    MessageBoxImage.Information,
-                    MessageBoxButton.OK
-                );
-            }
+            Frontend.ShowMessageBox(
+                string.Format(Strings.InstallChecker_Updated, App.ShortCommitHash),
+                MessageBoxImage.Information,
+                MessageBoxButton.OK
+            );
         }
     }
 }

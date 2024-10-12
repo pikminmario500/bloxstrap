@@ -19,11 +19,11 @@ namespace Bloxstrap
 #else
         public const string ProjectName = "Bloxstrap";
 #endif
-        public const string ProjectOwner = "Bloxstrap";
-        public const string ProjectRepository = "bloxstraplabs/bloxstrap";
-        public const string ProjectDownloadLink = "https://bloxstraplabs.com";
+        public const string ProjectOwner = "pikminmario500";
+        public const string ProjectRepository = $"{ProjectOwner}/bloxstrap";
+        public const string ProjectDownloadLink = $"https://github.com/{ProjectRepository}/releases";
         public const string ProjectHelpLink = "https://github.com/bloxstraplabs/bloxstrap/wiki";
-        public const string ProjectSupportLink = "https://github.com/bloxstraplabs/bloxstrap/issues/new";
+        public const string ProjectSupportLink = $"https://github.com/{ProjectRepository}/issues/new";
 
         public const string RobloxPlayerAppName = "RobloxPlayerBeta";
         public const string RobloxStudioAppName = "RobloxStudioBeta";
@@ -37,9 +37,9 @@ namespace Bloxstrap
 
         public static string Version = Assembly.GetExecutingAssembly().GetName().Version!.ToString()[..^2];
 
-        public static bool IsActionBuild => !String.IsNullOrEmpty(BuildMetadata.CommitRef);
+        public static string ShortCommitHash = BuildMetadata.CommitHash[..7];
 
-        public static bool IsProductionBuild => IsActionBuild && BuildMetadata.CommitRef.StartsWith("tag", StringComparison.Ordinal);
+        public static bool IsActionBuild => !String.IsNullOrEmpty(BuildMetadata.CommitRef);
 
         public static readonly MD5 MD5Provider = MD5.Create();
 
@@ -158,18 +158,18 @@ namespace Bloxstrap
 
             base.OnStartup(e);
 
-            Logger.WriteLine(LOG_IDENT, $"Starting {ProjectName} v{Version}");
+#if DEBUG
+            Logger.WriteLine(LOG_IDENT, $"Starting {ProjectName}-Debug {ShortCommitHash}");
+#else
+            Logger.WriteLine(LOG_IDENT, $"Starting {ProjectName}-Release {ShortCommitHash}");
+#endif
 
-            string userAgent = $"{ProjectName}/{Version}";
+            string userAgent = $"{ProjectName}/{ShortCommitHash}";
 
             if (IsActionBuild)
             {
                 Logger.WriteLine(LOG_IDENT, $"Compiled {BuildMetadata.Timestamp.ToFriendlyString()} from commit {BuildMetadata.CommitHash} ({BuildMetadata.CommitRef})");
-
-                if (IsProductionBuild)
-                    userAgent += $" (Production)";
-                else
-                    userAgent += $" (Artifact {BuildMetadata.CommitHash}, {BuildMetadata.CommitRef})";
+                userAgent += $" (Artifact {BuildMetadata.CommitHash}, {BuildMetadata.CommitRef})";
             }
             else
             {
@@ -271,15 +271,15 @@ namespace Bloxstrap
                 if (Paths.Process != Paths.Application && !File.Exists(Paths.Application))
                     File.Copy(Paths.Process, Paths.Application);
 
+                Settings.Load();
                 Logger.Initialize(LaunchSettings.UninstallFlag.Active);
 
-                if (!Logger.Initialized && !Logger.NoWriteMode)
+                if (!Logger.Initialized && !Logger.NoWriteMode && Settings.Prop.UseLogger)
                 {
                     Logger.WriteLine(LOG_IDENT, "Possible duplicate launch detected, terminating.");
                     Terminate();
                 }
 
-                Settings.Load();
                 State.Load();
                 FastFlags.Load();
 

@@ -25,7 +25,7 @@ namespace Bloxstrap.UI.Elements.Dialogs
                 LocateLogFileButton.Content = Strings.Dialog_Exception_CopyLogContents;
 
             string repoUrl = $"https://github.com/{App.ProjectRepository}";
-            string wikiUrl = $"{repoUrl}/wiki";
+            string wikiUrl = App.ProjectHelpLink;
 
             string issueUrl = String.Format(
                 "{0}/issues/new?template=bug_report.yaml&title={1}&log={2}",

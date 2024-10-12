@@ -49,14 +49,25 @@ namespace Bloxstrap
             { "UI.Menu.Style.ABTest.1", "FFlagEnableMenuControlsABTest" },
             { "UI.Menu.Style.ABTest.2", "FFlagEnableV3MenuABTest3" },
             { "UI.Menu.Style.ABTest.3", "FFlagEnableInGameMenuChromeABTest3" },
-            { "UI.Menu.Style.ABTest.4", "FFlagEnableInGameMenuChromeABTest4" }
+            { "UI.Menu.Style.ABTest.4", "FFlagEnableInGameMenuChromeABTest4" },
+
+            { "Rendering.DisableD3D", "FFlagDebugGraphicsDisableDirect3D11" },
+            { "Rendering.Mode.Metal", "FFlagDebugGraphicsPreferMetal" },
+            { "UI.Menu.PreloadFonts", "FFlagPreloadAllFonts" },
+            { "Rendering.ForceLowQuality", "DFIntDebugFRMQualityLevelOverride" },
+            { "Rendering.Mode.Vulkan", "FFlagDebugGraphicsPreferVulkan" },
+            { "Rendering.Mode.Vulkan.Fix", "FFlagRenderVulkanFixMinimizeWindow" },
+            { "Rendering.Mode.OpenGL", "FFlagDebugGraphicsPreferOpenGL" }
         };
 
         public static IReadOnlyDictionary<RenderingMode, string> RenderingModes => new Dictionary<RenderingMode, string>
         {
             { RenderingMode.Default, "None" },
+            { RenderingMode.Vulkan, "Vulkan" },
             { RenderingMode.D3D11, "D3D11" },
             { RenderingMode.D3D10, "D3D10" },
+            { RenderingMode.OpenGL, "OpenGL" },
+            { RenderingMode.Metal, "Metal" }
         };
 
         public static IReadOnlyDictionary<LightingMode, string> LightingModes => new Dictionary<LightingMode, string>
@@ -223,6 +234,20 @@ namespace Bloxstrap
             return mapping.First().Key;
         }
 
+        public void CheckManualFullscreenPreset()
+        {
+            if (GetPreset("Rendering.Mode.Vulkan") == "True" || GetPreset("Rendering.Mode.OpenGL") == "True")
+            {
+                SetPreset("Rendering.ManualFullscreen", null);
+                SetPreset("Rendering.DisableD3D", "True");
+            }
+            else
+            {
+                SetPreset("Rendering.ManualFullscreen", "False");
+                SetPreset("Rendering.DisableD3D", null);
+            }
+        }
+
         public override void Save()
         {
             // convert all flag values to strings before saving
@@ -242,6 +267,8 @@ namespace Bloxstrap
 
             // clone the dictionary
             OriginalProp = new(Prop);
+
+            CheckManualFullscreenPreset();
 
             // TODO - remove when activity tracking has been revamped
             if (GetPreset("Network.Log") != "7")

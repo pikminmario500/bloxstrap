@@ -625,12 +625,6 @@ Do NOT use this to import large "flag lists" made by other people that promise t
   <data name="Menu.FastFlags.Presets.FixDisplayScaling.Title" xml:space="preserve">
     <value>Preserve rendering quality with display scaling</value>
   </data>
-  <data name="Menu.FastFlags.Presets.FPSLimit.Description" xml:space="preserve">
-    <value>Set to 0 for defaults if you want to use Roblox's native framerate unlocker.</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.FPSLimit.Title" xml:space="preserve">
-    <value>Framerate limit</value>
-  </data>
   <data name="Menu.FastFlags.Presets.HideGuis.Description" xml:space="preserve">
     <value>Toggled with [keyboard shortcuts]({0}). Only works if you're in the [Bloxstrap group]({1}).</value>
   </data>
@@ -1233,5 +1227,62 @@ Would you like to enable test mode?</value>
   <data name="Paths.Icons" xml:space="preserve">
     <value>Icons</value>
     <comment>Name of the folder that gets created according to the "create shortcut icons" option. Ensure that it is a valid folder name.</comment>
+  </data>
+  <data name="Menu.Behaviour.SoftwareRendering.Title" xml:space="preserve">
+    <value>Software Rendering</value>
+  </data>
+  <data name="Menu.Behaviour.SoftwareRendering.Description" xml:space="preserve">
+    <value>Choose if Roblox should use Hardware or Software rendering.</value>
+  </data>
+  <data name="Enums.FlagPresets.RenderingMode.Metal" xml:space="preserve">
+    <value>Metal</value>
+  </data>
+  <data name="Enums.FlagPresets.RenderingMode.OpenGL" xml:space="preserve">
+    <value>OpenGL</value>
+  </data>
+  <data name="Enums.FlagPresets.RenderingMode.Vulkan" xml:space="preserve">
+    <value>Vulkan</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.PreloadFonts.Description" xml:space="preserve">
+    <value>Preloads fonts before usage.</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.PreloadFonts.Title" xml:space="preserve">
+    <value>Preload fonts</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.ForceLowQuality.Title" xml:space="preserve">
+    <value>Force low quality</value>
+  </data>
+  <data name="LaunchMenu.LaunchRobloxStudio" xml:space="preserve">
+    <value>Launch Roblox Studio</value>
+  </data>
+  <data name="Menu.Behaviour.ChangePriorityClass.Title" xml:space="preserve">
+    <value>Set priority</value>
+  </data>
+  <data name="Menu.Behaviour.ChangePriorityClass.Description" xml:space="preserve">
+    <value>Change the priority class Roblox uses.</value>
+  </data>
+  <data name="Enums.PriorityClasses.Idle" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Enums.PriorityClasses.BelowNormal" xml:space="preserve">
+    <value>Below normal</value>
+  </data>
+  <data name="Enums.PriorityClasses.Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Enums.PriorityClasses.AboveNormal" xml:space="preserve">
+    <value>Above normal</value>
+  </data>
+  <data name="Enums.PriorityClasses.High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Enums.PriorityClasses.RealTime" xml:space="preserve">
+    <value>Realtime</value>
+  </data>
+  <data name="Menu.Behaviour.UseLogger.Title" xml:space="preserve">
+    <value>Enable logging</value>
+  </data>
+  <data name="Menu.Behaviour.UseLogger.Description" xml:space="preserve">
+    <value>Allow Bloxstrap to write logs for troubleshooting purposes.</value>
   </data>
 </root>

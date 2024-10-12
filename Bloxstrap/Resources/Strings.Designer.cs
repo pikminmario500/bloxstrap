@@ -2451,24 +2451,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set to 0 for defaults if you want to use Roblox&apos;s native framerate unlocker..
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FPSLimit_Description {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FPSLimit.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Framerate limit.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FPSLimit_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FPSLimit.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Stops it from showing whenever you move your mouse to the top of the screen..
         /// </summary>
         public static string Menu_FastFlags_Presets_FullscreenTitlebar_Description {
@@ -3246,6 +3228,160 @@ namespace Bloxstrap.Resources {
         public static string Uninstaller_Uninstall {
             get {
                 return ResourceManager.GetString("Uninstaller.Uninstall", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Choose if Roblox should use Hardware or Software rendering..
+        /// </summary>
+        public static string Menu_Behaviour_SoftwareRendering_Description {
+            get {
+                return ResourceManager.GetString("Menu.Behaviour.SoftwareRendering.Description", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Software Rendering.
+        /// </summary>
+        public static string Menu_Behaviour_SoftwareRendering_Title {
+            get {
+                return ResourceManager.GetString("Menu.Behaviour.SoftwareRendering.Title", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Metal.
+        /// </summary>
+        public static string Enums_FlagPresets_RenderingMode_Metal {
+            get {
+                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Metal", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to OpenGL.
+        /// </summary>
+        public static string Enums_FlagPresets_RenderingMode_OpenGL {
+            get {
+                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.OpenGL", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Vulkan.
+        /// </summary>
+        public static string Enums_FlagPresets_RenderingMode_Vulkan {
+            get {
+                return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Vulkan", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Preloads fonts before usage..
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Description {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Description", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Preload fonts.
+        /// </summary>
+        public static string Menu_FastFlags_Presets_PreloadFonts_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Title", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Force low quality.
+        /// </summary>
+        public static string Menu_FastFlags_Presets_ForceLowQuality_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.ForceLowQuality.Title", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Launch Roblox Studio.
+        /// </summary>
+        public static string LaunchMenu_LaunchRobloxStudio {
+            get {
+                return ResourceManager.GetString("LaunchMenu.LaunchRobloxStudio", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Change the priority class Roblox uses..
+        /// </summary>
+        public static string Menu_Behaviour_ChangePriorityClass_Description {
+            get {
+                return ResourceManager.GetString("Menu.Behaviour.ChangePriorityClass.Description", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Set priority.
+        /// </summary>
+        public static string Menu_Behaviour_ChangePriorityClass_Title {
+            get {
+                return ResourceManager.GetString("Menu.Behaviour.ChangePriorityClass.Title", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Low.
+        /// </summary>
+        public static string Enums_PriorityClasses_Idle {
+            get {
+                return ResourceManager.GetString("Enums.PriorityClasses.Idle", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Below normal.
+        /// </summary>
+        public static string Enums_PriorityClasses_BelowNormal {
+            get {
+                return ResourceManager.GetString("Enums.PriorityClasses.BelowNormal", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        public static string Enums_PriorityClasses_Normal {
+            get {
+                return ResourceManager.GetString("Enums.PriorityClasses.Normal", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Above normal.
+        /// </summary>
+        public static string Enums_PriorityClasses_AboveNormal {
+            get {
+                return ResourceManager.GetString("Enums.PriorityClasses.AboveNormal", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to High.
+        /// </summary>
+        public static string Enums_PriorityClasses_High {
+            get {
+                return ResourceManager.GetString("Enums.PriorityClasses.High", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Realtime.
+        /// </summary>
+        public static string Enums_PriorityClasses_RealTime {
+            get {
+                return ResourceManager.GetString("Enums.PriorityClasses.RealTime", resourceCulture);
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Bloxstrap to write logs for troubleshooting purposes..
+        /// </summary>
+        public static string Menu_Behaviour_UseLogger_Description {
+            get {
+                return ResourceManager.GetString("Menu.Behaviour.UseLogger.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable logging.
+        /// </summary>
+        public static string Menu_Behaviour_UseLogger_Title {
+            get {
+                return ResourceManager.GetString("Menu.Behaviour.UseLogger.Title", resourceCulture);
             }
         }
     }

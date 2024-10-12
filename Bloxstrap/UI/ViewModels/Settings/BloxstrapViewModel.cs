@@ -13,5 +13,11 @@
             get => App.Settings.Prop.EnableAnalytics;
             set => App.Settings.Prop.EnableAnalytics = value;
         }
+
+        public bool UseLogger
+        {
+            get => App.Settings.Prop.UseLogger;
+            set => App.Settings.Prop.UseLogger = value;
+        }
     }
 }

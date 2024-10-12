@@ -1,19 +1,7 @@
-﻿// To debug the automatic updater:
-// - Uncomment the definition below
-// - Publish the executable
-// - Launch the executable (click no when it asks you to upgrade)
-// - Launch Roblox (for testing web launches, run it from the command prompt)
-// - To re-test the same executable, delete it from the installation folder
-
-// #define DEBUG_UPDATER
-
-#if DEBUG_UPDATER
-#warning "Automatic updater debugging is enabled"
-#endif
-
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Shell;
+using System.Security.Principal;
 
 using Microsoft.Win32;
 
@@ -160,7 +148,7 @@ namespace Bloxstrap
             if (connectionResult is not null)
                 HandleConnectionError(connectionResult);
             
-#if (!DEBUG || DEBUG_UPDATER) && !QA_BUILD
+#if !DEBUG && !QA_BUILD
             if (App.Settings.Prop.CheckForUpdates && !App.LaunchSettings.UpgradeFlag.Active)
             {
                 bool updatePresent = await CheckForUpdates();
@@ -364,9 +352,6 @@ namespace Bloxstrap
             if (startEventSignalled)
                 App.Logger.WriteLine(LOG_IDENT, "Start event signalled");
 
-            if (IsStudioLaunch)
-                return;
-
             var autoclosePids = new List<int>();
 
             // launch custom integrations now
@@ -415,6 +400,27 @@ namespace Bloxstrap
                 if (ipl.IsAcquired)
                     Process.Start(Paths.Process, args);
             }
+
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            bool ElevatedLaunch = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            using var proc = Process.GetProcessById(_appPid);
+            ProcessPriorityClass[] PriorityThing = [
+                ProcessPriorityClass.Idle,
+                ProcessPriorityClass.BelowNormal,
+                ProcessPriorityClass.Normal,
+                ProcessPriorityClass.AboveNormal,
+                ProcessPriorityClass.High,
+                ProcessPriorityClass.RealTime
+            ];
+            if (App.Settings.Prop.ChoosePriorityClass != PriorityClasses.RealTime || (App.Settings.Prop.ChoosePriorityClass == PriorityClasses.RealTime && ElevatedLaunch))
+                proc.PriorityClass = PriorityThing[(int)App.Settings.Prop.ChoosePriorityClass];
+            else
+            {
+                proc.PriorityClass = ProcessPriorityClass.High;
+                App.Logger.WriteLine(LOG_IDENT, $"No ChoosePriorityClass value found or tried to launch with 'RealTime' but is not running bloxstrap as admin!");
+            }
+            App.Logger.WriteLine(LOG_IDENT, $"Launching with priority '{proc.PriorityClass}'");
         }
 
         public void Cancel()
@@ -481,16 +487,13 @@ namespace Bloxstrap
 
             App.Logger.WriteLine(LOG_IDENT, "Checking for updates...");
 
-#if !DEBUG_UPDATER
             var releaseInfo = await App.GetLatestRelease();
 
             if (releaseInfo is null)
                 return false;
 
-            var versionComparison = Utilities.CompareVersions(App.Version, releaseInfo.TagName);
-
             // check if we aren't using a deployed build, so we can update to one if a new version comes out
-            if (App.IsProductionBuild && versionComparison == VersionComparison.Equal || versionComparison == VersionComparison.GreaterThan)
+            if (App.IsActionBuild && App.ShortCommitHash == releaseInfo.TagName)
             {
                 App.Logger.WriteLine(LOG_IDENT, "No updates found");
                 return false;
@@ -499,23 +502,11 @@ namespace Bloxstrap
             if (Dialog is not null)
                 Dialog.CancelEnabled = false;
 
-            string version = releaseInfo.TagName;
-#else
-            string version = App.Version;
-#endif
-
             SetStatus(Strings.Bootstrapper_Status_UpgradingBloxstrap);
 
             try
             {
-#if DEBUG_UPDATER
-                string downloadLocation = Path.Combine(Paths.TempUpdates, "Bloxstrap.exe");
-
-                Directory.CreateDirectory(Paths.TempUpdates);
-
-                File.Copy(Paths.Process, downloadLocation, true);
-#else
-                var asset = releaseInfo.Assets![0];
+                var asset = releaseInfo.Assets![1];
 
                 string downloadLocation = Path.Combine(Paths.TempUpdates, asset.Name);
 
@@ -530,9 +521,8 @@ namespace Bloxstrap
                     await using var fileStream = new FileStream(downloadLocation, FileMode.OpenOrCreate, FileAccess.Write);
                     await response.Content.CopyToAsync(fileStream);
                 }
-#endif
 
-                App.Logger.WriteLine(LOG_IDENT, $"Starting {version}...");
+                App.Logger.WriteLine(LOG_IDENT, $"Starting {releaseInfo.TagName}...");
 
                 ProcessStartInfo startInfo = new()
                 {
@@ -563,7 +553,7 @@ namespace Bloxstrap
                 App.Logger.WriteException(LOG_IDENT, ex);
 
                 Frontend.ShowMessageBox(
-                    string.Format(Strings.Bootstrapper_AutoUpdateFailed, version),
+                    string.Format(Strings.Bootstrapper_AutoUpdateFailed, releaseInfo.TagName),
                     MessageBoxImage.Information
                 );
 
@@ -1070,7 +1060,7 @@ namespace Bloxstrap
 
                         Frontend.ShowConnectivityDialog(
                             Strings.Dialog_Connectivity_UnableToDownload,
-                            String.Format(Strings.Dialog_Connectivity_UnableToDownloadReason, "[https://github.com/bloxstraplabs/bloxstrap/wiki/Bloxstrap-is-unable-to-download-Roblox](https://github.com/bloxstraplabs/bloxstrap/wiki/Bloxstrap-is-unable-to-download-Roblox)"),
+                            String.Format(Strings.Dialog_Connectivity_UnableToDownloadReason, $"[{App.ProjectHelpLink}/Bloxstrap-is-unable-to-download-Roblox]({App.ProjectHelpLink}/Bloxstrap-is-unable-to-download-Roblox)"),
                             MessageBoxImage.Error,
                             ex
                         );

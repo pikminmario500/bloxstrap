@@ -28,5 +28,11 @@
             Description="{Binding Source={x:Static resources:Strings.Menu_Bloxstrap_Analytics_Description}, Converter={StaticResource StringFormatConverter}, ConverterParameter='https://github.com/bloxstraplabs/bloxstrap/wiki/Privacy-Policy#analytical-functionality'}">
             <ui:ToggleSwitch IsChecked="{Binding AnalyticsEnabled, Mode=TwoWay}" />
         </controls:OptionControl>
+
+        <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_Behaviour_UseLogger_Title}"
+            Description="{x:Static resources:Strings.Menu_Behaviour_UseLogger_Description}">
+            <ui:ToggleSwitch IsChecked="{Binding UseLogger, Mode=TwoWay}" />
+        </controls:OptionControl>
     </StackPanel>
 </ui:UiPage>
