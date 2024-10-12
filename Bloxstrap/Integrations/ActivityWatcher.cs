@@ -87,31 +87,49 @@
 
                 App.Logger.WriteLine(LOG_IDENT, "Opening Roblox log file...");
 
-                while (true)
+                string logPath = "";
+
+                // check if log file was created before the tracker launched
+                logFileInfo = new DirectoryInfo(logDirectory)
+                    .GetFiles()
+                    .Where(x => x.Name.Contains("Player", StringComparison.OrdinalIgnoreCase) && x.CreationTime <= DateTime.Now)
+                    .OrderByDescending(x => x.CreationTime)
+                    .First();
+
+                // is 15s too much?
+                if (logFileInfo.CreationTime.AddSeconds(15) < DateTime.Now)
                 {
-                    logFileInfo = new DirectoryInfo(logDirectory)
-                        .GetFiles()
-                        .Where(x => x.Name.Contains("Player", StringComparison.OrdinalIgnoreCase) && x.CreationTime <= DateTime.Now)
-                        .OrderByDescending(x => x.CreationTime)
-                        .First();
+                    // wait for the log file
+                    using (FileSystemWatcher watcher = new FileSystemWatcher())
+                    using (AutoResetEvent waitEvent = new AutoResetEvent(false))
+                    {
+                        watcher.Path = logDirectory;
+                        watcher.Created += (s, e) => logPath = e.FullPath; waitEvent.Set();
+                        watcher.EnableRaisingEvents = true;
 
-                    if (logFileInfo.CreationTime.AddSeconds(15) > DateTime.Now)
-                        break;
+                        App.Logger.WriteLine(LOG_IDENT, "Waiting for log file.");
 
-                    App.Logger.WriteLine(LOG_IDENT, $"Could not find recent enough log file, waiting... (newest is {logFileInfo.Name})");
-                    await Task.Delay(1000);
+                        waitEvent.WaitOne();
+                    }
                 }
+                else
+                {
+                    logPath = logFileInfo.FullName;
+                    App.Logger.WriteLine(LOG_IDENT, "Found recent log file.");
+                }
+
+                App.Logger.WriteLine(LOG_IDENT, $"Got log file: {Path.GetFileName(logPath)}");
 
                 OnLogOpen?.Invoke(this, EventArgs.Empty);
 
-                LogLocation = logFileInfo.FullName;
+                LogLocation = logPath;
             }
             else
             {
                 logFileInfo = new FileInfo(LogLocation);
             }
 
-            var logFileStream = logFileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            var logFileStream = File.Open(LogLocation, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
             App.Logger.WriteLine(LOG_IDENT, $"Opened {LogLocation}");
 
