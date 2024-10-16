@@ -114,15 +114,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All of Bloxstrap&apos;s translations are crowdsourced through [Crowdin]({0}). Everyone listed here are people who generously volunteered their time and effort to help localise Bloxstrap. A massive thank you to everyone here!.
-        /// </summary>
-        public static string About_Translators_Description {
-            get {
-                return ResourceManager.GetString("About.Translators.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Translators.
         /// </summary>
         public static string About_Translators_Title {
@@ -137,15 +128,6 @@ namespace Bloxstrap.Resources {
         public static string ActivityWatcher_LocationQueryFailed {
             get {
                 return ResourceManager.GetString("ActivityWatcher.LocationQueryFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your current game will not show on your Discord presence because an error occurred when loading the game information..
-        /// </summary>
-        public static string ActivityWatcher_RichPresenceLoadFailed {
-            get {
-                return ResourceManager.GetString("ActivityWatcher.RichPresenceLoadFailed", resourceCulture);
             }
         }
         
@@ -2329,24 +2311,6 @@ namespace Bloxstrap.Resources {
         public static string Menu_FastFlags_Help_Description {
             get {
                 return ResourceManager.GetString("Menu.FastFlags.Help.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disabling this will prevent anything configured here from being applied to Roblox..
-        /// </summary>
-        public static string Menu_FastFlags_ManagerEnabled_Description {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.ManagerEnabled.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Allow Bloxstrap to manage Fast Flags.
-        /// </summary>
-        public static string Menu_FastFlags_ManagerEnabled_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.ManagerEnabled.Title", resourceCulture);
             }
         }
         
