@@ -9,7 +9,6 @@
 //------------------------------------------------------------------------------
 
 namespace Bloxstrap.Properties {
-    using System;
     
     
     /// <summary>

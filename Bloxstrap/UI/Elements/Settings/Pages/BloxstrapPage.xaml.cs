@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bloxstrap.UI.ViewModels.Settings;
+﻿using Bloxstrap.UI.ViewModels.Settings;
 
 namespace Bloxstrap.UI.Elements.Settings.Pages
 {

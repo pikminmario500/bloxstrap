@@ -9,7 +9,6 @@
 //------------------------------------------------------------------------------
 
 namespace Bloxstrap.Resources {
-    using System;
     
     
     /// <summary>

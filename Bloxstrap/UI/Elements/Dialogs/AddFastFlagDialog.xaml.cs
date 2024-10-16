@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System.Windows;
-using Bloxstrap.Resources;
 
 namespace Bloxstrap.UI.Elements.Dialogs
 {

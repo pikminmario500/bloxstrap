@@ -1,7 +1,4 @@
-﻿using Bloxstrap.Models.SettingTasks;
-using Bloxstrap.Resources;
-
-namespace Bloxstrap.UI.ViewModels.Settings
+﻿namespace Bloxstrap.UI.ViewModels.Settings
 {
     public class ShortcutsViewModel : NotifyPropertyChangedViewModel
     {

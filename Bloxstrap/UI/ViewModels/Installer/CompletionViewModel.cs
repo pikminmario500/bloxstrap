@@ -1,10 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-
-using Bloxstrap.Resources;
-
-using Microsoft.Win32;
 
 namespace Bloxstrap.UI.ViewModels.Installer
 {

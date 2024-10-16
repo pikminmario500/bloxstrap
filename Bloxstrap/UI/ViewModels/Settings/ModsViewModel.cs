@@ -9,7 +9,6 @@ using Windows.Win32.Foundation;
 
 using CommunityToolkit.Mvvm.Input;
 
-using Bloxstrap.Models.SettingTasks;
 using Bloxstrap.AppData;
 
 namespace Bloxstrap.UI.ViewModels.Settings

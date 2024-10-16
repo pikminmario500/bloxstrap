@@ -1,8 +1,6 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 
-using Bloxstrap.Resources;
-
 namespace Bloxstrap.UI.ViewModels.Dialogs
 {
     public class UninstallerViewModel

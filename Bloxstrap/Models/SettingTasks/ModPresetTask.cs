@@ -1,7 +1,4 @@
-﻿using Bloxstrap.Models.Entities;
-using Bloxstrap.Models.SettingTasks.Base;
-
-namespace Bloxstrap.Models.SettingTasks
+﻿namespace Bloxstrap.Models.SettingTasks
 {
     public class ModPresetTask : BoolBaseTask
     {

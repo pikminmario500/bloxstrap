@@ -6,8 +6,6 @@ using System.Collections.ObjectModel;
 using Wpf.Ui.Mvvm.Contracts;
 
 using Bloxstrap.UI.Elements.Dialogs;
-using Newtonsoft.Json.Linq;
-using System.Xml.Linq;
 
 namespace Bloxstrap.UI.Elements.Settings.Pages
 {

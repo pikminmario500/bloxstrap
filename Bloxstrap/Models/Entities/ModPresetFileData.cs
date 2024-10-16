@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Windows.Markup;
-
-namespace Bloxstrap.Models.Entities
+﻿namespace Bloxstrap.Models.Entities
 {
     public class ModPresetFileData
     {
