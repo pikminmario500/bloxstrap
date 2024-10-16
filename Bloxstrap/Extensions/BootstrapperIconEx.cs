@@ -4,8 +4,8 @@ namespace Bloxstrap.Extensions
 {
     static class BootstrapperIconEx
     {
-        public static IReadOnlyCollection<BootstrapperIcon> Selections => new BootstrapperIcon[]
-        {
+        public static IReadOnlyCollection<BootstrapperIcon> Selections =>
+        [
             BootstrapperIcon.IconBloxstrap,
             BootstrapperIcon.Icon2022,
             BootstrapperIcon.Icon2019,
@@ -15,7 +15,7 @@ namespace Bloxstrap.Extensions
             BootstrapperIcon.Icon2011,
             BootstrapperIcon.Icon2008,
             BootstrapperIcon.IconCustom
-        };
+        ];
 
         // small note on handling icon sizes
         // i'm using multisize icon packs here with sizes 16, 24, 32, 48, 64 and 128

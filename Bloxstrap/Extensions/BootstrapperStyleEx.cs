@@ -4,8 +4,8 @@
     {
         public static IBootstrapperDialog GetNew(this BootstrapperStyle bootstrapperStyle) => Frontend.GetBootstrapperDialog(bootstrapperStyle);
 
-        public static IReadOnlyCollection<BootstrapperStyle> Selections => new BootstrapperStyle[]
-        {
+        public static IReadOnlyCollection<BootstrapperStyle> Selections =>
+        [
             BootstrapperStyle.FluentDialog,
             BootstrapperStyle.FluentAeroDialog,
             BootstrapperStyle.ClassicFluentDialog,
@@ -14,6 +14,6 @@
             BootstrapperStyle.LegacyDialog2011,
             BootstrapperStyle.LegacyDialog2008,
             BootstrapperStyle.VistaDialog
-        };
+        ];
     }
 }
