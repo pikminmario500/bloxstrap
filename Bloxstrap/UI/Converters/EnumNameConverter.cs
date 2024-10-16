@@ -29,7 +29,7 @@ namespace Bloxstrap.UI.Converters
                 }
             }
 
-            return Strings.ResourceManager.GetStringSafe(String.Format(
+            return Strings.ResourceManager.GetStringSafe(string.Format(
                 "{0}.{1}",
                 typeName.Substring(typeName.IndexOf('.', StringComparison.Ordinal) + 1),
                 stringVal

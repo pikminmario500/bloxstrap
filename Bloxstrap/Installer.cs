@@ -91,7 +91,7 @@ namespace Bloxstrap
 
             App.Settings.Prop.EnableAnalytics = EnableAnalytics;
 
-            if (!String.IsNullOrEmpty(App.State.Prop.Studio.VersionGuid))
+            if (!string.IsNullOrEmpty(App.State.Prop.Studio.VersionGuid))
                 WindowsRegistry.RegisterStudio();
 
             App.Settings.Save();
@@ -121,7 +121,7 @@ namespace Bloxstrap
                 return false;
 
             // prevent from installing to an essential user profile folder (e.g. Documents, Downloads, Contacts idk)
-            if (String.Compare(Directory.GetParent(InstallLocation)?.FullName, Paths.UserProfile, StringComparison.InvariantCultureIgnoreCase) == 0)
+            if (string.Compare(Directory.GetParent(InstallLocation)?.FullName, Paths.UserProfile, StringComparison.InvariantCultureIgnoreCase) == 0)
                 return false;
 
             return true;
@@ -147,7 +147,7 @@ namespace Bloxstrap
                     string suggestedChange = Path.Combine(InstallLocation, App.ProjectName);
 
                     MessageBoxResult result = Frontend.ShowMessageBox(
-                        String.Format(Strings.Menu_InstallLocation_NotEmpty, suggestedChange),
+                        string.Format(Strings.Menu_InstallLocation_NotEmpty, suggestedChange),
                         MessageBoxImage.Warning,
                         MessageBoxButton.YesNoCancel,
                         MessageBoxResult.Yes
@@ -178,7 +178,7 @@ namespace Bloxstrap
                 }
             }
 
-            return String.IsNullOrEmpty(InstallLocationError);
+            return string.IsNullOrEmpty(InstallLocationError);
         }
 
         public static void DoUninstall(bool keepData)
@@ -187,10 +187,10 @@ namespace Bloxstrap
 
             var processes = new List<Process>();
             
-            if (!String.IsNullOrEmpty(App.State.Prop.Player.VersionGuid))
+            if (!string.IsNullOrEmpty(App.State.Prop.Player.VersionGuid))
                 processes.AddRange(Process.GetProcessesByName(App.RobloxPlayerAppName));
 
-            if (!String.IsNullOrEmpty(App.State.Prop.Studio.VersionGuid))
+            if (!string.IsNullOrEmpty(App.State.Prop.Studio.VersionGuid))
                 processes.AddRange(Process.GetProcessesByName(App.RobloxStudioAppName));
 
             // prompt to shutdown roblox if its currently running

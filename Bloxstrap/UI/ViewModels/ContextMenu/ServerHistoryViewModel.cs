@@ -12,7 +12,7 @@ namespace Bloxstrap.UI.ViewModels.ContextMenu
 
         public GenericTriState LoadState { get; private set; } = GenericTriState.Unknown;
 
-        public string Error { get; private set; } = String.Empty;
+        public string Error { get; private set; } = string.Empty;
 
         public ICommand CloseWindowCommand => new RelayCommand(RequestClose);
         
@@ -36,7 +36,7 @@ namespace Bloxstrap.UI.ViewModels.ContextMenu
 
             if (entries.Any())
             {
-                string universeIds = String.Join(',', entries.Select(x => x.UniverseId).Distinct());
+                string universeIds = string.Join(',', entries.Select(x => x.UniverseId).Distinct());
 
                 try
                 {

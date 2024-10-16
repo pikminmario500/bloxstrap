@@ -53,7 +53,7 @@
 
         public ActivityWatcher(string? logFile = null)
         {
-            if (!String.IsNullOrEmpty(logFile))
+            if (!string.IsNullOrEmpty(logFile))
                 LogLocation = logFile;
         }
 
@@ -74,7 +74,7 @@
             
             FileInfo logFileInfo;
 
-            if (String.IsNullOrEmpty(LogLocation))
+            if (string.IsNullOrEmpty(LogLocation))
             {
                 string logDirectory = Path.Combine(Paths.LocalAppData, "Roblox\\logs");
 

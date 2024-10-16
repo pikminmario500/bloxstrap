@@ -26,7 +26,7 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
         private void ManageCustomFont()
         {
-            if (!String.IsNullOrEmpty(TextFontTask.NewState))
+            if (!string.IsNullOrEmpty(TextFontTask.NewState))
             {
                 TextFontTask.NewState = "";
             }
@@ -58,9 +58,9 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
         public ICommand OpenModsFolderCommand => new RelayCommand(OpenModsFolder);
 
-        public Visibility ChooseCustomFontVisibility => !String.IsNullOrEmpty(TextFontTask.NewState) ? Visibility.Collapsed : Visibility.Visible;
+        public Visibility ChooseCustomFontVisibility => !string.IsNullOrEmpty(TextFontTask.NewState) ? Visibility.Collapsed : Visibility.Visible;
 
-        public Visibility DeleteCustomFontVisibility => !String.IsNullOrEmpty(TextFontTask.NewState) ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility DeleteCustomFontVisibility => !string.IsNullOrEmpty(TextFontTask.NewState) ? Visibility.Visible : Visibility.Collapsed;
 
         public ICommand ManageCustomFontCommand => new RelayCommand(ManageCustomFont);
 

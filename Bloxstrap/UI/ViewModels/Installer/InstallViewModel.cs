@@ -17,7 +17,7 @@ namespace Bloxstrap.UI.ViewModels.Installer
             get => installer.InstallLocation;
             set
             {
-                if (!String.IsNullOrEmpty(ErrorMessage))
+                if (!string.IsNullOrEmpty(ErrorMessage))
                 {
                     SetCanContinueEvent?.Invoke(this, true);
 

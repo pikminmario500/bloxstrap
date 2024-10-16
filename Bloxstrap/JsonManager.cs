@@ -43,7 +43,7 @@
                     else if (ClassName == nameof(FastFlagManager))
                         message = Strings.JsonManager_FastFlagsLoadFailed;
 
-                    if (!String.IsNullOrEmpty(message))
+                    if (!string.IsNullOrEmpty(message))
                         Frontend.ShowMessageBox($"{message}\n\n{ex.Message}", System.Windows.MessageBoxImage.Warning);
                 }
 

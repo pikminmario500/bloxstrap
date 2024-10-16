@@ -94,7 +94,7 @@
         {
             RobloxLaunchMode = LaunchMode.Player;
 
-            if (!String.IsNullOrEmpty(data))
+            if (!string.IsNullOrEmpty(data))
                 RobloxLaunchArgs = data;
         }
 

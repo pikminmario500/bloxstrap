@@ -73,7 +73,7 @@ namespace Bloxstrap.UI
 
             ShowAlert(
                 title,
-                String.Format(Strings.ContextMenu_ServerInformation_Notification_Text, serverLocation),
+                string.Format(Strings.ContextMenu_ServerInformation_Notification_Text, serverLocation),
                 10,
                 (_, _) => _menuContainer.ShowServerInformationWindow()
             );

@@ -44,7 +44,7 @@ namespace Bloxstrap
         private double _taskbarProgressMaximum;
         private long _totalDownloadedBytes = 0;
 
-        private bool _mustUpgrade => String.IsNullOrEmpty(AppData.State.VersionGuid) || File.Exists(AppData.LockFilePath) || !File.Exists(AppData.ExecutablePath);
+        private bool _mustUpgrade => string.IsNullOrEmpty(AppData.State.VersionGuid) || File.Exists(AppData.LockFilePath) || !File.Exists(AppData.ExecutablePath);
         private bool _noConnection = false;
 
         private AsyncMutex? _mutex;
@@ -117,7 +117,7 @@ namespace Bloxstrap
                 exception = exception.InnerException!;
 
             if (exception.GetType() == typeof(HttpRequestException))
-                message = String.Format(Strings.Dialog_Connectivity_RobloxDown, "[status.roblox.com](https://status.roblox.com)");
+                message = string.Format(Strings.Dialog_Connectivity_RobloxDown, "[status.roblox.com](https://status.roblox.com)");
             else if (exception.GetType() == typeof(TaskCanceledException))
                 message = Strings.Dialog_Connectivity_TimedOut;
 
@@ -127,7 +127,7 @@ namespace Bloxstrap
                 message += $"\n\n{Strings.Dialog_Connectivity_RobloxUpgradeSkip}";
 
             Frontend.ShowConnectivityDialog(
-                String.Format(Strings.Dialog_Connectivity_UnableToConnect, "Roblox"), 
+                string.Format(Strings.Dialog_Connectivity_UnableToConnect, "Roblox"), 
                 message, 
                 _mustUpgrade ? MessageBoxImage.Error : MessageBoxImage.Warning,
                 exception);
@@ -254,12 +254,12 @@ namespace Bloxstrap
             {
                 Deployment.Channel = match.Groups[1].Value.ToLowerInvariant();
             }
-            else if (key.GetValue("www.roblox.com") is string value && !String.IsNullOrEmpty(value))
+            else if (key.GetValue("www.roblox.com") is string value && !string.IsNullOrEmpty(value))
             {
                 Deployment.Channel = value.ToLowerInvariant();
             }
 
-            App.Logger.WriteLine(LOG_IDENT, "Got channel as " + (String.IsNullOrEmpty(Deployment.Channel) ? Deployment.DefaultChannel : Deployment.Channel));
+            App.Logger.WriteLine(LOG_IDENT, "Got channel as " + (string.IsNullOrEmpty(Deployment.Channel) ? Deployment.DefaultChannel : Deployment.Channel));
 
             if (Deployment.Channel != "production")
                 App.SendStat("robloxChannel", Deployment.Channel);
@@ -317,7 +317,7 @@ namespace Bloxstrap
                         _launchCommandLine = _launchCommandLine.Replace("robloxLocale:en_us", $"robloxLocale:{match.Groups[1].Value}", StringComparison.InvariantCultureIgnoreCase);
                 }
 
-                if (!String.IsNullOrEmpty(_launchCommandLine))
+                if (!string.IsNullOrEmpty(_launchCommandLine))
                     _launchCommandLine += " ";
 
                 _launchCommandLine += "-isInstallerLaunch";
@@ -385,7 +385,7 @@ namespace Bloxstrap
 
                 logCreatedEvent.WaitOne(TimeSpan.FromSeconds(5));
 
-                if (String.IsNullOrEmpty(logFileName))
+                if (string.IsNullOrEmpty(logFileName))
                 {
                     App.Logger.WriteLine(LOG_IDENT, "Unable to identify log file");
                     Frontend.ShowPlayerErrorDialog();
@@ -620,7 +620,7 @@ namespace Bloxstrap
         {
             const string LOG_IDENT = "Bootstrapper::UpgradeRoblox";
 
-            if (String.IsNullOrEmpty(AppData.State.VersionGuid))
+            if (string.IsNullOrEmpty(AppData.State.VersionGuid))
                 SetStatus(Strings.Bootstrapper_Status_Installing);
             else
                 SetStatus(Strings.Bootstrapper_Status_Upgrading);
@@ -915,7 +915,7 @@ namespace Bloxstrap
                     continue;
                 }
 
-                if (!App.Settings.Prop.UseFastFlagManager && String.Equals(relativeFile, "ClientSettings\\ClientAppSettings.json", StringComparison.OrdinalIgnoreCase))
+                if (!App.Settings.Prop.UseFastFlagManager && string.Equals(relativeFile, "ClientSettings\\ClientAppSettings.json", StringComparison.OrdinalIgnoreCase))
                     continue;
 
                 if (relativeFile.EndsWith(".lock"))
@@ -952,11 +952,11 @@ namespace Bloxstrap
                 if (modFolderFiles.Contains(fileLocation))
                     continue;
 
-                var packageMapEntry = AppData.PackageDirectoryMap.SingleOrDefault(x => !String.IsNullOrEmpty(x.Value) && fileLocation.StartsWith(x.Value));
+                var packageMapEntry = AppData.PackageDirectoryMap.SingleOrDefault(x => !string.IsNullOrEmpty(x.Value) && fileLocation.StartsWith(x.Value));
                 string packageName = packageMapEntry.Key;
 
                 // package doesn't exist, likely mistakenly placed file
-                if (String.IsNullOrEmpty(packageName))
+                if (string.IsNullOrEmpty(packageName))
                 {
                     App.Logger.WriteLine(LOG_IDENT, $"{fileLocation} was removed as a mod but does not belong to a package");
 
@@ -1111,7 +1111,7 @@ namespace Bloxstrap
 
                         Frontend.ShowConnectivityDialog(
                             Strings.Dialog_Connectivity_UnableToDownload,
-                            String.Format(Strings.Dialog_Connectivity_UnableToDownloadReason, $"[{App.ProjectHelpLink}/Bloxstrap-is-unable-to-download-Roblox]({App.ProjectHelpLink}/Bloxstrap-is-unable-to-download-Roblox)"),
+                            string.Format(Strings.Dialog_Connectivity_UnableToDownloadReason, $"[{App.ProjectHelpLink}/Bloxstrap-is-unable-to-download-Roblox]({App.ProjectHelpLink}/Bloxstrap-is-unable-to-download-Roblox)"),
                             MessageBoxImage.Error,
                             ex
                         );
@@ -1158,7 +1158,7 @@ namespace Bloxstrap
                 foreach (string file in files)
                     regexList.Add("^" + file.Replace("\\", "\\\\") + "$");
 
-                fileFilter = String.Join(';', regexList);
+                fileFilter = string.Join(';', regexList);
             }
 
             App.Logger.WriteLine(LOG_IDENT, $"Extracting {package.Name}...");

@@ -19,9 +19,9 @@
 
         public override void Execute()
         {
-            if (!String.IsNullOrEmpty(NewState))
+            if (!string.IsNullOrEmpty(NewState))
             {
-                if (String.Compare(NewState, Paths.CustomFont, StringComparison.InvariantCultureIgnoreCase) != 0 && File.Exists(NewState))
+                if (string.Compare(NewState, Paths.CustomFont, StringComparison.InvariantCultureIgnoreCase) != 0 && File.Exists(NewState))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(Paths.CustomFont)!);
 

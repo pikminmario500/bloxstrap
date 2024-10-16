@@ -27,27 +27,27 @@ namespace Bloxstrap.UI.Elements.Dialogs
             string repoUrl = $"https://github.com/{App.ProjectRepository}";
             string wikiUrl = App.ProjectHelpLink;
 
-            string issueUrl = String.Format(
+            string issueUrl = string.Format(
                 "{0}/issues/new?template=bug_report.yaml&title={1}&log={2}",
                 repoUrl,
                 HttpUtility.UrlEncode($"[BUG] {exception.GetType()}: {exception.Message}"),
-                HttpUtility.UrlEncode(String.Join('\n', App.Logger.History))
+                HttpUtility.UrlEncode(string.Join('\n', App.Logger.History))
             );
 
-            string helpMessage = String.Format(Strings.Dialog_Exception_Info_2, wikiUrl, issueUrl);
+            string helpMessage = string.Format(Strings.Dialog_Exception_Info_2, wikiUrl, issueUrl);
 
             if (!App.IsActionBuild && !App.BuildMetadata.Machine.Contains("pizzaboxer", StringComparison.Ordinal))
-                helpMessage = String.Format(Strings.Dialog_Exception_Info_2_Alt, wikiUrl);
+                helpMessage = string.Format(Strings.Dialog_Exception_Info_2_Alt, wikiUrl);
 
             HelpMessageMDTextBlock.MarkdownText = helpMessage;
             ReportExceptionButton.Click += (_, _) => Utilities.ShellExecute(issueUrl);
 
             LocateLogFileButton.Click += delegate
             {
-                if (App.Logger.Initialized && !String.IsNullOrEmpty(App.Logger.FileLocation))
+                if (App.Logger.Initialized && !string.IsNullOrEmpty(App.Logger.FileLocation))
                     Utilities.ShellExecute(App.Logger.FileLocation);
                 else
-                    Clipboard.SetDataObject(String.Join("\r\n", App.Logger.History));
+                    Clipboard.SetDataObject(string.Join("\r\n", App.Logger.History));
             };
 
             CloseButton.Click += delegate

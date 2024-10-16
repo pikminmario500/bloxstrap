@@ -293,7 +293,7 @@ namespace Bloxstrap.Integrations
 
                 if (data.ServerType == ServerType.Public)
                     show = true;
-                else if (data.ServerType == ServerType.Reserved && !String.IsNullOrEmpty(data.RPCLaunchData))
+                else if (data.ServerType == ServerType.Reserved && !string.IsNullOrEmpty(data.RPCLaunchData))
                     show = true;
 
                 if (show)

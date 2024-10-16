@@ -56,7 +56,7 @@
                     WriteLine(LOG_IDENT, $"Failed to initialize because Bloxstrap cannot write to {directory}");
 
                     Frontend.ShowMessageBox(
-                        String.Format(Strings.Logger_NoWriteMode, directory), 
+                        string.Format(Strings.Logger_NoWriteMode, directory), 
                         System.Windows.MessageBoxImage.Warning, 
                         System.Windows.MessageBoxButton.OK
                     );

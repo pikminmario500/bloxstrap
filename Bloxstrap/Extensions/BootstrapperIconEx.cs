@@ -31,7 +31,7 @@ namespace Bloxstrap.Extensions
                 Icon? customIcon = null;
                 string location = App.Settings.Prop.BootstrapperIconCustomLocation;
 
-                if (String.IsNullOrEmpty(location)) 
+                if (string.IsNullOrEmpty(location)) 
                 {
                     App.Logger.WriteLine(LOG_IDENT, "Warning: custom icon is not set.");
                 }

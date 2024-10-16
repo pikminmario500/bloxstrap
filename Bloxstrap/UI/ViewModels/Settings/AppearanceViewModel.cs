@@ -100,7 +100,7 @@ namespace Bloxstrap.UI.ViewModels.Settings
             get => App.Settings.Prop.BootstrapperIconCustomLocation;
             set
             {
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     if (App.Settings.Prop.BootstrapperIcon == BootstrapperIcon.IconCustom)
                         App.Settings.Prop.BootstrapperIcon = BootstrapperIcon.IconBloxstrap;

@@ -34,7 +34,7 @@
         {
             // wouldnt it be better to check old version guids?
             // what about fresh installs?
-            get => String.IsNullOrEmpty(App.State.Prop.Player.VersionGuid) && String.IsNullOrEmpty(App.State.Prop.Studio.VersionGuid);
+            get => string.IsNullOrEmpty(App.State.Prop.Player.VersionGuid) && string.IsNullOrEmpty(App.State.Prop.Studio.VersionGuid);
             set
             {
                 if (value)

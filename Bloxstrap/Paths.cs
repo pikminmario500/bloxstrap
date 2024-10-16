@@ -27,7 +27,7 @@
 
         public static string CustomFont => Path.Combine(Modifications, "content\\fonts\\CustomFont.ttf");
 
-        public static bool Initialized => !String.IsNullOrEmpty(Base);
+        public static bool Initialized => !string.IsNullOrEmpty(Base);
 
         public static void Initialize(string baseDirectory)
         {

@@ -10,7 +10,7 @@
 
         public static string BinaryType = "WindowsPlayer";
 
-        public static bool IsDefaultChannel => String.Compare(Channel, DefaultChannel, StringComparison.OrdinalIgnoreCase) == 0;
+        public static bool IsDefaultChannel => string.Compare(Channel, DefaultChannel, StringComparison.OrdinalIgnoreCase) == 0;
         
         public static string BaseUrl { get; private set; } = null!;
         
@@ -78,7 +78,7 @@
 
             App.Logger.WriteLine(LOG_IDENT, "Testing connectivity...");
 
-            while (tasks.Any() && String.IsNullOrEmpty(BaseUrl))
+            while (tasks.Any() && string.IsNullOrEmpty(BaseUrl))
             {
                 var finishedTask = await Task.WhenAny(tasks);
 
@@ -130,10 +130,10 @@
         {
             const string LOG_IDENT = "Deployment::GetInfo";
 
-            if (String.IsNullOrEmpty(channel))
+            if (string.IsNullOrEmpty(channel))
                 channel = Channel;
 
-            bool isDefaultChannel = String.Compare(channel, DefaultChannel, StringComparison.OrdinalIgnoreCase) == 0;
+            bool isDefaultChannel = string.Compare(channel, DefaultChannel, StringComparison.OrdinalIgnoreCase) == 0;
 
             App.Logger.WriteLine(LOG_IDENT, $"Getting deploy info for channel {channel}");
 

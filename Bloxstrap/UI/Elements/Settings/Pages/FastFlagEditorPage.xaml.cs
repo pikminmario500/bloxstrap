@@ -198,7 +198,7 @@ namespace Bloxstrap.UI.Elements.Settings.Pages
             catch (Exception ex)
             {
                 Frontend.ShowMessageBox(                    
-                    String.Format(Strings.Menu_FastFlagEditor_InvalidJSON, ex.Message),
+                    string.Format(Strings.Menu_FastFlagEditor_InvalidJSON, ex.Message),
                     MessageBoxImage.Error
                 );
 
@@ -226,10 +226,10 @@ namespace Bloxstrap.UI.Elements.Settings.Pages
             {
                 int count = conflictingFlags.Count();
 
-                string message = String.Format(
+                string message = string.Format(
                     Strings.Menu_FastFlagEditor_ConflictingImport,
                     count,
-                    String.Join(", ", conflictingFlags.Take(25))
+                    string.Join(", ", conflictingFlags.Take(25))
                 );
 
                 if (count > 25)
@@ -279,9 +279,9 @@ namespace Bloxstrap.UI.Elements.Settings.Pages
             else if ((name.StartsWith("FFlag") || name.StartsWith("DFFlag")) && lowerValue != "true" && lowerValue != "false")
                 errorMessage = Strings.Menu_FastFlagEditor_InvalidBoolValue;
             
-            if (!String.IsNullOrEmpty(errorMessage))
+            if (!string.IsNullOrEmpty(errorMessage))
             { 
-                Frontend.ShowMessageBox(String.Format(errorMessage, name), MessageBoxImage.Error);
+                Frontend.ShowMessageBox(string.Format(errorMessage, name), MessageBoxImage.Error);
                 return false;
             }
 

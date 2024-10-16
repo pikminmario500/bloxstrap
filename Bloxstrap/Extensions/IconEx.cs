@@ -22,7 +22,7 @@ namespace Bloxstrap.Extensions
                 catch (Exception ex)
                 {
                     App.Logger.WriteException("IconEx::GetImageSource", ex);
-                    Frontend.ShowMessageBox(String.Format(Strings.Dialog_IconLoadFailed, ex.Message));
+                    Frontend.ShowMessageBox(string.Format(Strings.Dialog_IconLoadFailed, ex.Message));
                     return BootstrapperIcon.IconBloxstrap.GetIcon().GetImageSource(false);
                 }
             }

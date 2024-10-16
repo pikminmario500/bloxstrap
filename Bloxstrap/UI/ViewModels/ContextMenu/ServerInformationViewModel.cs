@@ -31,7 +31,7 @@ namespace Bloxstrap.UI.ViewModels.ContextMenu
         {
             string? location = await _activityWatcher.Data.QueryServerLocation();
 
-            if (String.IsNullOrEmpty(location))
+            if (string.IsNullOrEmpty(location))
                 ServerLocation = Strings.Common_NotAvailable;
             else
                 ServerLocation = location;

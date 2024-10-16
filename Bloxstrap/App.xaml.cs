@@ -37,7 +37,7 @@ namespace Bloxstrap
 
         public static string ShortCommitHash = BuildMetadata.CommitHash[..7];
 
-        public static bool IsActionBuild => !String.IsNullOrEmpty(BuildMetadata.CommitRef);
+        public static bool IsActionBuild => !string.IsNullOrEmpty(BuildMetadata.CommitRef);
 
         public static readonly MD5 MD5Provider = MD5.Create();
 
