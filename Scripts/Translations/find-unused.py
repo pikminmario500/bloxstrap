@@ -2,6 +2,8 @@ import re, glob
 
 directory = input("Enter project path (the one containing Bloxstrap.csproj): ")
 
+print()
+
 existing = []
 found = []
 
@@ -32,8 +34,12 @@ for filename in glob.glob(f"{directory}\\**\\*.*", recursive=True):
 
 	except Exception:
 		print(f"Could not open {filename}")
+		print()
 		continue
 
 for entry in existing:
 	if not entry in found and not "Enums." in entry:
 		print(entry)
+
+print()
+input("Press Enter to continue...")
