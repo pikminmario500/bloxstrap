@@ -112,6 +112,15 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("About.Title", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to All of Bloxstrap&apos;s translations are crowdsourced through [Crowdin]({0}). Everyone listed here are people who generously volunteered their time and effort to help localise Bloxstrap. A massive thank you to everyone here!.
+        /// </summary>
+        public static string About_Translators_Description {
+            get {
+                return ResourceManager.GetString("About.Translators.Description", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Translators.
@@ -128,6 +137,15 @@ namespace Bloxstrap.Resources {
         public static string ActivityWatcher_LocationQueryFailed {
             get {
                 return ResourceManager.GetString("ActivityWatcher.LocationQueryFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your current game will not show on your Discord presence because an error occurred when loading the game information..
+        /// </summary>
+        public static string ActivityWatcher_RichPresenceLoadFailed {
+            get {
+                return ResourceManager.GetString("ActivityWatcher.RichPresenceLoadFailed", resourceCulture);
             }
         }
         
