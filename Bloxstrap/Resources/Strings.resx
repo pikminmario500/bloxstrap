@@ -1281,4 +1281,7 @@ Would you like to enable test mode?</value>
   <data name="Menu.Behaviour.UseLogger.Description" xml:space="preserve">
     <value>Allow Bloxstrap to write logs for troubleshooting purposes.</value>
   </data>
+  <data name="Dialog.Exception.Version" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
 </root>
