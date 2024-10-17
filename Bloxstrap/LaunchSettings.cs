@@ -43,6 +43,10 @@
         {
             const string LOG_IDENT = "LaunchSettings";
 
+#if DEBUG
+            App.Logger.WriteLine(LOG_IDENT, $"Launched with arguments: {string.Join(' ', args)}");
+#endif
+
             Args = args;
 
             // build flag map
@@ -102,7 +106,23 @@
         {
             RobloxLaunchMode = LaunchMode.Studio;
 
-            // TODO: do this later
+            if (string.IsNullOrEmpty(data))
+                return;
+
+            if (data.StartsWith("roblox-studio:"))
+            {
+                RobloxLaunchArgs = data;
+            }
+            else if (data.StartsWith("roblox-studio-auth:"))
+            {
+                RobloxLaunchMode = LaunchMode.StudioAuth;
+                RobloxLaunchArgs = data;
+            }
+            else
+            {
+                // likely a local path
+                RobloxLaunchArgs = $"-task EditFile -localPlaceFile \"{data}\"";
+            }
         }
     }
 }

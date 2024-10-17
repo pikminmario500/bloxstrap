@@ -39,6 +39,8 @@ namespace Bloxstrap
 
         public static bool IsActionBuild => !string.IsNullOrEmpty(BuildMetadata.CommitRef);
 
+        public static bool IsStudioVisible => !string.IsNullOrEmpty(State.Prop.Studio.VersionGuid);
+
         public static readonly MD5 MD5Provider = MD5.Create();
 
         public static readonly Logger Logger = new();

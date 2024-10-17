@@ -1224,6 +1224,9 @@ Would you like to enable test mode?</value>
     <value>Icons</value>
     <comment>Name of the folder that gets created according to the "create shortcut icons" option. Ensure that it is a valid folder name.</comment>
   </data>
+  <data name="LaunchMenu.LaunchRobloxStudio" xml:space="preserve">
+    <value>Launch Roblox Studio</value>
+  </data>
   <data name="Menu.Behaviour.SoftwareRendering.Title" xml:space="preserve">
     <value>Software Rendering</value>
   </data>
@@ -1247,9 +1250,6 @@ Would you like to enable test mode?</value>
   </data>
   <data name="Menu.FastFlags.Presets.ForceLowQuality.Title" xml:space="preserve">
     <value>Force low quality</value>
-  </data>
-  <data name="LaunchMenu.LaunchRobloxStudio" xml:space="preserve">
-    <value>Launch Roblox Studio</value>
   </data>
   <data name="Menu.Behaviour.ChangePriorityClass.Title" xml:space="preserve">
     <value>Set priority</value>

@@ -1612,6 +1612,15 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Launch Roblox Studio.
+        /// </summary>
+        public static string LaunchMenu_LaunchRobloxStudio {
+            get {
+                return ResourceManager.GetString("LaunchMenu.LaunchRobloxStudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to See the Wiki for help.
         /// </summary>
         public static string LaunchMenu_Wiki_Description {
@@ -3220,6 +3229,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.Behaviour.SoftwareRendering.Description", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Software Rendering.
         /// </summary>
@@ -3228,6 +3238,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.Behaviour.SoftwareRendering.Title", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Metal.
         /// </summary>
@@ -3236,6 +3247,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Metal", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to OpenGL.
         /// </summary>
@@ -3244,6 +3256,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.OpenGL", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Vulkan.
         /// </summary>
@@ -3252,6 +3265,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.FlagPresets.RenderingMode.Vulkan", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Preloads fonts before usage..
         /// </summary>
@@ -3260,6 +3274,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Description", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Preload fonts.
         /// </summary>
@@ -3268,6 +3283,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.PreloadFonts.Title", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Force low quality.
         /// </summary>
@@ -3276,14 +3292,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.ForceLowQuality.Title", resourceCulture);
             }
         }
-        /// <summary>
-        ///   Looks up a localized string similar to Launch Roblox Studio.
-        /// </summary>
-        public static string LaunchMenu_LaunchRobloxStudio {
-            get {
-                return ResourceManager.GetString("LaunchMenu.LaunchRobloxStudio", resourceCulture);
-            }
-        }
+
         /// <summary>
         ///   Looks up a localized string similar to Change the priority class Roblox uses..
         /// </summary>
@@ -3292,6 +3301,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.Behaviour.ChangePriorityClass.Description", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Set priority.
         /// </summary>
@@ -3300,6 +3310,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.Behaviour.ChangePriorityClass.Title", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Low.
         /// </summary>
@@ -3308,6 +3319,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.PriorityClasses.Idle", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Below normal.
         /// </summary>
@@ -3316,6 +3328,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.PriorityClasses.BelowNormal", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Normal.
         /// </summary>
@@ -3324,6 +3337,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.PriorityClasses.Normal", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Above normal.
         /// </summary>
@@ -3332,6 +3346,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.PriorityClasses.AboveNormal", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to High.
         /// </summary>
@@ -3340,6 +3355,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.PriorityClasses.High", resourceCulture);
             }
         }
+
         /// <summary>
         ///   Looks up a localized string similar to Realtime.
         /// </summary>
@@ -3348,6 +3364,7 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.PriorityClasses.RealTime", resourceCulture);
             }
         }
+        
         /// <summary>
         ///   Looks up a localized string similar to Allow Bloxstrap to write logs for troubleshooting purposes..
         /// </summary>
