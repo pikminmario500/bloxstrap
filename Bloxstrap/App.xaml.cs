@@ -38,8 +38,6 @@ namespace Bloxstrap
 
         public static Bootstrapper? Bootstrapper { get; set; } = null!;
 
-        public static Bootstrapper? Bootstrapper { get; set; } = null!;
-
         public static string ShortCommitHash = BuildMetadata.CommitHash[..7];
 
         public static bool IsActionBuild => !string.IsNullOrEmpty(BuildMetadata.CommitRef);
