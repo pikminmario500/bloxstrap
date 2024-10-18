@@ -21,7 +21,7 @@
 	        catch (Exception ex)
 	        {
 		        App.Logger.WriteLine($"{LOG_IDENT}BadPath", $"The path: {path} does not contain a valid drive info.");
-			    App.Logger.WriteException($"{LOG_IDENT}PadPath", ex);
+			    App.Logger.WriteException($"{LOG_IDENT}BadPath", ex);
 
 		        return -1;
 	        }
