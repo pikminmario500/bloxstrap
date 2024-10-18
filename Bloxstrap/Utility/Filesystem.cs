@@ -8,7 +8,7 @@
             {
                 var isUri = Uri.TryCreate(p, UriKind.RelativeOrAbsolute, out var u);
 
-    			if (!Path.IsPathRooted(p) || !Path.IsPathFullyQualified(p) || (isUri && (u?.IsUnc??false)))
+    		if (!Path.IsPathRooted(p) || !Path.IsPathFullyQualified(p) || (isUri && (u?.IsUnc??false)))
                 {
                     return -1;
                 }
