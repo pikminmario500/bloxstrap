@@ -20,7 +20,7 @@
 	        {
 		        App.Logger.WriteLine("Filesystem::BadPath", $"The path: {p} does not contain a valid drive info.");
 
-		        return -1
+		        return -1;
 	        }
         }
 
