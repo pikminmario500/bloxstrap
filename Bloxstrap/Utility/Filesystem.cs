@@ -6,19 +6,20 @@
         {
             try
             {
-                var isUri = Uri.TryCreate(p, UriKind.RelativeOrAbsolute, out var u);
+                var isUri = Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var u);
 
-    		if (!Path.IsPathRooted(p) || !Path.IsPathFullyQualified(p) || (isUri && (u?.IsUnc??false)))
+    		if (!Path.IsPathRooted(path) || !Path.IsPathFullyQualified(path) || (isUri && (u?.IsUnc??false)))
                 {
                     return -1;
                 }
 
-                var drive = new DriveInfo(p);
+                var drive = new DriveInfo(path);
                 return drive.AvailableFreeSpace;
             }
-	        catch (ArgumentException e)
+	        catch (ArgumentException ex)
 	        {
-		        App.Logger.WriteLine("Filesystem::BadPath", $"The path: {p} does not contain a valid drive info.");
+		        App.Logger.WriteLine("Filesystem::BadPath", $"The path: {path} does not contain a valid drive info.");
+			App.Logger.WriteException("Filesystem::BadPath", ex);
 
 		        return -1;
 	        }
