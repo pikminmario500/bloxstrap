@@ -455,22 +455,14 @@ namespace Bloxstrap
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
             WindowsPrincipal principal = new WindowsPrincipal(identity);
             bool ElevatedLaunch = principal.IsInRole(WindowsBuiltInRole.Administrator);
+
             using var proc = Process.GetProcessById(_appPid);
-            ProcessPriorityClass[] PriorityThing = [
-                ProcessPriorityClass.Idle,
-                ProcessPriorityClass.BelowNormal,
-                ProcessPriorityClass.Normal,
-                ProcessPriorityClass.AboveNormal,
-                ProcessPriorityClass.High,
-                ProcessPriorityClass.RealTime
-            ];
+
             if (App.Settings.Prop.ChoosePriorityClass != PriorityClasses.RealTime || (App.Settings.Prop.ChoosePriorityClass == PriorityClasses.RealTime && ElevatedLaunch))
-                proc.PriorityClass = PriorityThing[(int)App.Settings.Prop.ChoosePriorityClass];
+                proc.PriorityClass = App.Settings.Prop.ChoosePriorityClass.ToProcessPriorityClass();
             else
-            {
-                proc.PriorityClass = ProcessPriorityClass.High;
-                App.Logger.WriteLine(LOG_IDENT, $"No ChoosePriorityClass value found or tried to launch with 'RealTime' but is not running bloxstrap as admin!");
-            }
+                App.Logger.WriteLine(LOG_IDENT, "Tried to launch with 'RealTime' but is not running Bloxstrap as admin!");
+
             App.Logger.WriteLine(LOG_IDENT, $"Launching with priority '{proc.PriorityClass}'");
         }
 
