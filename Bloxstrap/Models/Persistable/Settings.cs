@@ -17,6 +17,7 @@ namespace Bloxstrap.Models.Persistable
         public bool UseFastFlagManager { get; set; } = true;
         public bool WPFSoftwareRender { get; set; } = false;
         public bool EnableAnalytics { get; set; } = true;
+        public string? SelectedCustomTheme { get; set; } = null;
         public PriorityClasses ChoosePriorityClass { get; set; } = PriorityClasses.Normal;
         public bool UseLogger { get; set; } = true;
 
