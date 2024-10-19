@@ -458,7 +458,7 @@ namespace Bloxstrap
 
             using var proc = Process.GetProcessById(_appPid);
 
-            if (App.Settings.Prop.ChoosePriorityClass != PriorityClasses.RealTime || (App.Settings.Prop.ChoosePriorityClass == PriorityClasses.RealTime && ElevatedLaunch))
+            if (App.Settings.Prop.ChoosePriorityClass != PriorityClasses.RealTime || ElevatedLaunch)
                 proc.PriorityClass = App.Settings.Prop.ChoosePriorityClass.ToProcessPriorityClass();
             else
                 App.Logger.WriteLine(LOG_IDENT, "Tried to launch with 'RealTime' but is not running Bloxstrap as admin!");
