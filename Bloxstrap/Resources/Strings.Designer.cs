@@ -2870,7 +2870,7 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Font size can be adjusted in the Fast Flags tab..
+        ///   Looks up a localized string similar to Font size can be adjusted in the Engine Settings tab..
         /// </summary>
         public static string Menu_Mods_Misc_CustomFont_Description {
             get {
