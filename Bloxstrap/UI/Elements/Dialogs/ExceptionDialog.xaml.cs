@@ -28,15 +28,16 @@ namespace Bloxstrap.UI.Elements.Dialogs
             string wikiUrl = App.ProjectHelpLink;
 
             string issueUrl = string.Format(
-                "{0}/issues/new?template=bug_report.yaml&title={1}&log={2}",
+                "{0}/issues/new?template=bug_report.yaml&title={1}&input={2}&log={3}",
                 repoUrl,
                 HttpUtility.UrlEncode($"[BUG] {exception.GetType()}: {exception.Message}"),
+                HttpUtility.UrlEncode(App.ShortCommitHash),
                 HttpUtility.UrlEncode(string.Join('\n', App.Logger.History))
             );
 
             string helpMessage = string.Format(Strings.Dialog_Exception_Info_2, wikiUrl, issueUrl);
 
-            if (!App.IsActionBuild && !App.BuildMetadata.Machine.Contains("pizzaboxer", StringComparison.Ordinal))
+            if (!App.IsActionBuild)
                 helpMessage = string.Format(Strings.Dialog_Exception_Info_2_Alt, wikiUrl);
 
             HelpMessageMDTextBlock.MarkdownText = helpMessage;
