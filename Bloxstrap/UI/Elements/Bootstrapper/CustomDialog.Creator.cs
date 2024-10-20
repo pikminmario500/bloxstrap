@@ -5,7 +5,10 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
+
 using Wpf.Ui.Markup;
+
+using Bloxstrap.UI.Elements.Controls;
 
 namespace Bloxstrap.UI.Elements.Bootstrapper
 {
@@ -36,6 +39,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             ["Button"] = HandleXmlElement_Button,
             ["ProgressBar"] = HandleXmlElement_ProgressBar,
             ["TextBlock"] = HandleXmlElement_TextBlock,
+            ["MarkdownTextBlock"] = HandleXmlElement_MarkdownTextBlock,
             ["Image"] = HandleXmlElement_Image
         };
 
@@ -225,6 +229,30 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             }
         }
 
+        private static TextDecorationCollection? GetTextDecorationsFromXElement(XElement element)
+        {
+            string? value = element.Attribute("TextDecorations")?.Value?.ToString();
+            if (string.IsNullOrEmpty(value))
+                return null;
+            switch (value)
+            {
+                case "Baseline":
+                    return TextDecorations.Baseline;
+
+                case "OverLine":
+                    return TextDecorations.OverLine;
+
+                case "Strikethrough":
+                    return TextDecorations.Strikethrough;
+
+                case "Underline":
+                    return TextDecorations.Underline;
+
+                default:
+                    throw new Exception($"{element.Name} Unknown TextDecorations {value}");
+            }
+        }
+
         /// <summary>
         /// Return type of string = Name of DynamicResource
         /// Return type of brush = ... The Brush!!!
@@ -335,6 +363,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             uiElement.Name = name;
 
             uiElement.Visibility = ParseXmlAttribute<Visibility>(xmlElement, "Visibility", Visibility.Visible);
+            uiElement.IsEnabled = ParseXmlAttribute<bool>(xmlElement, "IsEnabled", true);
 
             object? margin = GetThicknessFromXElement(xmlElement, "Margin");
             if (margin != null)
@@ -363,7 +392,6 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             if (borderThickness != null)
                 uiElement.BorderThickness = (Thickness)borderThickness;
 
-            // TODO: this isn't working for BloxstrapCustomBootstrapper. likely because of wpf.ui's themeservice.
             object? foregroundBrush = GetBrushFromXElement(xmlElement, "Background");
             if (foregroundBrush is Brush)
                 uiElement.Background = (Brush)foregroundBrush;
@@ -380,6 +408,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         private static void HandleXmlElement_BloxstrapCustomBootstrapper(CustomDialog dialog, XElement xmlElement)
         {
             xmlElement.SetAttributeValue("Visibility", "Collapsed"); // don't show the bootstrapper yet!!!
+            xmlElement.SetAttributeValue("IsEnabled", "True");
             HandleXmlElement_Control(dialog, dialog, xmlElement);
 
             var theme = ParseXmlAttribute<Theme>(xmlElement, "Theme", Theme.Default);
@@ -392,14 +421,12 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
 
             dialog.Margin = new Thickness(0, 0, 0, 0);
             dialog.Padding = new Thickness(0, 0, 0, 0);
-
-            dialog.MaxHeight = dialog.Height;
-            dialog.MaxWidth = dialog.Width;
         }
 
         private static void HandleXmlElement_TitleBar(CustomDialog dialog, XElement xmlElement)
         {
             xmlElement.SetAttributeValue("Name", "TitleBar"); // prevent two titlebars from existing
+            xmlElement.SetAttributeValue("IsEnabled", "True");
             HandleXmlElement_Control(dialog, dialog.RootTitleBar, xmlElement);
 
             Panel.SetZIndex(dialog.RootTitleBar, 1001); // always show above others
@@ -466,9 +493,8 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             dialog.ElementGrid.Children.Add(progressBar);
         }
 
-        private static void HandleXmlElement_TextBlock(CustomDialog dialog, XElement xmlElement)
+        private static void HandleXmlElement_TextBlock_Base(CustomDialog dialog, TextBlock textBlock, XElement xmlElement)
         {
-            var textBlock = new TextBlock();
             HandleXmlElement_FrameworkElement(dialog, textBlock, xmlElement);
 
             textBlock.Text = xmlElement.Attribute("Text")?.Value;
@@ -483,7 +509,20 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             textBlock.FontWeight = GetFontWeightFromXElement(xmlElement);
             textBlock.FontStyle = GetFontStyleFromXElement(xmlElement);
 
+            textBlock.LineHeight = ParseXmlAttribute<double>(xmlElement, "LineHeight", double.NaN);
+            textBlock.LineStackingStrategy = ParseXmlAttribute<LineStackingStrategy>(xmlElement, "LineStackingStrategy", LineStackingStrategy.MaxHeight);
+
             textBlock.TextAlignment = ParseXmlAttribute<TextAlignment>(xmlElement, "TextAlignment", TextAlignment.Center);
+            textBlock.TextTrimming = ParseXmlAttribute<TextTrimming>(xmlElement, "TextTrimming", TextTrimming.None);
+            textBlock.TextWrapping = ParseXmlAttribute<TextWrapping>(xmlElement, "TextWrapping", TextWrapping.NoWrap);
+            textBlock.TextDecorations = GetTextDecorationsFromXElement(xmlElement);
+
+            textBlock.IsHyphenationEnabled = ParseXmlAttribute<bool>(xmlElement, "IsHyphenationEnabled", false);
+            textBlock.BaselineOffset = ParseXmlAttribute<double>(xmlElement, "BaselineOffset", double.NaN);
+
+            object? padding = GetThicknessFromXElement(xmlElement, "Padding");
+            if (padding != null)
+                textBlock.Padding = (Thickness)padding;
 
             if (xmlElement.Attribute("Name")?.Value == "StatusText")
             {
@@ -492,6 +531,24 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             }
 
             ApplyTransformations_UIElement(textBlock, xmlElement);
+        }
+
+        private static void HandleXmlElement_TextBlock(CustomDialog dialog, XElement xmlElement)
+        {
+            var textBlock = new TextBlock();
+            HandleXmlElement_TextBlock_Base(dialog, textBlock, xmlElement);
+
+            dialog.ElementGrid.Children.Add(textBlock);
+        }
+
+        private static void HandleXmlElement_MarkdownTextBlock(CustomDialog dialog, XElement xmlElement)
+        {
+            var textBlock = new MarkdownTextBlock();
+            HandleXmlElement_TextBlock_Base(dialog, textBlock, xmlElement);
+
+            string? text = xmlElement.Attribute("Text")?.Value;
+            if (text != null)
+                textBlock.MarkdownText = text;
 
             dialog.ElementGrid.Children.Add(textBlock);
         }
