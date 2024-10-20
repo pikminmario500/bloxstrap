@@ -4,7 +4,8 @@ using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 
-using Bloxstrap.UI.Elements.Base;using Bloxstrap.UI.ViewModels.Editor;
+using Bloxstrap.UI.Elements.Base;
+using Bloxstrap.UI.ViewModels.Editor;
 
 namespace Bloxstrap.UI.Elements.Editor
 {
