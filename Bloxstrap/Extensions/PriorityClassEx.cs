@@ -6,8 +6,8 @@ namespace Bloxstrap.Extensions
         {
             PriorityClasses.Idle => ProcessPriorityClass.Idle,
             PriorityClasses.BelowNormal => ProcessPriorityClass.BelowNormal,
-            PriorityClasses.Normal => ProcessPriorityClass.AboveNormal,
-            PriorityClasses.AboveNormal => ProcessPriorityClass.Normal,
+            PriorityClasses.Normal => ProcessPriorityClass.Normal,
+            PriorityClasses.AboveNormal => ProcessPriorityClass.AboveNormal,
             PriorityClasses.High => ProcessPriorityClass.High,
             PriorityClasses.RealTime => ProcessPriorityClass.RealTime,
             _ => ProcessPriorityClass.Normal
