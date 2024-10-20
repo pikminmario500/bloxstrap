@@ -89,7 +89,7 @@
 			"Attributes": {
 				"Stretch": "Stretch",
 				"StretchDirection": "StretchDirection",
-				"Source": "string",
+				"Source": "ImageSource",
 				"IsAnimated": "bool"
 			}
 		},
@@ -126,13 +126,20 @@
 				"Y": "double"
 			}
 		},
-		"RenderTransform": {
+		"ImageBrush": {
 			"IsCreatable": true,
-			"Attributes": {}
-		},
-		"Content": {
-			"IsCreatable": true,
-			"Attributes": {}
+			"Attributes": {
+				"AlignmentX": "AlignmentX",
+				"AlignmentY": "AlignmentY",
+				"Opacity": "double",
+				"Stretch": "Stretch",
+				"TileMode": "TileMode",
+				"ViewboxUnits": "BrushMappingMode",
+				"ViewportUnits": "BrushMappingMode",
+				"Viewbox": "Rect",
+				"Viewport": "Rect",
+				"ImageSource": "ImageSource"
+			}
 		}
 	},
 	"Types": {
@@ -146,8 +153,10 @@
 		"int": {},
 		"double": {},
 		"Thickness": {},
+		"Rect": {},
 		"Brush": {},
 		"Content": {},
+		"ImageSource": {},
 		"Visibility": {
 			"Values": [
 				"Visible",
@@ -245,6 +254,35 @@
 				"UpOnly",
 				"DownOnly",
 				"Both"
+			]
+		},
+		"AlignmentX": {
+			"Values": [
+				"Left",
+				"Center",
+				"Right"
+			]
+		},
+		"AlignmentY": {
+			"Values": [
+				"Top",
+				"Center",
+				"Bottom"
+			]
+		},
+		"TileMode": {
+			"Values": [
+				"None",
+				"FlipX",
+				"FlipY",
+				"FlipXY",
+				"Tile"
+			]
+		},
+		"BrushMappingMode": {
+			"Values": [
+				"Absolute",
+				"RelativeToBoundingBox"
 			]
 		}
 	}
