@@ -227,8 +227,8 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
         public bool PreloadFontsEnabled
         {
-            get => App.FastFlags.GetPreset("UI.Menu.PreloadFonts") == "True";
-            set => App.FastFlags.SetPreset("UI.Menu.PreloadFonts", value ? "True" : null);
+            get => App.FastFlags.GetPreset("UI.PreloadFonts") == "True";
+            set => App.FastFlags.SetPreset("UI.PreloadFonts", value ? "True" : null);
         }
     }
 }
