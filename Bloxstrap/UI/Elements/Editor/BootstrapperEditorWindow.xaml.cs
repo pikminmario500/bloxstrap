@@ -12,8 +12,6 @@ namespace Bloxstrap.UI.Elements.Editor
     /// <summary>
     /// Interaction logic for BootstrapperEditorWindow.xaml
     /// </summary>
-    
-    
     public partial class BootstrapperEditorWindow : WpfUiWindow
     {
         private static class CustomBootstrapperSchema
@@ -287,6 +285,9 @@ namespace Bloxstrap.UI.Elements.Editor
             }
             else
             {
+                if (UIXML.Text.Length > UIXML.CaretOffset && UIXML.Text[UIXML.CaretOffset] == '>')
+                    return;
+
                 var elementName = ShowAttributesForElementName(); // re-using functions :)
                 if (elementName != null)
                     UIXML.TextArea.Document.Insert(UIXML.CaretOffset, ">");
