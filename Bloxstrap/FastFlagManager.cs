@@ -14,8 +14,6 @@ namespace Bloxstrap
 
         public static IReadOnlyDictionary<string, string> PresetFlags = new Dictionary<string, string>
         {
-            { "Network.Log", "FLogNetwork" },
-
             { "Rendering.Framerate", "DFIntTaskSchedulerTargetFps" },
             { "Rendering.ManualFullscreen", "FFlagHandleAltEnterFullscreenManually" },
             { "Rendering.DisableScaling", "DFFlagDisableDPIScale" },
@@ -336,10 +334,6 @@ namespace Bloxstrap
             CheckTelemetryPreset();
             CheckHyperThreadingPreset();
             CheckGrassPreset();
-
-            // TODO - remove when activity tracking has been revamped
-            if (GetPreset("Network.Log") != "7")
-                SetPreset("Network.Log", "7");
         }
     }
 }
