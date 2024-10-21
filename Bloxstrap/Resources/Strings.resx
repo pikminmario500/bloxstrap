@@ -1260,9 +1260,6 @@ Would you like to enable test mode?</value>
   <data name="Menu.Behaviour.UseLogger.Description" xml:space="preserve">
     <value>Allow Bloxstrap to write logs for troubleshooting purposes.</value>
   </data>
-  <data name="Menu.FastFlags.Presets.Categories.Misc" xml:space="preserve">
-    <value>Miscellaneous</value>
-  </data>
   <data name="Menu.FastFlags.Presets.DisableTelemetry.Title" xml:space="preserve">
     <value>Disable telemetry</value>
   </data>

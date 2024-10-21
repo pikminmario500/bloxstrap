@@ -3321,15 +3321,6 @@ namespace Bloxstrap.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Miscellaneous.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_Categories_Misc {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.Categories.Misc", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Disable telemetry.
         /// </summary>
         public static string Menu_FastFlags_Presets_DisableTelemetry_Title {
