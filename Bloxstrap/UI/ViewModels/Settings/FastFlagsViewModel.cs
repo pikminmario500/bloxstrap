@@ -32,12 +32,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.FastFlags.SetPreset("Rendering.MSAA", MSAALevels[value]);
         }
 
-        public bool ForceLowQualityEnabled
-        {
-            get => App.FastFlags.GetPreset("Rendering.ForceLowQuality") == "1";
-            set => App.FastFlags.SetPreset("Rendering.ForceLowQuality", value ? "1" : null);
-        }
-
         public IReadOnlyDictionary<RenderingMode, string> RenderingModes => FastFlagManager.RenderingModes;
 
         public RenderingMode SelectedRenderingMode
@@ -102,12 +96,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
         {
             get => int.TryParse(App.FastFlags.GetPreset("UI.FullscreenTitlebarDelay"), out int x) && x > 5000;
             set => App.FastFlags.SetPreset("UI.FullscreenTitlebarDelay", value ? "3600000" : null);
-        }
-
-        public bool PreloadFontsEnabled
-        {
-            get => App.FastFlags.GetPreset("UI.Menu.PreloadFonts") == "True";
-            set => App.FastFlags.SetPreset("UI.Menu.PreloadFonts", value ? "True" : null);
         }
 
         public bool GuiHidingEnabled
@@ -179,6 +167,68 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
                 RequestPageReloadEvent?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        // divider
+
+        public bool DisableTelemetry
+        {
+            get => App.FastFlags.GetPreset("Network.DisableTelemetry1") == "True";
+            set
+            {
+                App.FastFlags.SetPreset("Network.DisableTelemetry1", value ? "True" : null);
+                App.FastFlags.CheckTelemetryPreset();
+            }
+        }
+
+        public bool DisableVC
+        {
+            get => App.FastFlags.GetPreset("Audio.DisableVC") == "False";
+            set => App.FastFlags.SetPreset("Audio.DisableVC", value ? "False" : null);
+        }
+
+        public bool HyperThreadingEnabled
+        {
+            get => App.FastFlags.GetPreset("Rendering.HyperThreading1") == "True";
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.HyperThreading1", value ? "True" : null);
+                App.FastFlags.CheckHyperThreadingPreset();
+            }
+        }
+
+        public bool BetterPreloadingEnabled
+        {
+            get => App.FastFlags.GetPreset("Rendering.BetterPreloading") == "2147483647";
+            set => App.FastFlags.SetPreset("Rendering.BetterPreloading", value ? "2147483647" : null);
+        }
+
+        public bool UseGPUForLightingEnabled
+        {
+            get => App.FastFlags.GetPreset("Rendering.Lighting.UseGPU") == "True";
+            set => App.FastFlags.SetPreset("Rendering.Lighting.UseGPU", value ? "True" : null);
+        }
+
+        public bool ForceLowQualityEnabled
+        {
+            get => App.FastFlags.GetPreset("Rendering.ForceLowQuality") == "1";
+            set => App.FastFlags.SetPreset("Rendering.ForceLowQuality", value ? "1" : null);
+        }
+
+        public bool RemoveGrass
+        {
+            get => App.FastFlags.GetPreset("Rendering.NoGrass1") == "0";
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.NoGrass1", value ? "0" : null);
+                App.FastFlags.CheckGrassPreset();
+            }
+        }
+
+        public bool PreloadFontsEnabled
+        {
+            get => App.FastFlags.GetPreset("UI.Menu.PreloadFonts") == "True";
+            set => App.FastFlags.SetPreset("UI.Menu.PreloadFonts", value ? "True" : null);
         }
     }
 }

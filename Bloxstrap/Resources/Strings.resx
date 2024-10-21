@@ -1248,9 +1248,6 @@ Would you like to enable test mode?</value>
   <data name="Enums.FlagPresets.RenderingMode.Vulkan" xml:space="preserve">
     <value>Vulkan</value>
   </data>
-  <data name="Menu.FastFlags.Presets.PreloadFonts.Description" xml:space="preserve">
-    <value>Preloads fonts before usage.</value>
-  </data>
   <data name="Menu.FastFlags.Presets.PreloadFonts.Title" xml:space="preserve">
     <value>Preload fonts</value>
   </data>
@@ -1262,5 +1259,26 @@ Would you like to enable test mode?</value>
   </data>
   <data name="Menu.Behaviour.UseLogger.Description" xml:space="preserve">
     <value>Allow Bloxstrap to write logs for troubleshooting purposes.</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.DisableTelemetry.Title" xml:space="preserve">
+    <value>Disable telemetry</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.DisableVC.Title" xml:space="preserve">
+    <value>Disable voice chat</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.HyperThreading.Title" xml:space="preserve">
+    <value>Use hyperthreading</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.BetterPreloading.Title" xml:space="preserve">
+    <value>Better asset preloading</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.BetterPreloading.Description" xml:space="preserve">
+    <value>Removes the limit of preloaded assets causing faster load times if the game has already been loaded once</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.UseGPUForLighting.Title" xml:space="preserve">
+    <value>Use GPU for lighting</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.RemoveGrass.Title" xml:space="preserve">
+    <value>Remove grass</value>
   </data>
 </root>

@@ -45,19 +45,39 @@ namespace Bloxstrap
             { "UI.Menu.Style.EnableV4Chrome", "FFlagEnableInGameMenuChrome" },
             { "UI.Menu.Style.ReportButtonCutOff", "FFlagFixReportButtonCutOff" },
 
-
             { "UI.Menu.Style.ABTest.1", "FFlagEnableMenuControlsABTest" },
             { "UI.Menu.Style.ABTest.2", "FFlagEnableV3MenuABTest3" },
             { "UI.Menu.Style.ABTest.3", "FFlagEnableInGameMenuChromeABTest3" },
             { "UI.Menu.Style.ABTest.4", "FFlagEnableInGameMenuChromeABTest4" },
 
+            // divider
+
+            { "Network.DisableTelemetry1", "FFlagDebugDisableTelemetryEphemeralCounter" },
+            { "Network.DisableTelemetry2", "FFlagDebugDisableTelemetryEphemeralStat" },
+            { "Network.DisableTelemetry3", "FFlagDebugDisableTelemetryEventIngest" },
+            { "Network.DisableTelemetry4", "FFlagDebugDisableTelemetryPoint" },
+            { "Network.DisableTelemetry5", "FFlagDebugDisableTelemetryV2Counter" },
+            { "Network.DisableTelemetry6", "FFlagDebugDisableTelemetryV2Event" },
+            { "Network.DisableTelemetry7", "FFlagDebugDisableTelemetryV2Stat" },
+
+            { "Audio.DisableVC", "DFFlagVoiceChat4" },
+
             { "Rendering.DisableD3D", "FFlagDebugGraphicsDisableDirect3D11" },
             { "Rendering.Mode.Metal", "FFlagDebugGraphicsPreferMetal" },
-            { "UI.Menu.PreloadFonts", "FFlagPreloadAllFonts" },
-            { "Rendering.ForceLowQuality", "DFIntDebugFRMQualityLevelOverride" },
             { "Rendering.Mode.Vulkan", "FFlagDebugGraphicsPreferVulkan" },
-            { "Rendering.Mode.Vulkan.Fix", "FFlagRenderVulkanFixMinimizeWindow" },
-            { "Rendering.Mode.OpenGL", "FFlagDebugGraphicsPreferOpenGL" }
+            { "Rendering.Mode.OpenGL", "FFlagDebugGraphicsPreferOpenGL" },
+
+            { "Rendering.HyperThreading1", "FFlagDebugCheckRenderThreading" },
+            { "Rendering.HyperThreading2", "FFlagRenderDebugCheckThreading2" },
+            { "Rendering.BetterPreloading", "DFIntNumAssetsMaxToPreload" },
+            { "Rendering.Lighting.UseGPU", "FFlagFastGPULightCulling3" },
+
+            { "Rendering.ForceLowQuality", "DFIntDebugFRMQualityLevelOverride" },
+            { "Rendering.NoGrass1", "FIntFRMMinGrassDistance" },
+            { "Rendering.NoGrass2", "FIntFRMMaxGrassDistance" },
+            { "Rendering.NoGrass3", "FIntRenderGrassDetailStrands" },
+
+            { "UI.PreloadFonts", "FFlagPreloadAllFonts" }
         };
 
         public static IReadOnlyDictionary<RenderingMode, string> RenderingModes => new Dictionary<RenderingMode, string>
@@ -248,6 +268,50 @@ namespace Bloxstrap
             }
         }
 
+        public void CheckTelemetryPreset()
+        {
+            if (GetPreset("Network.DisableTelemetry1") == "True")
+            {
+                SetPreset("Network.DisableTelemetry2", "True");
+                SetPreset("Network.DisableTelemetry3", "True");
+                SetPreset("Network.DisableTelemetry4", "True");
+                SetPreset("Network.DisableTelemetry5", "True");
+                SetPreset("Network.DisableTelemetry6", "True");
+                SetPreset("Network.DisableTelemetry7", "True");
+            }
+            else
+            {
+                SetPreset("Network.DisableTelemetry2", null);
+                SetPreset("Network.DisableTelemetry3", null);
+                SetPreset("Network.DisableTelemetry4", null);
+                SetPreset("Network.DisableTelemetry5", null);
+                SetPreset("Network.DisableTelemetry6", null);
+                SetPreset("Network.DisableTelemetry7", null);
+            }
+        }
+
+        public void CheckHyperThreadingPreset()
+        {
+            if (GetPreset("Rendering.HyperThreading1") == "True")
+                SetPreset("Rendering.HyperThreading2", "True");
+            else
+                SetPreset("Rendering.HyperThreading2", null);
+        }
+
+        public void CheckGrassPreset()
+        {
+            if (GetPreset("Rendering.NoGrass1") == "0")
+            {
+                SetPreset("Rendering.NoGrass2", "0");
+                SetPreset("Rendering.NoGrass3", "0");
+            }
+            else
+            {
+                SetPreset("Rendering.NoGrass2", null);
+                SetPreset("Rendering.NoGrass3", null);
+            }
+        }
+
         public override void Save()
         {
             // convert all flag values to strings before saving
@@ -269,6 +333,9 @@ namespace Bloxstrap
             OriginalProp = new(Prop);
 
             CheckManualFullscreenPreset();
+            CheckTelemetryPreset();
+            CheckHyperThreadingPreset();
+            CheckGrassPreset();
 
             // TODO - remove when activity tracking has been revamped
             if (GetPreset("Network.Log") != "7")
