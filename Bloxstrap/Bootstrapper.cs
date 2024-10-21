@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Shell;
-using System.Security.Principal;
 
 using Microsoft.Win32;
 
@@ -451,19 +450,6 @@ namespace Bloxstrap
                 if (ipl.IsAcquired)
                     Process.Start(Paths.Process, args);
             }
-
-            WindowsIdentity identity = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(identity);
-            bool ElevatedLaunch = principal.IsInRole(WindowsBuiltInRole.Administrator);
-
-            using var proc = Process.GetProcessById(_appPid);
-
-            if (App.Settings.Prop.ChoosePriorityClass != PriorityClasses.RealTime || ElevatedLaunch)
-                proc.PriorityClass = App.Settings.Prop.ChoosePriorityClass.ToProcessPriorityClass();
-            else
-                App.Logger.WriteLine(LOG_IDENT, "Tried to launch with 'RealTime' but is not running Bloxstrap as admin!");
-
-            App.Logger.WriteLine(LOG_IDENT, $"Launching with priority '{proc.PriorityClass}'");
         }
 
         public void Cancel()

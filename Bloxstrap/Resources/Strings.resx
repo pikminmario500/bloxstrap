@@ -1257,30 +1257,6 @@ Would you like to enable test mode?</value>
   <data name="Menu.FastFlags.Presets.ForceLowQuality.Title" xml:space="preserve">
     <value>Force low quality</value>
   </data>
-  <data name="Menu.Behaviour.ChangePriorityClass.Title" xml:space="preserve">
-    <value>Set priority</value>
-  </data>
-  <data name="Menu.Behaviour.ChangePriorityClass.Description" xml:space="preserve">
-    <value>Change the priority class Roblox uses.</value>
-  </data>
-  <data name="Enums.PriorityClasses.Idle" xml:space="preserve">
-    <value>Low</value>
-  </data>
-  <data name="Enums.PriorityClasses.BelowNormal" xml:space="preserve">
-    <value>Below normal</value>
-  </data>
-  <data name="Enums.PriorityClasses.Normal" xml:space="preserve">
-    <value>Normal</value>
-  </data>
-  <data name="Enums.PriorityClasses.AboveNormal" xml:space="preserve">
-    <value>Above normal</value>
-  </data>
-  <data name="Enums.PriorityClasses.High" xml:space="preserve">
-    <value>High</value>
-  </data>
-  <data name="Enums.PriorityClasses.RealTime" xml:space="preserve">
-    <value>Realtime</value>
-  </data>
   <data name="Menu.Behaviour.UseLogger.Title" xml:space="preserve">
     <value>Enable logging</value>
   </data>
