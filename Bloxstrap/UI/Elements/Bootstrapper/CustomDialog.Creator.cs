@@ -1,9 +1,9 @@
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Xml.Linq;
 
 using Wpf.Ui.Markup;
@@ -46,7 +46,11 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             ["ScaleTransform"] = HandleXml_ScaleTransform,
             ["SkewTransform"] = HandleXml_SkewTransform,
             ["RotateTransform"] = HandleXml_RotateTransform,
-            ["TranslateTransform"] = HandleXml_TranslateTransform
+            ["TranslateTransform"] = HandleXml_TranslateTransform,
+
+            ["Ellipse"] = HandleXmlElement_Ellipse,
+            ["Line"] = HandleXmlElement_Line,
+            ["Rectangle"] = HandleXmlElement_Rectangle
         };
 
 
@@ -121,14 +125,14 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         // You can't do numeric only generics in .NET 6. The feature is exclusive to .NET 7+.
         private static double ParseXmlAttributeClamped(XElement element, string attributeName, double? defaultValue = null, double? min = null, double? max = null)
         {
-            double value = ParseXmlAttribute<double>(element, attributeName, defaultValue);
+            double value = ParseXmlAttribute(element, attributeName, defaultValue);
             ValidateXmlElement(element.Name.ToString(), attributeName, value, min, max);
             return value;
         }
 
         private static int ParseXmlAttributeClamped(XElement element, string attributeName, int? defaultValue = null, int? min = null, int? max = null)
         {
-            int value = ParseXmlAttribute<int>(element, attributeName, defaultValue);
+            int value = ParseXmlAttribute(element, attributeName, defaultValue);
             ValidateXmlElement(element.Name.ToString(), attributeName, value, min, max);
             return value;
         }
@@ -226,6 +230,15 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
                 default:
                     throw new Exception($"{element.Name} Unknown TextDecorations {value}");
             }
+        }
+
+        private static string? GetTranslatedText(string? text)
+        {
+            if (text == null || !text.StartsWith('{') || !text.EndsWith('}'))
+                return text; // can't be translated (not in the correct format)
+
+            string resourceName = text[1..^1];
+            return Strings.ResourceManager.GetStringSafe(resourceName);
         }
         #endregion
 
@@ -432,6 +445,61 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         }
         #endregion
 
+        #region Shapes
+        private static void HandleXmlElement_Shape(CustomDialog dialog, Shape shape, XElement xmlElement)
+        {
+            HandleXmlElement_FrameworkElement(dialog, shape, xmlElement);
+
+            ApplyBrush_UIElement(dialog, shape, "Fill", Shape.FillProperty, xmlElement);
+            ApplyBrush_UIElement(dialog, shape, "Stroke", Shape.StrokeProperty, xmlElement);
+
+            shape.Stretch = ParseXmlAttribute<Stretch>(xmlElement, "Stretch", Stretch.Fill);
+
+            shape.StrokeDashCap = ParseXmlAttribute<PenLineCap>(xmlElement, "StrokeDashCap", PenLineCap.Flat);
+            shape.StrokeDashOffset = ParseXmlAttribute<double>(xmlElement, "StrokeDashOffset", 0);
+            shape.StrokeEndLineCap = ParseXmlAttribute<PenLineCap>(xmlElement, "StrokeEndLineCap", PenLineCap.Flat);
+            shape.StrokeLineJoin = ParseXmlAttribute<PenLineJoin>(xmlElement, "StrokeLineJoin", PenLineJoin.Miter);
+            shape.StrokeMiterLimit = ParseXmlAttribute<double>(xmlElement, "StrokeMiterLimit", 10);
+            shape.StrokeStartLineCap = ParseXmlAttribute<PenLineCap>(xmlElement, "StrokeStartLineCap", PenLineCap.Flat);
+            shape.StrokeThickness = ParseXmlAttribute<double>(xmlElement, "StrokeThickness", 1);
+
+            ApplyTransformations_UIElement(dialog, shape, xmlElement);
+        }
+
+        private static Ellipse HandleXmlElement_Ellipse(CustomDialog dialog, XElement xmlElement)
+        {
+            var ellipse = new Ellipse();
+            HandleXmlElement_Shape(dialog, ellipse, xmlElement);
+
+            return ellipse;
+        }
+
+        private static Line HandleXmlElement_Line(CustomDialog dialog, XElement xmlElement)
+        {
+            var line = new Line();
+            HandleXmlElement_Shape(dialog, line, xmlElement);
+
+            line.X1 = ParseXmlAttribute<double>(xmlElement, "X1", 0);
+            line.X2 = ParseXmlAttribute<double>(xmlElement, "X2", 0);
+            line.Y1 = ParseXmlAttribute<double>(xmlElement, "Y1", 0);
+            line.Y2 = ParseXmlAttribute<double>(xmlElement, "Y2", 0);
+
+            return line;
+        }
+
+        private static Rectangle HandleXmlElement_Rectangle(CustomDialog dialog, XElement xmlElement)
+        {
+            var rectangle = new Rectangle();
+            HandleXmlElement_Shape(dialog, rectangle, xmlElement);
+
+            rectangle.RadiusX = ParseXmlAttribute<double>(xmlElement, "RadiusX", 0);
+            rectangle.RadiusY = ParseXmlAttribute<double>(xmlElement, "RadiusY", 0);
+
+            return rectangle;
+        }
+
+        #endregion
+
         #region Elements
         private static void HandleXmlElement_FrameworkElement(CustomDialog dialog, FrameworkElement uiElement, XElement xmlElement)
         {
@@ -454,8 +522,8 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             if (margin != null)
                 uiElement.Margin = (Thickness)margin;
 
-            uiElement.Height = ParseXmlAttributeClamped(xmlElement, "Height", defaultValue: 100.0, min: 0, max: 1000);
-            uiElement.Width = ParseXmlAttributeClamped(xmlElement, "Width", defaultValue: 100.0, min: 0, max: 1000);
+            uiElement.Height = ParseXmlAttributeClamped(xmlElement, "Height", defaultValue: double.NaN, min: 0, max: 1000);
+            uiElement.Width = ParseXmlAttributeClamped(xmlElement, "Width", defaultValue: double.NaN, min: 0, max: 1000);
 
             // default values of these were originally Stretch but that was no good
             uiElement.HorizontalAlignment = ParseXmlAttribute<HorizontalAlignment>(xmlElement, "HorizontalAlignment", HorizontalAlignment.Left);
@@ -540,7 +608,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         {
             var contentAttr = xmlElement.Attribute("Content");
             if (contentAttr != null)
-                return contentAttr.Value.ToString();
+                return GetTranslatedText(contentAttr.Value);
 
             var contentElement = xmlElement.Element($"{xmlElement.Name}.Content");
             if (contentElement != null)
@@ -608,7 +676,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         {
             HandleXmlElement_FrameworkElement(dialog, textBlock, xmlElement);
 
-            textBlock.Text = xmlElement.Attribute("Text")?.Value;
+            textBlock.Text = GetTranslatedText(xmlElement.Attribute("Text")?.Value);
 
             ApplyBrush_UIElement(dialog, textBlock, "Foreground", TextBlock.ForegroundProperty, xmlElement);
 
@@ -657,7 +725,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             var textBlock = new MarkdownTextBlock();
             HandleXmlElement_TextBlock_Base(dialog, textBlock, xmlElement);
 
-            string? text = xmlElement.Attribute("Text")?.Value;
+            string? text = GetTranslatedText(xmlElement.Attribute("Text")?.Value);
             if (text != null)
                 textBlock.MarkdownText = text;
 
@@ -767,7 +835,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         #region Public APIs
         public void ApplyCustomTheme(string name, string contents)
         {
-            ThemeDir = Path.Combine(Paths.CustomThemes, name);
+            ThemeDir = System.IO.Path.Combine(Paths.CustomThemes, name);
 
             XElement xml;
 
@@ -786,7 +854,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
 
         public void ApplyCustomTheme(string name)
         {
-            string path = Path.Combine(Paths.CustomThemes, name, "Theme.xml");
+            string path = System.IO.Path.Combine(Paths.CustomThemes, name, "Theme.xml");
 
             ApplyCustomTheme(name, File.ReadAllText(path));
         }
