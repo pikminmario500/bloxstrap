@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 
@@ -47,6 +48,9 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             ["SkewTransform"] = HandleXml_SkewTransform,
             ["RotateTransform"] = HandleXml_RotateTransform,
             ["TranslateTransform"] = HandleXml_TranslateTransform,
+
+            ["BlurEffect"] = HandleXmlElement_BlurEffect,
+            ["DropShadowEffect"] = HandleXmlElement_DropShadowEffect,
 
             ["Ellipse"] = HandleXmlElement_Ellipse,
             ["Line"] = HandleXmlElement_Line,
@@ -123,13 +127,6 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         }
 
         // You can't do numeric only generics in .NET 6. The feature is exclusive to .NET 7+.
-        private static double ParseXmlAttributeClamped(XElement element, string attributeName, double? defaultValue = null, double? min = null, double? max = null)
-        {
-            double value = ParseXmlAttribute(element, attributeName, defaultValue);
-            ValidateXmlElement(element.Name.ToString(), attributeName, value, min, max);
-            return value;
-        }
-
         private static int ParseXmlAttributeClamped(XElement element, string attributeName, int? defaultValue = null, int? min = null, int? max = null)
         {
             int value = ParseXmlAttribute(element, attributeName, defaultValue);
@@ -288,22 +285,77 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return tt;
         }
 
+        private static void ApplyTransformation_UIElement(CustomDialog dialog, string name, DependencyProperty property, UIElement uiElement, XElement xmlElement)
+        {
+            var transformElement = xmlElement.Element($"{xmlElement.Name}.{name}");
+
+            if (transformElement == null)
+                return;
+
+            var tg = new TransformGroup();
+
+            foreach (var child in transformElement.Elements())
+            {
+                Transform element = HandleXml<Transform>(dialog, child);
+                tg.Children.Add(element);
+            }
+
+            uiElement.SetValue(property, tg);
+        }
+
         private static void ApplyTransformations_UIElement(CustomDialog dialog, UIElement uiElement, XElement xmlElement)
         {
-            var renderTransform = xmlElement.Element($"{xmlElement.Name}.RenderTransform");
+            ApplyTransformation_UIElement(dialog, "RenderTransform", FrameworkElement.RenderTransformProperty, uiElement, xmlElement);
+            ApplyTransformation_UIElement(dialog, "LayoutTransform", FrameworkElement.LayoutTransformProperty, uiElement, xmlElement);
+        }
+        #endregion
 
-            if (renderTransform != null)
-            {
-                var tg = new TransformGroup();
+        #region Effects
+        private static BlurEffect HandleXmlElement_BlurEffect(CustomDialog dialog, XElement xmlElement)
+        {
+            var effect = new BlurEffect();
 
-                foreach (var child in renderTransform.Elements())
-                {
-                    Transform element = HandleXml<Transform>(dialog, child);
-                    tg.Children.Add(element);
-                }
+            effect.KernelType = ParseXmlAttribute<KernelType>(xmlElement, "KernelType", KernelType.Gaussian);
+            effect.Radius = ParseXmlAttribute<double>(xmlElement, "Radius", 5);
+            effect.RenderingBias = ParseXmlAttribute<RenderingBias>(xmlElement, "RenderingBias", RenderingBias.Performance);
 
-                uiElement.RenderTransform = tg;
-            }
+            return effect;
+        }
+
+        private static DropShadowEffect HandleXmlElement_DropShadowEffect(CustomDialog dialog, XElement xmlElement)
+        {
+            var effect = new DropShadowEffect();
+
+            effect.BlurRadius = ParseXmlAttribute<double>(xmlElement, "BlurRadius", 5);
+            effect.Direction = ParseXmlAttribute<double>(xmlElement, "Direction", 315);
+            effect.Opacity = ParseXmlAttribute<double>(xmlElement, "Opacity", 1);
+            effect.ShadowDepth = ParseXmlAttribute<double>(xmlElement, "ShadowDepth", 5);
+            effect.RenderingBias = ParseXmlAttribute<RenderingBias>(xmlElement, "RenderingBias", RenderingBias.Performance);
+
+            var color = GetColorFromXElement(xmlElement, "Color");
+            if (color is Color)
+                effect.Color = (Color)color;
+
+            return effect;
+        }
+
+
+        private static void ApplyEffects_UIElement(CustomDialog dialog, UIElement uiElement, XElement xmlElement)
+        {
+            var effectElement = xmlElement.Element($"{xmlElement.Name}.Effect");
+            if (effectElement == null)
+                return;
+
+            var children = effectElement.Elements();
+            if (children.Count() > 1)
+                throw new Exception($"{xmlElement.Name}.Effect can only have one child");
+
+            var child = children.FirstOrDefault();
+            if (child == null)
+                return;
+
+            Effect effect = HandleXml<Effect>(dialog, child);
+            uiElement.Effect = effect;
         }
         #endregion
 
@@ -462,8 +514,6 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             shape.StrokeMiterLimit = ParseXmlAttribute<double>(xmlElement, "StrokeMiterLimit", 10);
             shape.StrokeStartLineCap = ParseXmlAttribute<PenLineCap>(xmlElement, "StrokeStartLineCap", PenLineCap.Flat);
             shape.StrokeThickness = ParseXmlAttribute<double>(xmlElement, "StrokeThickness", 1);
-
-            ApplyTransformations_UIElement(dialog, shape, xmlElement);
         }
 
         private static Ellipse HandleXmlElement_Ellipse(CustomDialog dialog, XElement xmlElement)
@@ -522,15 +572,25 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             if (margin != null)
                 uiElement.Margin = (Thickness)margin;
 
-            uiElement.Height = ParseXmlAttributeClamped(xmlElement, "Height", defaultValue: double.NaN, min: 0, max: 1000);
-            uiElement.Width = ParseXmlAttributeClamped(xmlElement, "Width", defaultValue: double.NaN, min: 0, max: 1000);
+            uiElement.Height = ParseXmlAttribute<double>(xmlElement, "Height", double.NaN);
+            uiElement.Width = ParseXmlAttribute<double>(xmlElement, "Width", double.NaN);
 
             // default values of these were originally Stretch but that was no good
             uiElement.HorizontalAlignment = ParseXmlAttribute<HorizontalAlignment>(xmlElement, "HorizontalAlignment", HorizontalAlignment.Left);
             uiElement.VerticalAlignment = ParseXmlAttribute<VerticalAlignment>(xmlElement, "VerticalAlignment", VerticalAlignment.Top);
 
+            uiElement.Opacity = ParseXmlAttribute<double>(xmlElement, "Opacity", 1);
+            ApplyBrush_UIElement(dialog, uiElement, "OpacityMask", FrameworkElement.OpacityMaskProperty, xmlElement);
+
+            object? renderTransformOrigin = GetPointFromXElement(xmlElement, "RenderTransformOrigin");
+            if (renderTransformOrigin is Point)
+                uiElement.RenderTransformOrigin = (Point)renderTransformOrigin;
+
             int zIndex = ParseXmlAttributeClamped(xmlElement, "ZIndex", defaultValue: 0, min: 0, max: 1000);
             Panel.SetZIndex(uiElement, zIndex);
+
+            ApplyTransformations_UIElement(dialog, uiElement, xmlElement);
+            ApplyEffects_UIElement(dialog, uiElement, xmlElement);
         }
 
         private static void HandleXmlElement_Control(CustomDialog dialog, Control uiElement, XElement xmlElement)
@@ -550,6 +610,12 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             ApplyBrush_UIElement(dialog, uiElement, "Background", Control.BackgroundProperty, xmlElement);
 
             ApplyBrush_UIElement(dialog, uiElement, "BorderBrush", Control.BorderBrushProperty, xmlElement);
+
+            var fontSize = ParseXmlAttributeNullable<double>(xmlElement, "FontSize");
+            if (fontSize is double)
+                uiElement.FontSize = (double)fontSize;
+            uiElement.FontWeight = GetFontWeightFromXElement(xmlElement);
+            uiElement.FontStyle = GetFontStyleFromXElement(xmlElement);
         }
 
         private static UIElement HandleXmlElement_BloxstrapCustomBootstrapper(CustomDialog dialog, XElement xmlElement)
@@ -557,6 +623,17 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             xmlElement.SetAttributeValue("Visibility", "Collapsed"); // don't show the bootstrapper yet!!!
             xmlElement.SetAttributeValue("IsEnabled", "True");
             HandleXmlElement_Control(dialog, dialog, xmlElement);
+
+            dialog.Opacity = 1;
+
+            // transfer effect to element grid
+            dialog.ElementGrid.RenderTransform = dialog.RenderTransform;
+            dialog.RenderTransform = null;
+            dialog.ElementGrid.LayoutTransform = dialog.LayoutTransform;
+            dialog.LayoutTransform = null;
+
+            dialog.ElementGrid.Effect = dialog.Effect;
+            dialog.Effect = null;
 
             var theme = ParseXmlAttribute<Theme>(xmlElement, "Theme", Theme.Default);
             dialog.Resources.MergedDictionaries.Clear();
@@ -586,6 +663,12 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             xmlElement.SetAttributeValue("Name", "TitleBar"); // prevent two titlebars from existing
             xmlElement.SetAttributeValue("IsEnabled", "True");
             HandleXmlElement_Control(dialog, dialog.RootTitleBar, xmlElement);
+
+            // get rid of all effects
+            dialog.RootTitleBar.RenderTransform = null;
+            dialog.RootTitleBar.LayoutTransform = null;
+
+            dialog.RootTitleBar.Effect = null;
 
             Panel.SetZIndex(dialog.RootTitleBar, 1001); // always show above others
 
@@ -640,8 +723,6 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
                 BindingOperations.SetBinding(button, Button.CommandProperty, cancelCommandBinding);
             }
 
-            ApplyTransformations_UIElement(dialog, button, xmlElement);
-
             return button;
         }
 
@@ -666,8 +747,6 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
                 Binding valueBinding = new Binding("ProgressValue") { Mode = BindingMode.OneWay };
                 BindingOperations.SetBinding(progressBar, ProgressBar.ValueProperty, valueBinding);
             }
-
-            ApplyTransformations_UIElement(dialog, progressBar, xmlElement);
 
             return progressBar;
         }
@@ -708,8 +787,6 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
                 Binding textBinding = new Binding("Message") { Mode = BindingMode.OneWay };
                 BindingOperations.SetBinding(textBlock, TextBlock.TextProperty, textBinding);
             }
-
-            ApplyTransformations_UIElement(dialog, textBlock, xmlElement);
         }
 
         private static UIElement HandleXmlElement_TextBlock(CustomDialog dialog, XElement xmlElement)
@@ -779,8 +856,6 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
                     XamlAnimatedGif.AnimationBehavior.SetSourceUri(image, result);
                 }
             }
-
-            ApplyTransformations_UIElement(dialog, image, xmlElement);
 
             return image;
         }

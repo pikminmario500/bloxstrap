@@ -12,7 +12,11 @@
 				"HorizontalAlignment": "HorizontalAlignment",
 				"VerticalAlignment": "VerticalAlignment",
 				"ZIndex": "int",
-				"RenderTransform": "Transform"
+				"RenderTransform": "Transform",
+				"LayoutTransform": "Transform",
+				"Opacity": "double",
+				"OpacityMask": "Brush",
+				"RenderTransformOrigin": "Point"
 			}
 		},
 		"Control": {
@@ -23,7 +27,10 @@
 				"BorderThickness": "Thickness",
 				"Foreground": "Brush",
 				"Background": "Brush",
-				"BorderBrush": "Brush"
+				"BorderBrush": "Brush",
+				"FontSize": "double",
+				"FontWeight": "FontWeight",
+				"FontStyle": "FontStyle"
 			}
 		},
 		"BloxstrapCustomBootstrapper": {
@@ -212,6 +219,25 @@
 				"RadiusX": "double",
 				"RadiusY": "double"
 			}
+		},
+		"BlurEffect": {
+			"IsCreatable": true,
+			"Attributes": {
+				"KernelType": "KernelType",
+				"Radius": "double",
+				"RenderingBias": "RenderingBias"
+			}
+		},
+		"DropShadowEffect": {
+			"IsCreatable": true,
+			"Attributes": {
+				"BlurRadius": "double",
+				"Direction": "double",
+				"Opacity": "double",
+				"ShadowDepth": "double",
+				"RenderingBias": "RenderingBias",
+				"Color": "Color"
+			}
 		}
 	},
 	"Types": {
@@ -394,6 +420,18 @@
 				"Miter",
 				"Bevel",
 				"Round"
+			]
+		},
+		"KernelType": {
+			"Values": [
+				"Gaussian",
+				"Box"
+			]
+		},
+		"RenderingBias": {
+			"Values": [
+				"Performance",
+				"Quality"
 			]
 		}
 	}
