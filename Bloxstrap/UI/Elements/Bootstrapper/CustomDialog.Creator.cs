@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -34,20 +35,21 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             ["TitleBar"] = HandleXmlElement_TitleBar,
             ["Button"] = HandleXmlElement_Button,
             ["ProgressBar"] = HandleXmlElement_ProgressBar,
+            ["ProgressRing"] = HandleXmlElement_ProgressRing,
             ["TextBlock"] = HandleXmlElement_TextBlock,
             ["MarkdownTextBlock"] = HandleXmlElement_MarkdownTextBlock,
             ["Image"] = HandleXmlElement_Image,
 
-            ["SolidColorBrush"] = HandleXml_SolidColorBrush,
-            ["ImageBrush"] = HandleXml_ImageBrush,
-            ["LinearGradientBrush"] = HandleXml_LinearGradientBrush,
+            ["SolidColorBrush"] = HandleXmlElement_SolidColorBrush,
+            ["ImageBrush"] = HandleXmlElement_ImageBrush,
+            ["LinearGradientBrush"] = HandleXmlElement_LinearGradientBrush,
 
-            ["GradientStop"] = HandleXml_GradientStop,
+            ["GradientStop"] = HandleXmlElement_GradientStop,
 
-            ["ScaleTransform"] = HandleXml_ScaleTransform,
-            ["SkewTransform"] = HandleXml_SkewTransform,
-            ["RotateTransform"] = HandleXml_RotateTransform,
-            ["TranslateTransform"] = HandleXml_TranslateTransform,
+            ["ScaleTransform"] = HandleXmlElement_ScaleTransform,
+            ["SkewTransform"] = HandleXmlElement_SkewTransform,
+            ["RotateTransform"] = HandleXmlElement_RotateTransform,
+            ["TranslateTransform"] = HandleXmlElement_TranslateTransform,
 
             ["BlurEffect"] = HandleXmlElement_BlurEffect,
             ["DropShadowEffect"] = HandleXmlElement_DropShadowEffect,
@@ -129,7 +131,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         // You can't do numeric only generics in .NET 6. The feature is exclusive to .NET 7+.
         private static int ParseXmlAttributeClamped(XElement element, string attributeName, int? defaultValue = null, int? min = null, int? max = null)
         {
-            int value = ParseXmlAttribute(element, attributeName, defaultValue);
+            int value = ParseXmlAttribute<int>(element, attributeName, defaultValue);
             ValidateXmlElement(element.Name.ToString(), attributeName, value, min, max);
             return value;
         }
@@ -237,10 +239,18 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             string resourceName = text[1..^1];
             return Strings.ResourceManager.GetStringSafe(resourceName);
         }
+
+        private static string? GetSourcePath(CustomDialog dialog, string? sourcePath)
+        {
+            if (sourcePath == null)
+                return null;
+
+            return sourcePath.Replace("theme://", $"{dialog.ThemeDir}\\");
+        }
         #endregion
 
         #region Transformation Elements
-        private static Transform HandleXml_ScaleTransform(CustomDialog dialog, XElement xmlElement)
+        private static Transform HandleXmlElement_ScaleTransform(CustomDialog dialog, XElement xmlElement)
         {
             var st = new ScaleTransform();
 
@@ -252,7 +262,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return st;
         }
 
-        private static Transform HandleXml_SkewTransform(CustomDialog dialog, XElement xmlElement)
+        private static Transform HandleXmlElement_SkewTransform(CustomDialog dialog, XElement xmlElement)
         {
             var st = new SkewTransform();
 
@@ -264,7 +274,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return st;
         }
 
-        private static Transform HandleXml_RotateTransform(CustomDialog dialog, XElement xmlElement)
+        private static Transform HandleXmlElement_RotateTransform(CustomDialog dialog, XElement xmlElement)
         {
             var rt = new RotateTransform();
 
@@ -275,7 +285,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return rt;
         }
 
-        private static Transform HandleXml_TranslateTransform(CustomDialog dialog, XElement xmlElement)
+        private static Transform HandleXmlElement_TranslateTransform(CustomDialog dialog, XElement xmlElement)
         {
             var tt = new TranslateTransform();
 
@@ -365,7 +375,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             brush.Opacity = ParseXmlAttribute<double>(xmlElement, "Opacity", 1.0);
         }
 
-        private static Brush HandleXml_SolidColorBrush(CustomDialog dialog, XElement xmlElement)
+        private static Brush HandleXmlElement_SolidColorBrush(CustomDialog dialog, XElement xmlElement)
         {
             var brush = new SolidColorBrush();
             HandleXml_Brush(brush, xmlElement);
@@ -377,7 +387,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return brush;
         }
 
-        private static Brush HandleXml_ImageBrush(CustomDialog dialog, XElement xmlElement)
+        private static Brush HandleXmlElement_ImageBrush(CustomDialog dialog, XElement xmlElement)
         {
             var imageBrush = new ImageBrush();
             HandleXml_Brush(imageBrush, xmlElement);
@@ -399,8 +409,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             if (viewport is Rect)
                 imageBrush.Viewport = (Rect)viewport;
 
-            string sourcePath = GetXmlAttribute(xmlElement, "ImageSource");
-            sourcePath = sourcePath.Replace("theme://", $"{dialog.ThemeDir}\\");
+            string sourcePath = GetSourcePath(dialog, GetXmlAttribute(xmlElement, "ImageSource"))!;
 
             if (sourcePath == "{Icon}")
             {
@@ -432,7 +441,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return imageBrush;
         }
 
-        private static GradientStop HandleXml_GradientStop(CustomDialog dialog, XElement xmlElement)
+        private static GradientStop HandleXmlElement_GradientStop(CustomDialog dialog, XElement xmlElement)
         {
             var gs = new GradientStop();
 
@@ -445,7 +454,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return gs;
         }
 
-        private static Brush HandleXml_LinearGradientBrush(CustomDialog dialog, XElement xmlElement)
+        private static Brush HandleXmlElement_LinearGradientBrush(CustomDialog dialog, XElement xmlElement)
         {
             var brush = new LinearGradientBrush();
             HandleXml_Brush(brush, xmlElement);
@@ -616,6 +625,11 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
                 uiElement.FontSize = (double)fontSize;
             uiElement.FontWeight = GetFontWeightFromXElement(xmlElement);
             uiElement.FontStyle = GetFontStyleFromXElement(xmlElement);
+
+            // NOTE: font family can both be the name of the font or a uri
+            string? fontFamily = GetSourcePath(dialog, xmlElement.Attribute("FontFamily")?.Value);
+            if (fontFamily != null)
+                uiElement.FontFamily = new System.Windows.Media.FontFamily(fontFamily);
         }
 
         private static UIElement HandleXmlElement_BloxstrapCustomBootstrapper(CustomDialog dialog, XElement xmlElement)
@@ -636,8 +650,18 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             dialog.Effect = null;
 
             var theme = ParseXmlAttribute<Theme>(xmlElement, "Theme", Theme.Default);
+            if (theme == Theme.Default)
+                theme = App.Settings.Prop.Theme;
+
+            var wpfUiTheme = theme.GetFinal() == Theme.Dark ? Wpf.Ui.Appearance.ThemeType.Dark : Wpf.Ui.Appearance.ThemeType.Light;
+
             dialog.Resources.MergedDictionaries.Clear();
-            dialog.Resources.MergedDictionaries.Add(new ThemesDictionary() { Theme = theme.GetFinal() == Theme.Dark ? Wpf.Ui.Appearance.ThemeType.Dark : Wpf.Ui.Appearance.ThemeType.Light });
+            dialog.Resources.MergedDictionaries.Add(new ThemesDictionary() { Theme = wpfUiTheme });
+            dialog.DefaultBorderThemeOverwrite = wpfUiTheme;
+
+            // disable default window border if border is modified
+            if (xmlElement.Attribute("BorderBrush") != null || xmlElement.Attribute("BorderThickness") != null)
+                dialog.DefaultBorderEnabled = false;
 
             // set the margin & padding on the element grid
             dialog.ElementGrid.Margin = dialog.Margin;
@@ -690,21 +714,26 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         private static object? GetContentFromXElement(CustomDialog dialog, XElement xmlElement)
         {
             var contentAttr = xmlElement.Attribute("Content");
+            var contentElement = xmlElement.Element($"{xmlElement.Name}.Content");
+            if (contentAttr != null && contentElement != null)
+                throw new Exception($"{xmlElement.Name} can only have one Content defined");
+
             if (contentAttr != null)
                 return GetTranslatedText(contentAttr.Value);
 
-            var contentElement = xmlElement.Element($"{xmlElement.Name}.Content");
-            if (contentElement != null)
-            {
-                var first = contentElement.FirstNode as XElement;
-                if (first == null)
-                    throw new Exception($"{xmlElement.Name} Content is missing the content");
+            if (contentElement == null)
+                return null;
 
-                var uiElement = HandleXml<UIElement>(dialog, first);
-                return uiElement;
-            }
+            var children = contentElement.Elements();
+            if (children.Count() > 1)
+                throw new Exception($"{xmlElement.Name}.Content can only have one child");
 
-            return null;
+            var first = contentElement.FirstNode as XElement;
+            if (first == null)
+                throw new Exception($"{xmlElement.Name} Content is missing the content");
+
+            var uiElement = HandleXml<UIElement>(dialog, first);
+            return uiElement;
         }
 
         private static UIElement HandleXmlElement_Button(CustomDialog dialog, XElement xmlElement)
@@ -726,15 +755,28 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return button;
         }
 
+        private static void HandleXmlElement_RangeBase(CustomDialog dialog, RangeBase rangeBase, XElement xmlElement)
+        {
+            HandleXmlElement_Control(dialog, rangeBase, xmlElement);
+
+            rangeBase.Value = ParseXmlAttribute<double>(xmlElement, "Value", 0);
+            rangeBase.Maximum = ParseXmlAttribute<double>(xmlElement, "Maximum", 100);
+        }
+
         private static UIElement HandleXmlElement_ProgressBar(CustomDialog dialog, XElement xmlElement)
         {
-            var progressBar = new ProgressBar();
-            HandleXmlElement_Control(dialog, progressBar, xmlElement);
+            var progressBar = new Wpf.Ui.Controls.ProgressBar();
+            HandleXmlElement_RangeBase(dialog, progressBar, xmlElement);
 
             progressBar.IsIndeterminate = ParseXmlAttribute<bool>(xmlElement, "IsIndeterminate", false);
 
-            progressBar.Value = ParseXmlAttribute<double>(xmlElement, "Value", 0);
-            progressBar.Maximum = ParseXmlAttribute<double>(xmlElement, "Maximum", 100);
+            object? cornerRadius = GetCornerRadiusFromXElement(xmlElement, "CornerRadius");
+            if (cornerRadius != null)
+                progressBar.CornerRadius = (CornerRadius)cornerRadius;
+
+            object? indicatorCornerRadius = GetCornerRadiusFromXElement(xmlElement, "IndicatorCornerRadius");
+            if (indicatorCornerRadius != null)
+                progressBar.IndicatorCornerRadius = (CornerRadius)indicatorCornerRadius;
 
             if (xmlElement.Attribute("Name")?.Value == "PrimaryProgressBar")
             {
@@ -746,6 +788,28 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
 
                 Binding valueBinding = new Binding("ProgressValue") { Mode = BindingMode.OneWay };
                 BindingOperations.SetBinding(progressBar, ProgressBar.ValueProperty, valueBinding);
+            }
+
+            return progressBar;
+        }
+
+        private static UIElement HandleXmlElement_ProgressRing(CustomDialog dialog, XElement xmlElement)
+        {
+            var progressBar = new Wpf.Ui.Controls.ProgressRing();
+            HandleXmlElement_RangeBase(dialog, progressBar, xmlElement);
+
+            progressBar.IsIndeterminate = ParseXmlAttribute<bool>(xmlElement, "IsIndeterminate", false);
+
+            if (xmlElement.Attribute("Name")?.Value == "PrimaryProgressRing")
+            {
+                Binding isIndeterminateBinding = new Binding("ProgressIndeterminate") { Mode = BindingMode.OneWay };
+                BindingOperations.SetBinding(progressBar, Wpf.Ui.Controls.ProgressRing.IsIndeterminateProperty, isIndeterminateBinding);
+
+                Binding maximumBinding = new Binding("ProgressMaximum") { Mode = BindingMode.OneWay };
+                BindingOperations.SetBinding(progressBar, Wpf.Ui.Controls.ProgressRing.MaximumProperty, maximumBinding);
+
+                Binding valueBinding = new Binding("ProgressValue") { Mode = BindingMode.OneWay };
+                BindingOperations.SetBinding(progressBar, Wpf.Ui.Controls.ProgressRing.ValueProperty, valueBinding);
             }
 
             return progressBar;
@@ -777,6 +841,11 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
 
             textBlock.IsHyphenationEnabled = ParseXmlAttribute<bool>(xmlElement, "IsHyphenationEnabled", false);
             textBlock.BaselineOffset = ParseXmlAttribute<double>(xmlElement, "BaselineOffset", double.NaN);
+
+            // NOTE: font family can both be the name of the font or a uri
+            string? fontFamily = GetSourcePath(dialog, xmlElement.Attribute("FontFamily")?.Value);
+            if (fontFamily != null)
+                textBlock.FontFamily = new System.Windows.Media.FontFamily(fontFamily);
 
             object? padding = GetThicknessFromXElement(xmlElement, "Padding");
             if (padding != null)
@@ -817,8 +886,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             image.Stretch = ParseXmlAttribute<Stretch>(xmlElement, "Stretch", Stretch.Uniform);
             image.StretchDirection = ParseXmlAttribute<StretchDirection>(xmlElement, "StretchDirection", StretchDirection.Both);
 
-            string sourcePath = GetXmlAttribute(xmlElement, "Source");
-            sourcePath = sourcePath.Replace("theme://", $"{dialog.ThemeDir}\\");
+            string sourcePath = GetSourcePath(dialog, GetXmlAttribute(xmlElement, "Source"))!;
 
             RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality); // should this be modifiable by the user?
 

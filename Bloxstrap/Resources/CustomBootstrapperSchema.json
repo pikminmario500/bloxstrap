@@ -30,7 +30,8 @@
 				"BorderBrush": "Brush",
 				"FontSize": "double",
 				"FontWeight": "FontWeight",
-				"FontStyle": "FontStyle"
+				"FontStyle": "FontStyle",
+				"FontFamily": "FontFamily"
 			}
 		},
 		"BloxstrapCustomBootstrapper": {
@@ -57,13 +58,28 @@
 				"Content": "object"
 			}
 		},
-		"ProgressBar": {
+		"RangeBase": {
 			"SuperClass": "Control",
+			"IsCreatable": false,
+			"Attributes": {
+				"Value": "double",
+				"Maximum": "double"
+			}
+		},
+		"ProgressBar": {
+			"SuperClass": "RangeBase",
 			"IsCreatable": true,
 			"Attributes": {
 				"IsIndeterminate": "bool",
-				"Value": "double",
-				"Maximum": "double"
+				"CornerRadius": "CornerRadius",
+				"IndicatorCornerRadius": "CornerRadius"
+			}
+		},
+		"ProgressRing": {
+			"SuperClass": "RangeBase",
+			"IsCreatable": true,
+			"Attributes": {
+				"IsIndeterminate": "bool"
 			}
 		},
 		"TextBlock": {
@@ -76,6 +92,7 @@
 				"FontSize": "double",
 				"FontWeight": "FontWeight",
 				"FontStyle": "FontStyle",
+				"FontFamily": "FontFamily",
 				"LineHeight": "double",
 				"LineStackingStrategy": "LineStackingStrategy",
 				"TextAlignment": "TextAlignment",
@@ -254,10 +271,12 @@
 		"Thickness": {},
 		"Rect": {},
 		"Point": {},
+		"CornerRadius": {},
 		"Brush": { "CanHaveElement": true },
 		"Color": {},
 		"ImageSource": {},
 		"Transform": { "CanHaveElement": true },
+		"FontFamily": {},
 		"Visibility": {
 			"Values": [
 				"Visible",
