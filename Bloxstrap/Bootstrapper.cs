@@ -369,7 +369,7 @@ namespace Bloxstrap
             App.Logger.WriteLine(LOG_IDENT, $"Started Roblox (PID {_appPid}), waiting for log file");
 
             logCreatedEvent.WaitOne(TimeSpan.FromSeconds(15));
-
+            {
                 if (string.IsNullOrEmpty(logFileName))
                 {
                     App.Logger.WriteLine(LOG_IDENT, "Unable to identify log file");

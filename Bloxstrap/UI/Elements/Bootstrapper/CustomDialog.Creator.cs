@@ -23,7 +23,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         private bool _initialised = false;
 
         // prevent users from creating elements with the same name multiple times
-        private List<string> UsedNames { get; } = new List<string>();
+        private List<string> UsedNames { get; } = [];
 
         private string ThemeDir { get; set; } = "";
 
@@ -131,7 +131,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         // You can't do numeric only generics in .NET 6. The feature is exclusive to .NET 7+.
         private static int ParseXmlAttributeClamped(XElement element, string attributeName, int? defaultValue = null, int? min = null, int? max = null)
         {
-            int value = ParseXmlAttribute<int>(element, attributeName, defaultValue);
+            int value = ParseXmlAttribute(element, attributeName, defaultValue);
             ValidateXmlElement(element.Name.ToString(), attributeName, value, min, max);
             return value;
         }
