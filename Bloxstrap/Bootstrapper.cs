@@ -306,20 +306,15 @@ namespace Bloxstrap
 
             SetStatus(Strings.Bootstrapper_Status_Starting);
 
-            if (_launchMode == LaunchMode.Player)
+            if (_launchMode == LaunchMode.Player && App.Settings.Prop.ForceRobloxLanguage)
             {
-                if (App.Settings.Prop.ForceRobloxLanguage)
-                {
-                    var match = Regex.Match(_launchCommandLine, "gameLocale:([a-z_]+)", RegexOptions.CultureInvariant);
+                var match = Regex.Match(_launchCommandLine, "gameLocale:([a-z_]+)", RegexOptions.CultureInvariant);
 
-                    if (match.Groups.Count == 2)
-                        _launchCommandLine = _launchCommandLine.Replace("robloxLocale:en_us", $"robloxLocale:{match.Groups[1].Value}", StringComparison.InvariantCultureIgnoreCase);
-                }
-
-                if (!string.IsNullOrEmpty(_launchCommandLine))
-                    _launchCommandLine += " ";
-
-                _launchCommandLine += "-isInstallerLaunch";
+                if (match.Groups.Count == 2)
+                    _launchCommandLine = _launchCommandLine.Replace(
+                        "robloxLocale:en_us", 
+                        $"robloxLocale:{match.Groups[1].Value}", 
+                        StringComparison.OrdinalIgnoreCase);
             }
 
             var startInfo = new ProcessStartInfo()
@@ -337,52 +332,43 @@ namespace Bloxstrap
 
             string? logFileName = null;
 
-            using (var startEvent = new EventWaitHandle(false, EventResetMode.ManualReset, AppData.StartEvent))
+            string rbxLogDir = Path.Combine(Paths.LocalAppData, "Roblox\\logs");
+
+            if (!Directory.Exists(rbxLogDir))
+                Directory.CreateDirectory(rbxLogDir);
+
+            var logWatcher = new FileSystemWatcher()
             {
-                startEvent.Reset();
+                Path = rbxLogDir,
+                Filter = "*.log",
+                EnableRaisingEvents = true
+            };
 
-                string rbxLogDir = Path.Combine(Paths.LocalAppData, "Roblox\\logs");
+            var logCreatedEvent = new AutoResetEvent(false);
 
-                if (!Directory.Exists(rbxLogDir))
-                    Directory.CreateDirectory(rbxLogDir);
+            logWatcher.Created += (_, e) =>
+            {
+                logWatcher.EnableRaisingEvents = false;
+                logFileName = e.FullPath;
+                logCreatedEvent.Set();
+            };
 
-                var logWatcher = new FileSystemWatcher()
-                {
-                    Path = rbxLogDir,
-                    Filter = "*.log",
-                    EnableRaisingEvents = true
-                };
+            // v2.2.0 - byfron will trip if we keep a process handle open for over a minute, so we're doing this now
+            try
+            {
+                using var process = Process.Start(startInfo)!;
+                _appPid = process.Id;
+            }
+            catch (Exception)
+            {
+                // attempt a reinstall on next launch
+                File.Delete(AppData.ExecutablePath);
+                throw;
+            }
 
-                var logCreatedEvent = new AutoResetEvent(false);
+            App.Logger.WriteLine(LOG_IDENT, $"Started Roblox (PID {_appPid}), waiting for log file");
 
-                logWatcher.Created += (_, e) =>
-                {
-                    logWatcher.EnableRaisingEvents = false;
-                    logFileName = e.FullPath;
-                    logCreatedEvent.Set();
-                };
-
-                // v2.2.0 - byfron will trip if we keep a process handle open for over a minute, so we're doing this now
-                try
-                {
-                    using var process = Process.Start(startInfo)!;
-                    _appPid = process.Id;
-                }
-                catch (Exception)
-                {
-                    // attempt a reinstall on next launch
-                    File.Delete(AppData.ExecutablePath);
-                    throw;
-                }
-
-                App.Logger.WriteLine(LOG_IDENT, $"Started Roblox (PID {_appPid}), waiting for start event");
-
-                if (startEvent.WaitOne(TimeSpan.FromSeconds(5)))
-                    App.Logger.WriteLine(LOG_IDENT, "Start event signalled");
-                else
-                   App.Logger.WriteLine(LOG_IDENT, "Start event not signalled, implying successful launch");
-
-                logCreatedEvent.WaitOne(TimeSpan.FromSeconds(5));
+            logCreatedEvent.WaitOne(TimeSpan.FromSeconds(15));
 
                 if (string.IsNullOrEmpty(logFileName))
                 {
@@ -450,6 +436,9 @@ namespace Bloxstrap
                 if (ipl.IsAcquired)
                     Process.Start(Paths.Process, args);
             }
+
+            // average grace time between log being created and the window being shown
+            Thread.Sleep(2000);
         }
 
         public void Cancel()
@@ -1026,9 +1015,6 @@ namespace Bloxstrap
 
             const int maxTries = 5;
 
-            bool statIsRetrying = false;
-            bool statIsHttp = false;
-
             App.Logger.WriteLine(LOG_IDENT, "Downloading...");
 
             var buffer = new byte[4096];
@@ -1081,8 +1067,6 @@ namespace Bloxstrap
                     App.Logger.WriteLine(LOG_IDENT, $"An exception occurred after downloading {totalBytesRead} bytes. ({i}/{maxTries})");
                     App.Logger.WriteException(LOG_IDENT, ex);
 
-                    statIsRetrying = true;
-
                     if (ex.GetType() == typeof(ChecksumFailedException))
                     {
                         App.SendStat("packageDownloadState", "httpFail");
@@ -1112,13 +1096,9 @@ namespace Bloxstrap
                     {
                         App.Logger.WriteLine(LOG_IDENT, "Retrying download over HTTP...");
                         packageUrl = packageUrl.Replace("https://", "http://");
-                        statIsHttp = true;
                     }
                 }
             }
-
-            if (statIsRetrying)
-                App.SendStat("packageDownloadState", statIsHttp ? "httpSuccess" : "retrySuccess");
         }
 
         private void ExtractPackage(Package package, List<string>? files = null)

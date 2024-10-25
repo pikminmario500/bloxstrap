@@ -161,6 +161,8 @@ namespace Bloxstrap
 
                 if (process is not null)
                     PInvoke.SetForegroundWindow((HWND)process.MainWindowHandle);
+
+                App.Terminate();
             }
         }
 
