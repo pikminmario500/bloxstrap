@@ -2360,6 +2360,24 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disabling this will prevent anything configured here from being applied to Roblox..
+        /// </summary>
+        public static string Menu_FastFlags_ManagerEnabled_Description {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.ManagerEnabled.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Bloxstrap to manage Fast Flags.
+        /// </summary>
+        public static string Menu_FastFlags_ManagerEnabled_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.ManagerEnabled.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rendering and Graphics.
         /// </summary>
         public static string Menu_FastFlags_Presets_Categories_Rendering {
