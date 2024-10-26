@@ -1,4 +1,6 @@
-﻿using System.Windows;
+using System.ComponentModel;
+using System.Data;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Shell;
 
@@ -324,7 +326,12 @@ namespace Bloxstrap
                 WorkingDirectory = AppData.Directory
             };
 
-            if (_launchMode == LaunchMode.StudioAuth)
+            if (_launchMode == LaunchMode.Player && ShouldRunAsAdmin())
+            {
+                startInfo.Verb = "runas";
+                startInfo.UseShellExecute = true;
+            }
+            else if (_launchMode == LaunchMode.StudioAuth)
             {
                 Process.Start(startInfo);
                 return;
@@ -358,6 +365,11 @@ namespace Bloxstrap
             {
                 using var process = Process.Start(startInfo)!;
                 _appPid = process.Id;
+            }
+            catch (Win32Exception ex) when (ex.NativeErrorCode == 1223)
+            {
+                // 1223 = ERROR_CANCELLED, gets thrown if a UAC prompt is cancelled
+                return;
             }
             catch (Exception)
             {
@@ -439,6 +451,24 @@ namespace Bloxstrap
 
             // allow for window to show, since the log is created pretty far beforehand
             Thread.Sleep(1000);
+        }
+
+        private bool ShouldRunAsAdmin()
+        {
+            foreach (var root in WindowsRegistry.Roots)
+            {
+                using var key = root.OpenSubKey("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\Layers");
+
+                if (key is null)
+                    continue;
+
+                string? flags = (string?)key.GetValue(AppData.ExecutablePath);
+
+                if (flags is not null && flags.Contains("RUNASADMIN", StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+
+            return false;
         }
 
         public void Cancel()
@@ -598,6 +628,9 @@ namespace Bloxstrap
 
             if (Directory.Exists(AppData.Directory))
             {
+                if (Directory.Exists(AppData.OldDirectory))
+                    Directory.Delete(AppData.OldDirectory, true);
+
                 try
                 {
                     // test to see if any files are in use
