@@ -16,6 +16,8 @@ namespace Bloxstrap.UI.Elements.Dialogs
     /// </summary>
     public partial class ExceptionDialog
     {
+        const int MAX_GITHUB_URL_LENGTH = 8192;
+
         public ExceptionDialog(Exception exception)
         {
             InitializeComponent();
@@ -27,13 +29,19 @@ namespace Bloxstrap.UI.Elements.Dialogs
             string repoUrl = $"https://github.com/{App.ProjectRepository}";
             string wikiUrl = App.ProjectHelpLink;
 
-            string issueUrl = string.Format(
-                "{0}/issues/new?template=bug_report.yaml&title={1}&input={2}&log={3}",
-                repoUrl,
-                HttpUtility.UrlEncode($"[BUG] {exception.GetType()}: {exception.Message}"),
-                HttpUtility.UrlEncode(App.ShortCommitHash),
-                HttpUtility.UrlEncode(string.Join('\n', App.Logger.History))
-            );
+            string title = HttpUtility.UrlEncode($"[BUG] {exception.GetType()}: {exception.Message}");
+            string log = HttpUtility.UrlEncode(string.Join('\n', App.Logger.History));
+
+            string issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&title={title}&log={log}&input={App.ShortCommitHash}";
+
+            if (issueUrl.Length > MAX_GITHUB_URL_LENGTH)
+            {
+                // url is way too long for github. remove the log parameter.
+                issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&title={title}&input={App.ShortCommitHash}";
+
+                if (issueUrl.Length > MAX_GITHUB_URL_LENGTH)
+                    issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&input={App.ShortCommitHash}"; // bruh
+            }
 
             string helpMessage = string.Format(Strings.Dialog_Exception_Info_2, wikiUrl, issueUrl);
 
