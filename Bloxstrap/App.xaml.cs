@@ -165,7 +165,7 @@ namespace Bloxstrap
 
         public static async void SendLog()
         {
-            if (!Settings.Prop.EnableAnalytics || !IsProductionBuild)
+            if (!Settings.Prop.EnableAnalytics)
                 return;
 
             try

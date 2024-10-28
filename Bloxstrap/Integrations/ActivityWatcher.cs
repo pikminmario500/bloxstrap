@@ -131,8 +131,6 @@
 
             OnLogOpen?.Invoke(this, EventArgs.Empty);
             
-            var logFileStream = logFileInfo.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-
             FileStream logFileStream = File.Open(LogLocation, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
             App.Logger.WriteLine(LOG_IDENT, $"Opened {LogLocation}");
