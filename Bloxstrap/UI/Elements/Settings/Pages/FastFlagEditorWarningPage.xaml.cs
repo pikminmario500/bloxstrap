@@ -5,7 +5,7 @@
     /// </summary>
     public partial class FastFlagEditorWarningPage
     {
-        public FastFlagEditorWarningPage()
+        public FastFlagEditorWarningPage() : base(typeof(FastFlagEditorScamWarningPage))
         {
             InitializeComponent();
         }
