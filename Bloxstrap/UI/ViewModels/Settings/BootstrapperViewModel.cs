@@ -1,6 +1,8 @@
-﻿namespace Bloxstrap.UI.ViewModels.Settings
+﻿using System.Windows;
+
+namespace Bloxstrap.UI.ViewModels.Settings
 {
-    public class BehaviourViewModel : NotifyPropertyChangedViewModel
+    public class BootstrapperViewModel : NotifyPropertyChangedViewModel
     {
         private string _oldPlayerVersionGuid = "";
         private string _oldStudioVersionGuid = "";
@@ -43,6 +45,16 @@
                     App.State.Prop.Studio.VersionGuid = _oldStudioVersionGuid;
                 }
             }
+        }
+
+        // divider
+
+        public static Visibility ShowDebugStuff => App.Settings.Prop.ShowDebugStuff ? Visibility.Visible : Visibility.Collapsed;
+
+        public string? SelectedChannel
+        {
+            get => App.Settings.Prop.CustomChannel;
+            set => App.Settings.Prop.CustomChannel = value;
         }
     }
 }

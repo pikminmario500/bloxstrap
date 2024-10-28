@@ -11,15 +11,15 @@
       d:DataContext="{d:DesignInstance Type=models:BloxstrapViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
-      Title="BehaviourPage"
+      Title="BloxstrapPage"
       Scrollable="True">
 
     <StackPanel Margin="0,0,14,14">
         <TextBlock Margin="0,0,0,8" Text="{x:Static resources:Strings.Menu_Bloxstrap_Description}" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_Behaviour_AutoUpdate_Title}"
-            Description="{x:Static resources:Strings.Menu_Behaviour_AutoUpdate_Description}">
+            Header="{x:Static resources:Strings.Menu_Bloxstrap_AutoUpdate_Title}"
+            Description="{x:Static resources:Strings.Menu_Bloxstrap_AutoUpdate_Description}">
             <ui:ToggleSwitch IsChecked="{Binding UpdateCheckingEnabled, Mode=TwoWay}" />
         </controls:OptionControl>
 
@@ -69,8 +69,8 @@
         </ui:CardExpander>
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_Behaviour_UseLogger_Title}"
-            Description="{x:Static resources:Strings.Menu_Behaviour_UseLogger_Description}">
+            Header="{x:Static resources:Strings.Menu_Bloxstrap_UseLogger_Title}"
+            Description="{x:Static resources:Strings.Menu_Bloxstrap_UseLogger_Description}">
             <ui:ToggleSwitch IsChecked="{Binding UseLogger, Mode=TwoWay}" />
         </controls:OptionControl>
     </StackPanel>

@@ -2024,90 +2024,90 @@ namespace Bloxstrap.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Bloxstrap will automatically check and update itself when launching Roblox..
         /// </summary>
-        public static string Menu_Behaviour_AutoUpdate_Description {
+        public static string Menu_Bloxstrap_AutoUpdate_Description {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.AutoUpdate.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Bloxstrap.AutoUpdate.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Automatically update Bloxstrap.
         /// </summary>
-        public static string Menu_Behaviour_AutoUpdate_Title {
+        public static string Menu_Bloxstrap_AutoUpdate_Title {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.AutoUpdate.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Bloxstrap.AutoUpdate.Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Prevent against closures of your existing game from accidentally launching another one..
         /// </summary>
-        public static string Menu_Behaviour_ConfirmLaunches_Description {
+        public static string Menu_Bootstrapper_ConfirmLaunches_Description {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.ConfirmLaunches.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.ConfirmLaunches.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Prompt to confirm when launching another Roblox instance.
         /// </summary>
-        public static string Menu_Behaviour_ConfirmLaunches_Title {
+        public static string Menu_Bootstrapper_ConfirmLaunches_Title {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.ConfirmLaunches.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.ConfirmLaunches.Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Configure what Bloxstrap should do when launching Roblox..
         /// </summary>
-        public static string Menu_Behaviour_Description {
+        public static string Menu_Bootstrapper_Description {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Only applies to games launched from the Roblox website..
         /// </summary>
-        public static string Menu_Behaviour_ForceRobloxLanguage_Description {
+        public static string Menu_Bootstrapper_ForceRobloxLanguage_Description {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.ForceRobloxLanguage.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.ForceRobloxLanguage.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Allow use of unsupported Roblox languages.
         /// </summary>
-        public static string Menu_Behaviour_ForceRobloxLanguage_Title {
+        public static string Menu_Bootstrapper_ForceRobloxLanguage_Title {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.ForceRobloxLanguage.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.ForceRobloxLanguage.Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Roblox will be installed fresh on next launch..
         /// </summary>
-        public static string Menu_Behaviour_ForceRobloxReinstall_Description {
+        public static string Menu_Bootstrapper_ForceRobloxReinstall_Description {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.ForceRobloxReinstall.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.ForceRobloxReinstall.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Force Roblox reinstallation.
         /// </summary>
-        public static string Menu_Behaviour_ForceRobloxReinstall_Title {
+        public static string Menu_Bootstrapper_ForceRobloxReinstall_Title {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.ForceRobloxReinstall.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.ForceRobloxReinstall.Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Bootstrapper.
         /// </summary>
-        public static string Menu_Behaviour_Title {
+        public static string Menu_Bootstrapper_Title {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.Title", resourceCulture);
             }
         }
         
@@ -3348,18 +3348,18 @@ namespace Bloxstrap.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Choose if Roblox should use Hardware or Software rendering..
         /// </summary>
-        public static string Menu_Behaviour_SoftwareRendering_Description {
+        public static string Menu_Bootstrapper_SoftwareRendering_Description {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.SoftwareRendering.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.SoftwareRendering.Description", resourceCulture);
             }
         }
 
         /// <summary>
         ///   Looks up a localized string similar to Software Rendering.
         /// </summary>
-        public static string Menu_Behaviour_SoftwareRendering_Title {
+        public static string Menu_Bootstrapper_SoftwareRendering_Title {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.SoftwareRendering.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Bootstrapper.SoftwareRendering.Title", resourceCulture);
             }
         }
 
@@ -3411,18 +3411,18 @@ namespace Bloxstrap.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Allow Bloxstrap to write logs for troubleshooting purposes..
         /// </summary>
-        public static string Menu_Behaviour_UseLogger_Description {
+        public static string Menu_Bloxstrap_UseLogger_Description {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.UseLogger.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Bloxstrap.UseLogger.Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Enable logging.
         /// </summary>
-        public static string Menu_Behaviour_UseLogger_Title {
+        public static string Menu_Bloxstrap_UseLogger_Title {
             get {
-                return ResourceManager.GetString("Menu.Behaviour.UseLogger.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Bloxstrap.UseLogger.Title", resourceCulture);
             }
         }
 
@@ -3463,7 +3463,7 @@ namespace Bloxstrap.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Removes the limit of preloaded assets causing faster load times if the game has already been loaded once.
+        ///   Looks up a localized string similar to Removes the limit of preloaded assets causing faster load times if the game has already been loaded once..
         /// </summary>
         public static string Menu_FastFlags_Presets_BetterPreloading_Description {
             get {

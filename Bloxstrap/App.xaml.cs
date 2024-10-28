@@ -38,7 +38,7 @@ namespace Bloxstrap
 
         public static Bootstrapper? Bootstrapper { get; set; } = null!;
 
-        public static string ShortCommitHash = BuildMetadata.CommitHash[..7];
+        public static string? ShortCommitHash;
 
         public static bool IsActionBuild => !string.IsNullOrEmpty(BuildMetadata.CommitRef);
 
@@ -188,6 +188,11 @@ namespace Bloxstrap
             Locale.Initialize();
 
             base.OnStartup(e);
+
+            if (!IsActionBuild)
+                ShortCommitHash = "Custom";
+            else
+                ShortCommitHash = BuildMetadata.CommitHash[..7];
 
 #if DEBUG
             Logger.WriteLine(LOG_IDENT, $"Starting {ProjectName}-Debug {ShortCommitHash}");

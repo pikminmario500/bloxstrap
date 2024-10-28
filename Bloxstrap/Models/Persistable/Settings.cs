@@ -19,6 +19,10 @@ namespace Bloxstrap.Models.Persistable
         public bool EnableAnalytics { get; set; } = true;
         public string? SelectedCustomTheme { get; set; } = null;
         public bool UseLogger { get; set; } = true;
+        public bool ShowDebugStuff { get; set; } = false;
+
+        // channel configuration
+        public string? CustomChannel { get; set; } = null;
 
         // integration configuration
         public bool EnableActivityTracking { get; set; } = true;
