@@ -1413,15 +1413,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zip archive.
-        /// </summary>
-        public static string FileTypes_ZipArchive {
-            get {
-                return ResourceManager.GetString("FileTypes.ZipArchive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Bloxstrap has been upgraded to {0}.
         /// </summary>
         public static string InstallChecker_Updated {
