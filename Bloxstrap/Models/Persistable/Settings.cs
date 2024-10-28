@@ -22,7 +22,7 @@ namespace Bloxstrap.Models.Persistable
         public bool ShowDebugStuff { get; set; } = false;
 
         // channel configuration
-        public string? CustomChannel { get; set; } = null;
+        public string CustomChannel { get; set; } = "";
 
         // integration configuration
         public bool EnableActivityTracking { get; set; } = true;

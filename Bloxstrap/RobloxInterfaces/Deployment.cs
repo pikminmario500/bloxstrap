@@ -133,7 +133,7 @@
             if (string.IsNullOrEmpty(channel))
                 channel = Channel;
 
-            if (App.Settings.Prop.CustomChannel is not null)
+            if (App.Settings.Prop.CustomChannel != "")
                 channel = App.Settings.Prop.CustomChannel;
 
             bool isDefaultChannel = string.Compare(channel, DefaultChannel, StringComparison.OrdinalIgnoreCase) == 0;
