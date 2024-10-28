@@ -1295,4 +1295,7 @@ Please close any applications that may be using Roblox's files, and relaunch.</v
   <data name="Menu.FastFlags.Presets.RemoveGrass.Title" xml:space="preserve">
     <value>Remove grass</value>
   </data>
+  <data name="Menu.FastFlags.Presets.MovePrerender.Title" xml:space="preserve">
+    <value>Move prerender phase</value>
+  </data>
 </root>

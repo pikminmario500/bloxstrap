@@ -209,6 +209,12 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.FastFlags.SetPreset("Rendering.Lighting.UseGPU", value ? "True" : null);
         }
 
+        public bool MovePrerender
+        {
+            get => App.FastFlags.GetPreset("Rendering.MovePrerender") == "True";
+            set => App.FastFlags.SetPreset("Rendering.MovePrerender", value ? "True" : null);
+        }
+
         public bool ForceLowQualityEnabled
         {
             get => App.FastFlags.GetPreset("Rendering.ForceLowQuality") == "1";

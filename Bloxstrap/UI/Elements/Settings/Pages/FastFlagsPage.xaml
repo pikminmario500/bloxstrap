@@ -108,6 +108,11 @@
         </controls:OptionControl>
 
         <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_MovePrerender_Title}">
+            <ui:ToggleSwitch IsChecked="{Binding MovePrerender, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_RenderingMode_Title}">
             <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" ItemsSource="{Binding RenderingModes.Keys, Mode=OneTime}" Text="{Binding SelectedRenderingMode, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>

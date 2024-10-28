@@ -3413,5 +3413,14 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.RemoveGrass.Title", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Move prerender phase.
+        /// </summary>
+        public static string Menu_FastFlags_Presets_MovePrerender_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.MovePrerender.Title", resourceCulture);
+            }
+        }
     }
 }

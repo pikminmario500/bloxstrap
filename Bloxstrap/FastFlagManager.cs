@@ -70,6 +70,7 @@ namespace Bloxstrap
             { "Rendering.HyperThreading2", "FFlagRenderDebugCheckThreading2" },
             { "Rendering.BetterPreloading", "DFIntNumAssetsMaxToPreload" },
             { "Rendering.Lighting.UseGPU", "FFlagFastGPULightCulling3" },
+            { "Rendering.MovePrerender", "FFlagMovePrerender" },
 
             { "Rendering.ForceLowQuality", "DFIntDebugFRMQualityLevelOverride" },
             { "Rendering.NoGrass1", "FIntFRMMinGrassDistance" },
