@@ -68,6 +68,12 @@ namespace Bloxstrap
 
             { "Rendering.HyperThreading1", "FFlagDebugCheckRenderThreading" },
             { "Rendering.HyperThreading2", "FFlagRenderDebugCheckThreading2" },
+
+            { "Rendering.OcclusionCulling1", "DFFlagUseVisBugChecks" },
+            { "Rendering.OcclusionCulling2", "FFlagEnableVisBugChecks27" },
+            { "Rendering.OcclusionCulling3", "FFlagVisBugChecksThreadYield" },
+            { "Rendering.OcclusionCulling4", "FIntEnableVisBugChecksHundredthPercent27" },
+
             { "Rendering.BetterPreloading", "DFIntNumAssetsMaxToPreload" },
             { "Rendering.Lighting.UseGPU", "FFlagFastGPULightCulling3" },
             { "Rendering.MovePrerender", "FFlagMovePrerender" },
@@ -298,6 +304,22 @@ namespace Bloxstrap
                 SetPreset("Rendering.HyperThreading2", null);
         }
 
+        public void CheckOcclusionCullingPreset()
+        {
+            if (GetPreset("Rendering.OcclusionCulling1") == "True")
+            {
+                SetPreset("Rendering.OcclusionCulling2", "True");
+                SetPreset("Rendering.OcclusionCulling3", "True");
+                SetPreset("Rendering.OcclusionCulling4", "100");
+            }
+            else
+            {
+                SetPreset("Rendering.OcclusionCulling2", null);
+                SetPreset("Rendering.OcclusionCulling3", null);
+                SetPreset("Rendering.OcclusionCulling4", null);
+            }
+        }
+
         public void CheckGrassPreset()
         {
             if (GetPreset("Rendering.NoGrass1") == "0")
@@ -335,6 +357,7 @@ namespace Bloxstrap
             CheckManualFullscreenPreset();
             CheckTelemetryPreset();
             CheckHyperThreadingPreset();
+            CheckOcclusionCullingPreset();
             CheckGrassPreset();
         }
     }

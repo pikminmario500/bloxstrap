@@ -77,6 +77,12 @@
         </controls:OptionControl>
 
         <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_OcclusionCulling_Title}"
+            HelpLink="https://www.intel.com/content/www/us/en/gaming/resources/hyper-threading.html">
+            <ui:ToggleSwitch IsChecked="{Binding OcclusionCullingEnabled, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_LightingTechnology_Title}" 
             Description="{Binding Source={x:Static resources:Strings.Menu_FastFlags_Presets_LightingTechnology_Description}, Converter={StaticResource StringFormatConverter}, ConverterParameter='https://github.com/bloxstraplabs/bloxstrap/wiki/A-guide-to-FastFlags#preferred-lighting-technology'}"  Foreground="{DynamicResource TextFillColorSecondaryBrush}"
             HelpLink="https://github.com/bloxstraplabs/bloxstrap/wiki/A-guide-to-FastFlags#preferred-lighting-technology">

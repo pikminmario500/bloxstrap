@@ -3497,5 +3497,14 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.MovePrerender.Title", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Occlusion culling.
+        /// </summary>
+        public static string Menu_FastFlags_Presets_OcclusionCulling_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.OcclusionCulling.Title", resourceCulture);
+            }
+        }
     }
 }

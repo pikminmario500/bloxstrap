@@ -197,6 +197,16 @@ namespace Bloxstrap.UI.ViewModels.Settings
             }
         }
 
+        public bool OcclusionCullingEnabled
+        {
+            get => App.FastFlags.GetPreset("Rendering.OcclusionCulling1") == "True";
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.OcclusionCulling1", value ? "True" : null);
+                App.FastFlags.CheckOcclusionCullingPreset();
+            }
+        }
+
         public bool BetterPreloadingEnabled
         {
             get => App.FastFlags.GetPreset("Rendering.BetterPreloading") == "2147483647";
