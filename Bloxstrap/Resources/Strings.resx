@@ -1329,7 +1329,7 @@ Ask for your money back immediately.</value>
   <data name="Menu.FastFlags.Presets.MovePrerender.Title" xml:space="preserve">
     <value>Move prerender phase</value>
   </data>
-  <data name="Menu.FastFlags.Presets.HyperThreading.Title" xml:space="preserve">
+  <data name="Menu.FastFlags.Presets.OcclusionCulling.Title" xml:space="preserve">
     <value>Occlusion culling</value>
   </data>
 </root>

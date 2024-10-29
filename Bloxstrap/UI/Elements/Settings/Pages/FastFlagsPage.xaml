@@ -77,8 +77,7 @@
         </controls:OptionControl>
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_OcclusionCulling_Title}"
-            HelpLink="https://www.intel.com/content/www/us/en/gaming/resources/hyper-threading.html">
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_OcclusionCulling_Title}">
             <ui:ToggleSwitch IsChecked="{Binding OcclusionCullingEnabled, Mode=TwoWay}" />
         </controls:OptionControl>
 
