@@ -12,10 +12,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
     internal class FastFlagEditorWarningViewModel : NotifyPropertyChangedViewModel
     {
         private Page _page;
-        private Type _nextPageType;
-        private Action _continueCallback;
-
-        private CancellationTokenSource? _cancellationTokenSource;
 
         public string ContinueButtonText { get; set; } = "";
 
@@ -25,38 +21,20 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
         public ICommand ContinueCommand => new RelayCommand(Continue);
 
-        public FastFlagEditorWarningViewModel(Page page, Type nextPageType, Action continueCallback)
+        public FastFlagEditorWarningViewModel(Page page)
         {
             _page = page;
-            _nextPageType = nextPageType;
-            _continueCallback = continueCallback;
+            DoCountdown();
         }
 
-        public void StartCountdown()
+        private async void DoCountdown()
         {
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource = new CancellationTokenSource();
-            DoCountdown(_cancellationTokenSource.Token);
-        }
-
-        private async void DoCountdown(CancellationToken token)
-        {
-            CanContinue = false;
-            OnPropertyChanged(nameof(CanContinue));
-
             for (int i = 10; i > 0; i--)
             {
                 ContinueButtonText = $"({i}) {Strings.Menu_FastFlagEditor_Warning_Continue}";
                 OnPropertyChanged(nameof(ContinueButtonText));
 
-                try
-                {
-                    await Task.Delay(1000, token);
-                }
-                catch (TaskCanceledException)
-                {
-                    return;
-                }
+                await Task.Delay(1000);
             }
 
             ContinueButtonText = Strings.Menu_FastFlagEditor_Warning_Continue;
@@ -64,6 +42,9 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
             CanContinue = true;
             OnPropertyChanged(nameof(CanContinue));
+
+            App.State.Prop.ShowFFlagEditorWarning = false;
+            App.State.Save();
         }
 
         private void Continue()
@@ -71,10 +52,8 @@ namespace Bloxstrap.UI.ViewModels.Settings
             if (!CanContinue)
                 return;
 
-            _continueCallback();
-
             if (Window.GetWindow(_page) is INavigationWindow window)
-                window.Navigate(_nextPageType);
+                window.Navigate(typeof(FastFlagEditorPage));
         }
 
         private void GoBack()
