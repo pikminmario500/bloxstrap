@@ -165,21 +165,28 @@
                 if (!isDefaultChannel)
                     path = $"/v2/client-version/{BinaryType}/channel/{channel}";
 
-                try
+                if (App.Settings.Prop.ForceNonCDNLink)
                 {
-                    clientVersion = await Http.GetJson<ClientVersion>("https://clientsettingscdn.roblox.com" + path);
-                }
-                catch (HttpRequestException httpEx) 
-                when (!isDefaultChannel && BadChannelCodes.Contains(httpEx.StatusCode))
-                {
-                    throw new InvalidChannelException(httpEx.StatusCode);
-                }
-                catch (Exception ex)
-                {
-                    App.Logger.WriteLine(LOG_IDENT, "Failed to contact clientsettingscdn! Falling back to clientsettings...");
-                    App.Logger.WriteException(LOG_IDENT, ex);
-
                     clientVersion = await Http.GetJson<ClientVersion>("https://clientsettings.roblox.com" + path);
+                }
+                else
+                {
+                    try
+                    {
+                        clientVersion = await Http.GetJson<ClientVersion>("https://clientsettingscdn.roblox.com" + path);
+                    }
+                    catch (HttpRequestException httpEx) 
+                    when (!isDefaultChannel && BadChannelCodes.Contains(httpEx.StatusCode))
+                    {
+                        throw new InvalidChannelException(httpEx.StatusCode);
+                    }
+                    catch (Exception ex)
+                    {
+                        App.Logger.WriteLine(LOG_IDENT, "Failed to contact clientsettingscdn! Falling back to clientsettings...");
+                        App.Logger.WriteException(LOG_IDENT, ex);
+
+                        clientVersion = await Http.GetJson<ClientVersion>("https://clientsettings.roblox.com" + path);
+                    }
                 }
 
                 // check if channel is behind LIVE

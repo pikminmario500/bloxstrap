@@ -51,10 +51,16 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
         public static Visibility ShowDebugStuff => App.Settings.Prop.ShowDebugStuff ? Visibility.Visible : Visibility.Collapsed;
 
-        public string? SelectedChannel
+        public string SelectedChannel
         {
             get => App.Settings.Prop.CustomChannel;
             set => App.Settings.Prop.CustomChannel = value;
+        }
+
+        public bool ForceLink
+        {
+            get => App.Settings.Prop.ForceNonCDNLink;
+            set => App.Settings.Prop.ForceNonCDNLink = value;
         }
     }
 }

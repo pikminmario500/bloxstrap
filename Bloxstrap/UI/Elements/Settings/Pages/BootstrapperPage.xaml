@@ -61,6 +61,12 @@
                 Description="Choose which deployment channel Roblox should be downloaded from." >
                 <ui:TextBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" Text="{Binding SelectedChannel, Mode=TwoWay}" />
             </controls:OptionControl>
+
+            <controls:OptionControl 
+                Header="Force clientsettings link" 
+                Description="Force Bloxstrap to use clientsettings.roblox.com instead of clientsettingscdn.roblox.com." >
+                <ui:ToggleSwitch IsChecked="{Binding ForceLink, Mode=TwoWay}" />
+            </controls:OptionControl>
         </StackPanel>
     </StackPanel>
 </ui:UiPage>

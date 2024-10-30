@@ -23,6 +23,7 @@ namespace Bloxstrap.Models.Persistable
 
         // channel configuration
         public string CustomChannel { get; set; } = "";
+        public bool ForceNonCDNLink { get; set; } = false;
 
         // integration configuration
         public bool EnableActivityTracking { get; set; } = true;
