@@ -32,15 +32,15 @@ namespace Bloxstrap.UI.Elements.Dialogs
             string title = HttpUtility.UrlEncode($"[BUG] {exception.GetType()}: {exception.Message}");
             string log = HttpUtility.UrlEncode(App.Logger.AsDocument);
 
-            string issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&title={title}&log={log}&input={App.ShortCommitHash}";
+            string issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&title={title}&log={log}&version={App.ShortCommitHash}";
 
             if (issueUrl.Length > MAX_GITHUB_URL_LENGTH)
             {
                 // url is way too long for github. remove the log parameter.
-                issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&title={title}&input={App.ShortCommitHash}";
+                issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&title={title}&version={App.ShortCommitHash}";
 
                 if (issueUrl.Length > MAX_GITHUB_URL_LENGTH)
-                    issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&input={App.ShortCommitHash}"; // bruh
+                    issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&version={App.ShortCommitHash}"; // bruh
             }
 
             string helpMessage = string.Format(Strings.Dialog_Exception_Info_2, wikiUrl, issueUrl);
