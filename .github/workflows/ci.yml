@@ -28,4 +28,4 @@ jobs:
       with:
         name: Bloxstrap (${{ matrix.configuration }})
         path: |
-          .\Bloxstrap\bin\${{ matrix.configuration }}\net8.0-windows\win-x64\publish\*
+          .\Bloxstrap\bin\${{ matrix.configuration }}\net9.0-windows\win-x64\publish\*
