@@ -154,16 +154,6 @@ namespace Bloxstrap
 
             if (connectionResult is not null)
                 HandleConnectionError(connectionResult);
-            
-#if !DEBUG && !QA_BUILD
-            if (App.Settings.Prop.CheckForUpdates && !App.LaunchSettings.UpgradeFlag.Active && App.IsActionBuild)
-            {
-                bool updatePresent = await CheckForUpdates();
-                
-                if (updatePresent)
-                    return;
-            }
-#endif
 
             // ensure only one instance of the bootstrapper is running at the time
             // so that we don't have stuff like two updates happening simultaneously
@@ -450,7 +440,7 @@ namespace Bloxstrap
                 if (App.LaunchSettings.TestModeFlag.Active)
                     args += " -testmode";
 
-                if (ipl.IsAcquired)
+                if (ipl.IsAcquired || App.Settings.Prop.MultiInstanceLaunching)
                     Process.Start(Paths.Process, args);
             }
 
@@ -522,98 +512,6 @@ namespace Bloxstrap
             Dialog?.CloseBootstrapper();
 
             App.SoftTerminate(ErrorCode.ERROR_CANCELLED);
-        }
-#endregion
-
-        #region App Install
-        private async Task<bool> CheckForUpdates()
-        {
-            const string LOG_IDENT = "Bootstrapper::CheckForUpdates";
-            
-            // don't update if there's another instance running (likely running in the background)
-            // i don't like this, but there isn't much better way of doing it /shrug
-            if (Process.GetProcessesByName(App.ProjectName).Length > 1)
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"More than one Bloxstrap instance running, aborting update check");
-                return false;
-            }
-
-            App.Logger.WriteLine(LOG_IDENT, "Checking for updates...");
-
-            var releaseInfo = await App.GetLatestRelease();
-
-            if (releaseInfo is null)
-                return false;
-
-            // check if we aren't using a deployed build, so we can update to one if a new version comes out
-            if (App.IsActionBuild && App.ShortCommitHash == releaseInfo.TagName)
-            {
-                App.Logger.WriteLine(LOG_IDENT, "No updates found");
-                return false;
-            }
-
-            if (Dialog is not null)
-                Dialog.CancelEnabled = false;
-
-            SetStatus(Strings.Bootstrapper_Status_UpgradingBloxstrap);
-
-            try
-            {
-                var asset = releaseInfo.Assets![1];
-
-                string downloadLocation = Path.Combine(Paths.TempUpdates, asset.Name);
-
-                Directory.CreateDirectory(Paths.TempUpdates);
-
-                App.Logger.WriteLine(LOG_IDENT, $"Downloading {releaseInfo.TagName}...");
-                
-                if (!File.Exists(downloadLocation))
-                {
-                    var response = await App.HttpClient.GetAsync(asset.BrowserDownloadUrl);
-
-                    await using var fileStream = new FileStream(downloadLocation, FileMode.OpenOrCreate, FileAccess.Write);
-                    await response.Content.CopyToAsync(fileStream);
-                }
-
-                App.Logger.WriteLine(LOG_IDENT, $"Starting {releaseInfo.TagName}...");
-
-                ProcessStartInfo startInfo = new()
-                {
-                    FileName = downloadLocation,
-                };
-
-                startInfo.ArgumentList.Add("-upgrade");
-
-                foreach (string arg in App.LaunchSettings.Args)
-                    startInfo.ArgumentList.Add(arg);
-
-                if (_launchMode == LaunchMode.Player && !startInfo.ArgumentList.Contains("-player"))
-                    startInfo.ArgumentList.Add("-player");
-                else if (_launchMode == LaunchMode.Studio && !startInfo.ArgumentList.Contains("-studio"))
-                    startInfo.ArgumentList.Add("-studio");
-
-                App.Settings.Save();
-
-                new InterProcessLock("AutoUpdater");
-                
-                Process.Start(startInfo);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                App.Logger.WriteLine(LOG_IDENT, "An exception occurred when running the auto-updater");
-                App.Logger.WriteException(LOG_IDENT, ex);
-
-                Frontend.ShowMessageBox(
-                    string.Format(Strings.Bootstrapper_AutoUpdateFailed, releaseInfo.TagName),
-                    MessageBoxImage.Information
-                );
-
-                Utilities.ShellExecute(App.ProjectDownloadLink);
-            }
-
-            return false;
         }
 #endregion
 

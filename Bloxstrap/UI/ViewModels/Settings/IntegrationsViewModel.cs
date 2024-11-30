@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 using Microsoft.Win32;
@@ -111,6 +112,40 @@ namespace Bloxstrap.UI.ViewModels.Settings
         {
             get => !App.Settings.Prop.HideRPCButtons;
             set => App.Settings.Prop.HideRPCButtons = !value;
+        }
+
+        public bool MultiInstanceLaunchingEnabled
+        {
+            get => App.Settings.Prop.MultiInstanceLaunching;
+            set
+            {
+                App.Settings.Prop.MultiInstanceLaunching = value;
+
+                if (!value)
+                {
+                    FixTeleportsEnabled = value;
+                    OnPropertyChanged(nameof(FixTeleportsEnabled));
+                }
+            }
+        }
+
+        public bool FixTeleportsEnabled
+        {
+            get => App.Settings.Prop.FixTeleports;
+            set
+            {
+                if (value)
+                {
+                    var result = Frontend.ShowMessageBox(Bloxstrap.Resources.Strings.Menu_Integrations_FixTeleports_ConfirmEnable, MessageBoxImage.Warning, MessageBoxButton.YesNo);
+
+                    if (result != MessageBoxResult.Yes)
+                    {
+                        return;
+                    }
+                }
+
+                App.Settings.Prop.FixTeleports = value;
+            }
         }
 
         public bool DiscordAccountOnProfile
