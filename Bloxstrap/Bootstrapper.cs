@@ -344,8 +344,11 @@ namespace Bloxstrap
 
             string? logFileName = null;
 
-            string rbxLogDir = Path.Combine(Paths.LocalAppData, "Roblox\\logs");
+            string rbxDir = Path.Combine(Paths.LocalAppData, "Roblox");
+            if (!Directory.Exists(rbxDir))
+                Directory.CreateDirectory(rbxDir);
 
+            string rbxLogDir = Path.Combine(rbxDir, "logs");
             if (!Directory.Exists(rbxLogDir))
                 Directory.CreateDirectory(rbxLogDir);
 

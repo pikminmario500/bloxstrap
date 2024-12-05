@@ -124,6 +124,10 @@ namespace Bloxstrap
             if (string.Compare(Directory.GetParent(InstallLocation)?.FullName, Paths.UserProfile, StringComparison.InvariantCultureIgnoreCase) == 0)
                 return false;
 
+            // prevent from installing into the program files folder
+            if (InstallLocation.Contains("Program Files"))
+                return false;
+
             return true;
         }
 
@@ -541,6 +545,7 @@ namespace Bloxstrap
 
                     WindowsRegistry.RegisterPlayer();
 
+                    App.FastFlags.SetValue("FFlagDisableNewIGMinDUA", null);
                     App.FastFlags.SetValue("FFlagFixGraphicsQuality", null);
 
                     try
