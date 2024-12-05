@@ -44,8 +44,6 @@ namespace Bloxstrap
 
         public static bool IsStudioVisible => !string.IsNullOrEmpty(State.Prop.Studio.VersionGuid);
 
-        public static bool IsStudioVisible => !String.IsNullOrEmpty(App.State.Prop.Studio.VersionGuid);
-
         public static readonly MD5 MD5Provider = MD5.Create();
 
         public static readonly Logger Logger = new();
