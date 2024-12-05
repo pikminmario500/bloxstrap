@@ -1268,9 +1268,6 @@ Please close any applications that may be using Roblox's files, and relaunch.</v
   <data name="Enums.BootstrapperStyle.CustomDialog" xml:space="preserve">
     <value>Custom</value>
   </data>
-  <data name="LaunchMenu.LaunchRobloxStudio" xml:space="preserve">
-    <value>Launch Roblox Studio</value>
-  </data>
   <data name="Menu.Bootstrapper.SoftwareRendering.Title" xml:space="preserve">
     <value>Software Rendering</value>
   </data>
