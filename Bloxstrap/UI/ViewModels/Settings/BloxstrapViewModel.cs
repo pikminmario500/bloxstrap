@@ -56,6 +56,7 @@ namespace Bloxstrap.UI.ViewModels.Settings
             }
 
             zipStream.CloseEntry();
+            zipStream.Finish();
             memStream.Position = 0;
 
             using var outputStream = File.OpenWrite(dialog.FileName);
