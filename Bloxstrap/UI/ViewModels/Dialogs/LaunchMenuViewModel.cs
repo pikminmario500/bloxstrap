@@ -12,6 +12,8 @@ namespace Bloxstrap.UI.ViewModels.Installer
 
         public Visibility RobloxStudioOptionVisibility => App.IsStudioVisible ? Visibility.Visible : Visibility.Collapsed;
 
+        public Visibility RobloxStudioOptionVisibility => App.IsStudioVisible ? Visibility.Visible : Visibility.Collapsed;
+
         public ICommand LaunchSettingsCommand => new RelayCommand(LaunchSettings);
 
         public ICommand LaunchRobloxCommand => new RelayCommand(LaunchRoblox);
