@@ -36,13 +36,13 @@
         };
 
         public virtual string ExecutableName { get; } = null!;
-        
-        public virtual string Directory { get; } = null!;
 
-        public string LockFilePath => Path.Combine(Directory, "Bloxstrap.lock");
-        
+        public string Directory => Path.Combine(Paths.Versions, State.VersionGuid);
+
         public string ExecutablePath => Path.Combine(Directory, ExecutableName);
-        
+
+        public virtual AppState State { get; } = null!;
+
         public virtual IReadOnlyDictionary<string, string> PackageDirectoryMap { get; set; }
 
 
