@@ -5,6 +5,12 @@ namespace Bloxstrap
 {
     internal class Installer
     {
+        /// <summary>
+        /// Should this version automatically open the release notes page?
+        /// Recommended for major updates only.
+        /// </summary>
+        private const bool OpenReleaseNotes = false;
+
         private static string DesktopShortcut => Path.Combine(Paths.Desktop, $"{App.ProjectName}.lnk");
 
         private static string StartMenuShortcut => Path.Combine(Paths.WindowsStartMenu, $"{App.ProjectName}.lnk");
@@ -565,18 +571,32 @@ namespace Bloxstrap
 
                 if (Utilities.CompareVersions(existingVer, "2.8.2") == VersionComparison.LessThan)
                 {
-                    try
+                    string robloxDirectory = Path.Combine(Paths.Base, "Roblox");
+
+                    if (Directory.Exists(robloxDirectory))
                     {
-                        Directory.Delete(Path.Combine(Paths.Base, "Roblox"), true);
+                        try
+                        {
+                            Directory.Delete(robloxDirectory, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            App.Logger.WriteLine(LOG_IDENT, "Failed to delete the Roblox directory");
+                            App.Logger.WriteException(LOG_IDENT, ex);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        App.Logger.WriteException(LOG_IDENT, ex);
-                    }
+                }
+
+                if (Utilities.CompareVersions(existingVer, "2.8.3") == VersionComparison.LessThan)
+                {
+                    // force reinstallation
+                    App.State.Prop.Player.VersionGuid = "";
+                    App.State.Prop.Studio.VersionGuid = "";
                 }
 
                 App.Settings.Save();
                 App.FastFlags.Save();
+                App.State.Save();
             }
 
             if (currentVer is null)

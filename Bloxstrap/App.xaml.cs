@@ -296,15 +296,21 @@ namespace Bloxstrap
             if (installLocation is null)
             {
                 Logger.Initialize(true);
+                Logger.WriteLine(LOG_IDENT, "Not installed, launching the installer");
                 LaunchHandler.LaunchInstaller();
             }
             else
             {
                 Paths.Initialize(installLocation);
 
+                Logger.WriteLine(LOG_IDENT, "Entering main logic");
+
                 // ensure executable is in the install directory
                 if (Paths.Process != Paths.Application && !File.Exists(Paths.Application))
+                {
+                    Logger.WriteLine(LOG_IDENT, "Copying to install directory");
                     File.Copy(Paths.Process, Paths.Application);
+                }
 
                 Settings.Load();
                 Logger.Initialize(LaunchSettings.UninstallFlag.Active);
@@ -333,6 +339,7 @@ namespace Bloxstrap
             }
 
             // you must *explicitly* call terminate when everything is done, it won't be called implicitly
+            Logger.WriteLine(LOG_IDENT, "Startup finished");
         }
     }
 }

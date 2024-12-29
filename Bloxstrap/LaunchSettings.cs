@@ -62,6 +62,8 @@
                     _flagMap.Add(identifier, flag);
             }
 
+            int startIdx = 0;
+
             // infer roblox launch uris
             if (Args.Length >= 1)
             {
@@ -70,23 +72,31 @@
                 if (arg.StartsWith("roblox:", StringComparison.OrdinalIgnoreCase) 
                     || arg.StartsWith("roblox-player:", StringComparison.OrdinalIgnoreCase))
                 {
+                    App.Logger.WriteLine(LOG_IDENT, "Got Roblox player argument");
                     RobloxLaunchMode = LaunchMode.Player;
                     RobloxLaunchArgs = arg;
+                    startIdx = 1;
                 }
             }
 
             // parse
-            for (int i = 0; i < Args.Length; i++)
+            for (int i = startIdx; i < Args.Length; i++)
             {
                 string arg = Args[i];
 
                 if (!arg.StartsWith('-'))
+                {
+                    App.Logger.WriteLine(LOG_IDENT, $"Invalid argument: {arg}");
                     continue;
+                }
 
                 string identifier = arg[1..];
 
                 if (!_flagMap.TryGetValue(identifier, out LaunchFlag? flag) || flag is null)
+                {
+                    App.Logger.WriteLine(LOG_IDENT, $"Unknown argument: {identifier}");
                     continue;
+                }
 
                 flag.Active = true;
 
@@ -109,31 +119,48 @@
 
         private void ParsePlayer(string? data)
         {
+            const string LOG_IDENT = "LaunchSettings::ParsePlayer";
+
             RobloxLaunchMode = LaunchMode.Player;
 
             if (!string.IsNullOrEmpty(data))
+            {
+                App.Logger.WriteLine(LOG_IDENT, "Got Roblox launch arguments");
                 RobloxLaunchArgs = data;
+            }
+            else
+            {
+                App.Logger.WriteLine(LOG_IDENT, "No Roblox launch arguments were provided");
+            }
         }
 
         private void ParseStudio(string? data)
         {
+            const string LOG_IDENT = "LaunchSettings::ParseStudio";
+
             RobloxLaunchMode = LaunchMode.Studio;
 
             if (string.IsNullOrEmpty(data))
+            {
+                App.Logger.WriteLine(LOG_IDENT, "No Roblox launch arguments were provided");
                 return;
+            }
 
             if (data.StartsWith("roblox-studio:"))
             {
+                App.Logger.WriteLine(LOG_IDENT, "Got Roblox Studio launch arguments");
                 RobloxLaunchArgs = data;
             }
             else if (data.StartsWith("roblox-studio-auth:"))
             {
+                App.Logger.WriteLine(LOG_IDENT, "Got Roblox Studio Auth launch arguments");
                 RobloxLaunchMode = LaunchMode.StudioAuth;
                 RobloxLaunchArgs = data;
             }
             else
             {
                 // likely a local path
+                App.Logger.WriteLine(LOG_IDENT, "Got Roblox Studio local place file");
                 RobloxLaunchArgs = $"-task EditFile -localPlaceFile \"{data}\"";
             }
         }
