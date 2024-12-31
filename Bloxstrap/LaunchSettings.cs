@@ -103,6 +103,7 @@
                 if (i < Args.Length - 1 && Args[i+1] is string nextArg && !nextArg.StartsWith('-'))
                 {
                     flag.Data = nextArg;
+                    i++;
                     App.Logger.WriteLine(LOG_IDENT, $"Identifier '{identifier}' is active with data");
                 }
                 else
