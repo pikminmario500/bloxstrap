@@ -185,7 +185,14 @@
                         App.Logger.WriteLine(LOG_IDENT, "Failed to contact clientsettingscdn! Falling back to clientsettings...");
                         App.Logger.WriteException(LOG_IDENT, ex);
 
+                    try
+                    {
                         clientVersion = await Http.GetJson<ClientVersion>("https://clientsettings.roblox.com" + path);
+                    }
+                    catch (HttpRequestException httpEx)
+                    when (!isDefaultChannel && BadChannelCodes.Contains(httpEx.StatusCode))
+                    {
+                        throw new InvalidChannelException(httpEx.StatusCode);
                     }
                 }
 
