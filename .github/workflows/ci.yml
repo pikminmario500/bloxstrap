@@ -70,7 +70,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Release
-      uses: softprops/action-gh-release@9e35a64dfd1e0667392cb69005a3f9fa5ff84bf3
+      uses: softprops/action-gh-release@master
       with:
         draft: false
         make_latest: true
