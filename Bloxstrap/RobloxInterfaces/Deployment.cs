@@ -185,30 +185,31 @@
                         App.Logger.WriteLine(LOG_IDENT, "Failed to contact clientsettingscdn! Falling back to clientsettings...");
                         App.Logger.WriteException(LOG_IDENT, ex);
 
-                    try
-                    {
-                        clientVersion = await Http.GetJson<ClientVersion>("https://clientsettings.roblox.com" + path);
+                        try
+                        {
+                            clientVersion = await Http.GetJson<ClientVersion>("https://clientsettings.roblox.com" + path);
+                        }
+                        catch (HttpRequestException httpEx)
+                        when (!isDefaultChannel && BadChannelCodes.Contains(httpEx.StatusCode))
+                        {
+                            throw new InvalidChannelException(httpEx.StatusCode);
+                        }
                     }
-                    catch (HttpRequestException httpEx)
-                    when (!isDefaultChannel && BadChannelCodes.Contains(httpEx.StatusCode))
+
+                    // check if channel is behind LIVE
+                    if (!isDefaultChannel)
                     {
-                        throw new InvalidChannelException(httpEx.StatusCode);
+                        var defaultClientVersion = await GetInfo(DefaultChannel);
+
+                        if (Utilities.CompareVersions(clientVersion.Version, defaultClientVersion.Version) == VersionComparison.LessThan)
+                            clientVersion.IsBehindDefaultChannel = true;
                     }
+
+                    ClientVersionCache[cacheKey] = clientVersion;
                 }
 
-                // check if channel is behind LIVE
-                if (!isDefaultChannel)
-                {
-                    var defaultClientVersion = await GetInfo(DefaultChannel);
-
-                    if (Utilities.CompareVersions(clientVersion.Version, defaultClientVersion.Version) == VersionComparison.LessThan)
-                        clientVersion.IsBehindDefaultChannel = true;
-                }
-
-                ClientVersionCache[cacheKey] = clientVersion;
+                return clientVersion;
             }
-
-            return clientVersion;
         }
     }
 }
