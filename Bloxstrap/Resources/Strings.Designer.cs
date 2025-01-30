@@ -3468,5 +3468,86 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.OcclusionCulling.Title", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Roblox is currently running, are you sure you want to launch another instance?.
+        /// </summary>
+        public static string Bootstrapper_ConfirmLaunch_MultiInstanceEnabled {
+            get {
+                return ResourceManager.GetString("Bootstrapper.ConfirmLaunch.MultiInstanceEnabled", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Something is likely preventing Bloxstrap from connecting to the internet..
+        /// </summary>
+        public static string Dialog_Connectivity_Preventing {
+            get {
+                return ResourceManager.GetString("Dialog.Connectivity.Preventing", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Allows for having more than one Roblox game client instance open simultaneously..
+        /// </summary>
+        public static string Menu_Integrations_AllowMultipleInstances_Description {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.AllowMultipleInstances.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Allow multi-instance launching.
+        /// </summary>
+        public static string Menu_Integrations_AllowMultipleInstances_Title {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.AllowMultipleInstances.Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Enabling this setting will prevent you from using the desktop app while roblox is running. Are you sure you want to enable it?.
+        /// </summary>
+        public static string Menu_Integrations_FixTeleports_ConfirmEnable {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.FixTeleports.ConfirmEnable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Allows for cross-game teleportation with multiple instances. (fixes error 773).
+        /// </summary>
+        public static string Menu_Integrations_FixTeleports_Description {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.FixTeleports.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Allow cross-game teleportation.
+        /// </summary>
+        public static string Menu_Integrations_FixTeleports_Title {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.FixTeleports.Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Miscellaneous features..
+        /// </summary>
+        public static string Menu_Integrations_Miscellaneous_Description {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.Miscellaneous.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to make RobloxCookies.dat write-only. Please make a bug report about this using the exception dialog that will pop up after pressing OK..
+        /// </summary>
+        public static string Utilities_ApplyTeleportFixFail {
+            get {
+                return ResourceManager.GetString("Utilities.ApplyTeleportFixFail", resourceCulture);
+            }
+        }
     }
 }

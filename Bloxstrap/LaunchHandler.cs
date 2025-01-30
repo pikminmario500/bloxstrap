@@ -223,7 +223,7 @@ namespace Bloxstrap
                 // which often hangs around for a few seconds after the window closes
                 // it would be better to have this rely on the activity tracker when we implement IPC in the planned refactoring
 
-                var result = Frontend.ShowMessageBox(Strings.Bootstrapper_ConfirmLaunch, MessageBoxImage.Warning, MessageBoxButton.YesNo);
+                var result = Frontend.ShowMessageBox(App.Settings.Prop.MultiInstanceLaunching ? Strings.Bootstrapper_ConfirmLaunch_MultiInstanceEnabled : Strings.Bootstrapper_ConfirmLaunch, MessageBoxImage.Warning, MessageBoxButton.YesNo);
 
                 if (result != MessageBoxResult.Yes)
                 {
@@ -245,6 +245,29 @@ namespace Bloxstrap
                 dialog.Bootstrapper = App.Bootstrapper;
             }
 
+            Mutex? singletonMutex = null;
+
+            if (App.Settings.Prop.MultiInstanceLaunching)
+            {
+                App.Logger.WriteLine(LOG_IDENT, "Attempting to create singleton mutex...");
+                try
+                {
+                    Mutex.OpenExisting("ROBLOX_singletonMutex");
+                    App.Logger.WriteLine(LOG_IDENT, "Singleton mutex already exists.");
+                }
+                catch
+                {
+                    // create the singleton mutex before the game client does
+                    singletonMutex = new Mutex(true, "ROBLOX_singletonMutex");
+                    App.Logger.WriteLine(LOG_IDENT, "Created singleton mutex.");
+                }
+            }
+
+            // only applying the fix after game join allows the user to open the desktop app before joining any game
+            if (!App.Settings.Prop.EnableActivityTracking) {
+                Utilities.ApplyTeleportFix();
+            }
+
             Task.Run(App.Bootstrapper.Run).ContinueWith(t =>
             {
                 App.Logger.WriteLine(LOG_IDENT, "Bootstrapper task has finished");
@@ -255,6 +278,20 @@ namespace Bloxstrap
 
                     if (t.Exception is not null)
                         App.FinalizeExceptionHandling(t.Exception);
+                } else if (singletonMutex is not null) {
+                    App.Logger.WriteLine(LOG_IDENT, "We have singleton mutex ownership! Running in background until all Roblox processes are closed");
+
+                    // we've got ownership of the roblox singleton mutex!
+                    // if we stop running, everything will screw up once any more roblox instances launched
+                    while (Process.GetProcessesByName("RobloxPlayerBeta").Any())
+                    {
+                        Thread.Sleep(1000);
+                    };
+
+                    App.Logger.WriteLine(LOG_IDENT, "All Roblox processes closed!");
+
+                    if (File.Exists(App.RobloxCookiesFilePath))
+                        Utilities.RemoveTeleportFix();
                 }
 
                 App.Terminate();

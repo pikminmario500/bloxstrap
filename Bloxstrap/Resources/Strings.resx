@@ -1318,4 +1318,31 @@ Please close any applications that may be using Roblox's files, and relaunch.</v
   <data name="Menu.FastFlags.Presets.OcclusionCulling.Title" xml:space="preserve">
     <value>Occlusion culling</value>
   </data>
+  <data name="Bootstrapper.ConfirmLaunch.MultiInstanceEnabled" xml:space="preserve">
+    <value>Roblox is currently running, are you sure you want to launch another instance?</value>
+  </data>
+  <data name="Dialog.Connectivity.Preventing" xml:space="preserve">
+    <value>Something is likely preventing Bloxstrap from connecting to the internet.</value>
+  </data>
+  <data name="Menu.Integrations.AllowMultipleInstances.Title" xml:space="preserve">
+    <value>Allow multi-instance launching</value>
+  </data>
+  <data name="Menu.Integrations.AllowMultipleInstances.Description" xml:space="preserve">
+    <value>Allows for having more than one Roblox game client instance open simultaneously.</value>
+  </data>
+  <data name="Menu.Integrations.FixTeleports.Title" xml:space="preserve">
+    <value>Allow cross-game teleportation</value>
+  </data>
+  <data name="Menu.Integrations.FixTeleports.Description" xml:space="preserve">
+    <value>Allows for cross-game teleportation with multiple instances. (fixes error 773)</value>
+  </data>
+  <data name="Menu.Integrations.FixTeleports.ConfirmEnable" xml:space="preserve">
+    <value>Enabling this setting will prevent you from using the desktop app while roblox is running. Are you sure you want to enable it?</value>
+  </data>
+  <data name="Menu.Integrations.Miscellaneous.Description" xml:space="preserve">
+    <value>Miscellaneous features.</value>
+  </data>
+  <data name="Utilities.ApplyTeleportFixFail" xml:space="preserve">
+    <value>Failed to make RobloxCookies.dat write-only. Please make a bug report about this using the exception dialog that will pop up after pressing OK.</value>
+  </data>
 </root>

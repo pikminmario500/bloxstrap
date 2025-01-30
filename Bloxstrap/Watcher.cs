@@ -19,10 +19,18 @@ namespace Bloxstrap
         {
             const string LOG_IDENT = "Watcher";
 
+            // Allow multiple watchers if multi instance launching is enabled (there are better ways of doing this but this is fine for now)
             if (!_lock.IsAcquired)
             {
-                App.Logger.WriteLine(LOG_IDENT, "Watcher instance already exists");
-                return;
+                if (!App.Settings.Prop.MultiInstanceLaunching)
+                {
+                    App.Logger.WriteLine(LOG_IDENT, "Watcher instance already exists");
+                    return;
+                }
+                else
+                {
+                    App.Logger.WriteLine(LOG_IDENT, "Launching new Watcher instance");
+                }
             }
 
             string? watcherDataArg = App.LaunchSettings.WatcherFlag.Data;
@@ -50,6 +58,11 @@ namespace Bloxstrap
             {
                 ActivityWatcher = new(_watcherData.LogFile);
 
+                ActivityWatcher.OnGameJoin += delegate
+                {
+                    Utilities.ApplyTeleportFix();
+                };
+
                 if (App.Settings.Prop.UseDisableAppPatch)
                 {
                     ActivityWatcher.OnAppClose += delegate
@@ -60,7 +73,8 @@ namespace Bloxstrap
                     };
                 }
 
-                if (App.Settings.Prop.UseDiscordRichPresence)
+                // Only run rich presence for first watcher
+                if (App.Settings.Prop.UseDiscordRichPresence && _lock.IsAcquired)
                     RichPresence = new(ActivityWatcher);
             }
 
@@ -99,7 +113,7 @@ namespace Bloxstrap
 
         public async Task Run()
         {
-            if (!_lock.IsAcquired || _watcherData is null)
+            if ((!_lock.IsAcquired && !App.Settings.Prop.MultiInstanceLaunching) || _watcherData is null)
                 return;
 
             ActivityWatcher?.Start();
@@ -113,7 +127,7 @@ namespace Bloxstrap
                     CloseProcess(pid);
             }
 
-            if (App.LaunchSettings.TestModeFlag.Active)
+            if (App.LaunchSettings.TestModeFlag.Active && _lock.IsAcquired)
                 Process.Start(Paths.Process, "-settings -testmode");
         }
 
@@ -122,7 +136,8 @@ namespace Bloxstrap
             App.Logger.WriteLine("Watcher::Dispose", "Disposing Watcher");
 
             _notifyIcon?.Dispose();
-            RichPresence?.Dispose();
+            if (_lock.IsAcquired)
+                RichPresence?.Dispose();
 
             GC.SuppressFinalize(this);
         }
