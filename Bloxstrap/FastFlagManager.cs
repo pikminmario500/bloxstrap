@@ -17,9 +17,7 @@ namespace Bloxstrap
             { "Rendering.Framerate", "DFIntTaskSchedulerTargetFps" },
             { "Rendering.ManualFullscreen", "FFlagHandleAltEnterFullscreenManually" },
             { "Rendering.DisableScaling", "DFFlagDisableDPIScale" },
-            { "Rendering.MSAA", "FIntDebugForceMSAASamples" },
             { "Rendering.DisablePostFX", "FFlagDisablePostFx" },
-            { "Rendering.ShadowIntensity", "FIntRenderShadowIntensity" },
 
             { "Rendering.Mode.D3D11", "FFlagDebugGraphicsPreferD3D11" },
             { "Rendering.Mode.D3D10", "FFlagDebugGraphicsPreferD3D11FL10" },
@@ -28,26 +26,9 @@ namespace Bloxstrap
             { "Rendering.Lighting.ShadowMap", "FFlagDebugForceFutureIsBrightPhase2" },
             { "Rendering.Lighting.Future", "FFlagDebugForceFutureIsBrightPhase3" },
 
-            { "Rendering.TextureQuality.OverrideEnabled", "DFFlagTextureQualityOverrideEnabled" },
-            { "Rendering.TextureQuality.Level", "DFIntTextureQualityOverride" },
-            { "Rendering.TerrainTextureQuality", "FIntTerrainArraySliceSize" },
-
             { "UI.Hide", "DFIntCanHideGuiGroupId" },
-            { "UI.FontSize", "FIntFontSizePadding" },
 
             { "UI.FullscreenTitlebarDelay", "FIntFullscreenTitleBarTriggerDelayMillis" },
-            
-            //{ "UI.Menu.Style.V2Rollout", "FIntNewInGameMenuPercentRollout3" },
-            //{ "UI.Menu.Style.EnableV4.1", "FFlagEnableInGameMenuControls" },
-            //{ "UI.Menu.Style.EnableV4.2", "FFlagEnableInGameMenuModernization" },
-            //{ "UI.Menu.Style.EnableV4Chrome", "FFlagEnableInGameMenuChrome" },
-            //{ "UI.Menu.Style.ReportButtonCutOff", "FFlagFixReportButtonCutOff" },
-
-
-            //{ "UI.Menu.Style.ABTest.1", "FFlagEnableMenuControlsABTest" },
-            //{ "UI.Menu.Style.ABTest.2", "FFlagEnableV3MenuABTest3" },
-            //{ "UI.Menu.Style.ABTest.3", "FFlagEnableInGameMenuChromeABTest3" },
-            //{ "UI.Menu.Style.ABTest.4", "FFlagEnableInGameMenuChromeABTest4" },
 
             // divider
 
@@ -72,18 +53,16 @@ namespace Bloxstrap
             { "Rendering.OcclusionCulling1", "DFFlagUseVisBugChecks" },
             { "Rendering.OcclusionCulling2", "FFlagEnableVisBugChecks27" },
             { "Rendering.OcclusionCulling3", "FFlagVisBugChecksThreadYield" },
-            { "Rendering.OcclusionCulling4", "FIntEnableVisBugChecksHundredthPercent27" },
 
-            { "Rendering.BetterPreloading", "DFIntNumAssetsMaxToPreload" },
             { "Rendering.Lighting.UseGPU", "FFlagFastGPULightCulling3" },
             { "Rendering.MovePrerender", "FFlagMovePrerender" },
 
-            { "Rendering.ForceLowQuality", "DFIntDebugFRMQualityLevelOverride" },
-            { "Rendering.NoGrass1", "FIntFRMMinGrassDistance" },
-            { "Rendering.NoGrass2", "FIntFRMMaxGrassDistance" },
-            { "Rendering.NoGrass3", "FIntRenderGrassDetailStrands" },
-
-            { "UI.PreloadFonts", "FFlagPreloadAllFonts" }
+            { "UI.PreloadFonts", "FFlagPreloadAllFonts" },
+            { "UI.VCBetaBadge1", "FFlagVoiceBetaBadge"},
+            { "UI.VCBetaBadge2", "FFlagTopBarUseNewBadge"},
+            { "UI.VCBetaBadge3", "FFlagBetaBadgeLearnMoreLinkFormview"},
+            { "UI.VCBetaBadge4", "FFlagControlBetaBadgeWithGuac"},
+            { "UI.VCBetaBadge5", "FStringVoiceBetaBadgeLearnMoreLink"},
         };
 
         public static IReadOnlyDictionary<RenderingMode, string> RenderingModes => new Dictionary<RenderingMode, string>
@@ -103,88 +82,6 @@ namespace Bloxstrap
             { LightingMode.ShadowMap, "ShadowMap" },
             { LightingMode.Future, "Future" }
         };
-
-        public static IReadOnlyDictionary<MSAAMode, string?> MSAAModes => new Dictionary<MSAAMode, string?>
-        {
-            { MSAAMode.Default, null },
-            { MSAAMode.x1, "1" },
-            { MSAAMode.x2, "2" },
-            { MSAAMode.x4, "4" }
-        };
-
-        public static IReadOnlyDictionary<TextureQuality, string?> TextureQualityLevels => new Dictionary<TextureQuality, string?>
-        {
-            { TextureQuality.Default, null },
-            { TextureQuality.Level0, "0" },
-            { TextureQuality.Level1, "1" },
-            { TextureQuality.Level2, "2" },
-            { TextureQuality.Level3, "3" },
-        };
-
-        // this is one hell of a dictionary definition lmao
-        // since these all set the same flags, wouldn't making this use bitwise operators be better?
-        //public static IReadOnlyDictionary<InGameMenuVersion, Dictionary<string, string?>> IGMenuVersions => new Dictionary<InGameMenuVersion, Dictionary<string, string?>>
-        //{
-        //    {
-        //        InGameMenuVersion.Default,
-        //        new Dictionary<string, string?>
-        //        {
-        //            { "V2Rollout", null },
-        //            { "EnableV4", null },
-        //            { "EnableV4Chrome", null },
-        //            { "ABTest", null },
-        //            { "ReportButtonCutOff", null }
-        //        }
-        //    },
-
-        //    {
-        //        InGameMenuVersion.V1,
-        //        new Dictionary<string, string?>
-        //        {
-        //            { "V2Rollout", "0" },
-        //            { "EnableV4", "False" },
-        //            { "EnableV4Chrome", "False" },
-        //            { "ABTest", "False" },
-        //            { "ReportButtonCutOff", "False" }
-        //        }
-        //    },
-
-        //    {
-        //        InGameMenuVersion.V2,
-        //        new Dictionary<string, string?>
-        //        {
-        //            { "V2Rollout", "100" },
-        //            { "EnableV4", "False" },
-        //            { "EnableV4Chrome", "False" },
-        //            { "ABTest", "False" },
-        //            { "ReportButtonCutOff", null }
-        //        }
-        //    },
-
-        //    {
-        //        InGameMenuVersion.V4,
-        //        new Dictionary<string, string?>
-        //        {
-        //            { "V2Rollout", "0" },
-        //            { "EnableV4", "True" },
-        //            { "EnableV4Chrome", "False" },
-        //            { "ABTest", "False" },
-        //            { "ReportButtonCutOff", null }
-        //        }
-        //    },
-
-        //    {
-        //        InGameMenuVersion.V4Chrome,
-        //        new Dictionary<string, string?>
-        //        {
-        //            { "V2Rollout", "0" },
-        //            { "EnableV4", "True" },
-        //            { "EnableV4Chrome", "True" },
-        //            { "ABTest", "False" },
-        //            { "ReportButtonCutOff", null }
-        //        }
-        //    }
-        //};
 
         // all fflags are stored as strings
         // to delete a flag, set the value as null
@@ -320,27 +217,29 @@ namespace Bloxstrap
             {
                 SetPreset("Rendering.OcclusionCulling2", "True");
                 SetPreset("Rendering.OcclusionCulling3", "True");
-                SetPreset("Rendering.OcclusionCulling4", "100");
             }
             else
             {
                 SetPreset("Rendering.OcclusionCulling2", null);
                 SetPreset("Rendering.OcclusionCulling3", null);
-                SetPreset("Rendering.OcclusionCulling4", null);
             }
         }
 
-        public void CheckGrassPreset()
+        public void CheckVCBetaBadgePreset()
         {
-            if (GetPreset("Rendering.NoGrass1") == "0")
+            if (GetPreset("UI.VCBetaBadge1") == "False")
             {
-                SetPreset("Rendering.NoGrass2", "0");
-                SetPreset("Rendering.NoGrass3", "0");
+                SetPreset("UI.VCBetaBadge2", "False");
+                SetPreset("UI.VCBetaBadge3", "False");
+                SetPreset("UI.VCBetaBadge4", "False");
+                SetPreset("UI.VCBetaBadge5", "False");
             }
             else
             {
-                SetPreset("Rendering.NoGrass2", null);
-                SetPreset("Rendering.NoGrass3", null);
+                SetPreset("UI.VCBetaBadge2", null);
+                SetPreset("UI.VCBetaBadge3", null);
+                SetPreset("UI.VCBetaBadge4", null);
+                SetPreset("UI.VCBetaBadge5", null);
             }
         }
 
@@ -368,7 +267,7 @@ namespace Bloxstrap
             CheckTelemetryPreset();
             CheckHyperThreadingPreset();
             CheckOcclusionCullingPreset();
-            CheckGrassPreset();
+            CheckVCBetaBadgePreset();
         }
     }
 }

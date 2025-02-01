@@ -1305,42 +1305,6 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level 0 (Lowest).
-        /// </summary>
-        public static string Enums_FlagPresets_TextureQuality_Level0 {
-            get {
-                return ResourceManager.GetString("Enums.FlagPresets.TextureQuality.Level0", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Level 1.
-        /// </summary>
-        public static string Enums_FlagPresets_TextureQuality_Level1 {
-            get {
-                return ResourceManager.GetString("Enums.FlagPresets.TextureQuality.Level1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Level 2.
-        /// </summary>
-        public static string Enums_FlagPresets_TextureQuality_Level2 {
-            get {
-                return ResourceManager.GetString("Enums.FlagPresets.TextureQuality.Level2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Level 3 (Highest).
-        /// </summary>
-        public static string Enums_FlagPresets_TextureQuality_Level3 {
-            get {
-                return ResourceManager.GetString("Enums.FlagPresets.TextureQuality.Level3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Private server.
         /// </summary>
         public static string Enums_ServerType_Private {
@@ -2455,29 +2419,11 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable player shadows.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_DisablePlayerShadows_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.DisablePlayerShadows.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Disable post-processing effects.
         /// </summary>
         public static string Menu_FastFlags_Presets_DisablePostFX_Title {
             get {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.DisablePostFX.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable terrain textures.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_DisableTerrainTextures_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.DisableTerrainTextures.Title", resourceCulture);
             }
         }
         
@@ -2505,24 +2451,6 @@ namespace Bloxstrap.Resources {
         public static string Menu_FastFlags_Presets_FixDisplayScaling_Title {
             get {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.FixDisplayScaling.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default value is 1. Adjust if you use a custom font..
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FontPadding_Description {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FontPadding.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Font size.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_FontPadding_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.FontPadding.Title", resourceCulture);
             }
         }
         
@@ -2581,29 +2509,11 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anti-aliasing quality (MSAA).
-        /// </summary>
-        public static string Menu_FastFlags_Presets_MSAA_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.MSAA.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Rendering mode.
         /// </summary>
         public static string Menu_FastFlags_Presets_RenderingMode_Title {
             get {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.RenderingMode.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Texture quality.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_TextureQuality_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.TextureQuality.Title", resourceCulture);
             }
         }
         
@@ -3362,15 +3272,6 @@ namespace Bloxstrap.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Force low quality.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_ForceLowQuality_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.ForceLowQuality.Title", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Allow Bloxstrap to write logs for troubleshooting purposes..
         /// </summary>
         public static string Menu_Bloxstrap_UseLogger_Description {
@@ -3443,15 +3344,6 @@ namespace Bloxstrap.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Remove grass.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_RemoveGrass_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.RemoveGrass.Title", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Move prerender phase.
         /// </summary>
         public static string Menu_FastFlags_Presets_MovePrerender_Title {
@@ -3466,6 +3358,15 @@ namespace Bloxstrap.Resources {
         public static string Menu_FastFlags_Presets_OcclusionCulling_Title {
             get {
                 return ResourceManager.GetString("Menu.FastFlags.Presets.OcclusionCulling.Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Disable voice chat beta badge.
+        /// </summary>
+        public static string Menu_FastFlags_Presets_DisableBetaBadge_Title {
+            get {
+                return ResourceManager.GetString("Menu.FastFlags.Presets.DisableBetaBadge.Title", resourceCulture);
             }
         }
     }

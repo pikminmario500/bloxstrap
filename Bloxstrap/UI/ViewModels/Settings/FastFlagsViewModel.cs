@@ -24,14 +24,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.Settings.Prop.UseFastFlagManager = value;
         }
 
-        public IReadOnlyDictionary<MSAAMode, string?> MSAALevels => FastFlagManager.MSAAModes;
-
-        public MSAAMode SelectedMSAALevel
-        {
-            get => MSAALevels.FirstOrDefault(x => x.Value == App.FastFlags.GetPreset("Rendering.MSAA")).Key;
-            set => App.FastFlags.SetPreset("Rendering.MSAA", MSAALevels[value]);
-        }
-
         public IReadOnlyDictionary<RenderingMode, string> RenderingModes => FastFlagManager.RenderingModes;
 
         public RenderingMode SelectedRenderingMode
@@ -104,49 +96,11 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.FastFlags.SetPreset("UI.Hide", value ? "32380007" : null);
         }
 
-        public IReadOnlyDictionary<TextureQuality, string?> TextureQualities => FastFlagManager.TextureQualityLevels;
-
-        public TextureQuality SelectedTextureQuality
-        {
-            get => TextureQualities.Where(x => x.Value == App.FastFlags.GetPreset("Rendering.TextureQuality.Level")).FirstOrDefault().Key;
-            set
-            {
-                if (value == TextureQuality.Default)
-                {
-                    App.FastFlags.SetPreset("Rendering.TextureQuality", null);
-                }
-                else
-                {
-                    App.FastFlags.SetPreset("Rendering.TextureQuality.OverrideEnabled", "True");
-                    App.FastFlags.SetPreset("Rendering.TextureQuality.Level", TextureQualities[value]);
-                }
-            }
-        }
-
         public bool DisablePostFX
         {
             get => App.FastFlags.GetPreset("Rendering.DisablePostFX") == "True";
             set => App.FastFlags.SetPreset("Rendering.DisablePostFX", value ? "True" : null);
         }
-
-        public bool DisablePlayerShadows
-        {
-            get => App.FastFlags.GetPreset("Rendering.ShadowIntensity") == "0";
-            set => App.FastFlags.SetPreset("Rendering.ShadowIntensity", value ? "0" : null);
-        }
-
-        public int? FontSize
-        {
-            get => int.TryParse(App.FastFlags.GetPreset("UI.FontSize"), out int x) ? x : 1;
-            set => App.FastFlags.SetPreset("UI.FontSize", value == 1 ? null : value);
-        }
-
-        public bool DisableTerrainTextures
-        {
-            get => App.FastFlags.GetPreset("Rendering.TerrainTextureQuality") == "0";
-            set => App.FastFlags.SetPreset("Rendering.TerrainTextureQuality", value ? "0" : null);
-        }
-
 
         public bool ResetConfiguration
         {
@@ -225,26 +179,19 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.FastFlags.SetPreset("Rendering.MovePrerender", value ? "True" : null);
         }
 
-        public bool ForceLowQualityEnabled
-        {
-            get => App.FastFlags.GetPreset("Rendering.ForceLowQuality") == "1";
-            set => App.FastFlags.SetPreset("Rendering.ForceLowQuality", value ? "1" : null);
-        }
-
-        public bool RemoveGrass
-        {
-            get => App.FastFlags.GetPreset("Rendering.NoGrass1") == "0";
-            set
-            {
-                App.FastFlags.SetPreset("Rendering.NoGrass1", value ? "0" : null);
-                App.FastFlags.CheckGrassPreset();
-            }
-        }
-
         public bool PreloadFontsEnabled
         {
             get => App.FastFlags.GetPreset("UI.PreloadFonts") == "True";
             set => App.FastFlags.SetPreset("UI.PreloadFonts", value ? "True" : null);
+        }
+
+        public bool DisableBetaBadge
+        {
+            get => App.FastFlags.GetPreset("UI.VCBetaBadge1") == "False";
+            set {
+                App.FastFlags.SetPreset("UI.VCBetaBadge1", value ? "False" : null);
+                App.FastFlags.CheckVCBetaBadgePreset();
+            }
         }
     }
 }

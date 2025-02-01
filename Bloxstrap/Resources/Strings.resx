@@ -846,9 +846,6 @@ Selecting 'No' will ignore this warning and continue installation.</value>
   <data name="Menu.FastFlags.ManagerEnabled.Description" xml:space="preserve">
     <value>Disabling this will prevent anything configured here from being applied to Roblox.</value>
   </data>
-  <data name="Menu.FastFlags.Presets.MSAA.Title" xml:space="preserve">
-    <value>Anti-aliasing quality (MSAA)</value>
-  </data>
   <data name="Menu.FastFlags.Presets.DisablePostFX.Title" xml:space="preserve">
     <value>Disable post-processing effects</value>
   </data>
@@ -857,33 +854,6 @@ Selecting 'No' will ignore this warning and continue installation.</value>
   </data>
   <data name="Menu.FastFlags.Presets.FullscreenTitlebar.Description" xml:space="preserve">
     <value>Stops it from showing whenever you move your mouse to the top of the screen.</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.TextureQuality.Title" xml:space="preserve">
-    <value>Texture quality</value>
-  </data>
-  <data name="Enums.FlagPresets.TextureQuality.Level0" xml:space="preserve">
-    <value>Level 0 (Lowest)</value>
-  </data>
-  <data name="Enums.FlagPresets.TextureQuality.Level1" xml:space="preserve">
-    <value>Level 1</value>
-  </data>
-  <data name="Enums.FlagPresets.TextureQuality.Level2" xml:space="preserve">
-    <value>Level 2</value>
-  </data>
-  <data name="Enums.FlagPresets.TextureQuality.Level3" xml:space="preserve">
-    <value>Level 3 (Highest)</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.DisablePlayerShadows.Title" xml:space="preserve">
-    <value>Disable player shadows</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.FontPadding.Title" xml:space="preserve">
-    <value>Font size</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.FontPadding.Description" xml:space="preserve">
-    <value>Default value is 1. Adjust if you use a custom font.</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.DisableTerrainTextures.Title" xml:space="preserve">
-    <value>Disable terrain textures</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownload" xml:space="preserve">
     <value>Bloxstrap is unable to download Roblox</value>
@@ -1282,9 +1252,6 @@ Please close any applications that may be using Roblox's files, and relaunch.</v
   <data name="Menu.FastFlags.Presets.PreloadFonts.Title" xml:space="preserve">
     <value>Preload fonts</value>
   </data>
-  <data name="Menu.FastFlags.Presets.ForceLowQuality.Title" xml:space="preserve">
-    <value>Force low quality</value>
-  </data>
   <data name="Menu.Bloxstrap.UseLogger.Title" xml:space="preserve">
     <value>Enable logging</value>
   </data>
@@ -1309,13 +1276,13 @@ Please close any applications that may be using Roblox's files, and relaunch.</v
   <data name="Menu.FastFlags.Presets.UseGPUForLighting.Title" xml:space="preserve">
     <value>Use GPU for lighting</value>
   </data>
-  <data name="Menu.FastFlags.Presets.RemoveGrass.Title" xml:space="preserve">
-    <value>Remove grass</value>
-  </data>
   <data name="Menu.FastFlags.Presets.MovePrerender.Title" xml:space="preserve">
     <value>Move prerender phase</value>
   </data>
   <data name="Menu.FastFlags.Presets.OcclusionCulling.Title" xml:space="preserve">
     <value>Occlusion culling</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.DisableBetaBadge.Title" xml:space="preserve">
+    <value>Disable voice chat beta badge</value>
   </data>
 </root>

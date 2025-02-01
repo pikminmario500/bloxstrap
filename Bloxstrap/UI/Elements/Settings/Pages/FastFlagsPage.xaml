@@ -34,40 +34,9 @@
         <controls:MarkdownTextBlock MarkdownText="{Binding Source={x:Static resources:Strings.Menu_FastFlags_Presets_D3DExclusiveFullscreenInfo}, Converter={StaticResource StringFormatConverter}, ConverterParameter='https://github.com/bloxstraplabs/bloxstrap/wiki/A-guide-to-FastFlags#exclusive-fullscreen'}"  Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_MSAA_Title}">
-            <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" ItemsSource="{Binding MSAALevels.Keys, Mode=OneTime}" Text="{Binding SelectedMSAALevel, Mode=TwoWay}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumNameConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_ForceLowQuality_Title}">
-            <ui:ToggleSwitch IsChecked="{Binding ForceLowQualityEnabled, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_DisablePlayerShadows_Title}">
-            <ui:ToggleSwitch IsChecked="{Binding DisablePlayerShadows, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_DisablePostFX_Title}"
             HelpLink="https://create.roblox.com/docs/environment/post-processing-effects">
             <ui:ToggleSwitch IsChecked="{Binding DisablePostFX, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_DisableTerrainTextures_Title}">
-            <ui:ToggleSwitch IsChecked="{Binding DisableTerrainTextures, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_RemoveGrass_Title}">
-            <ui:ToggleSwitch IsChecked="{Binding RemoveGrass, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <controls:OptionControl 
@@ -128,17 +97,6 @@
             </ComboBox>
         </controls:OptionControl>
 
-        <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_TextureQuality_Title}">
-            <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" ItemsSource="{Binding TextureQualities.Keys, Mode=OneTime}" Text="{Binding SelectedTextureQuality, Mode=TwoWay}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumNameConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </controls:OptionControl>
-
         <TextBlock Text="{x:Static resources:Strings.Menu_FastFlags_Presets_Categories_UserInterface}" FontSize="16" FontWeight="Medium" Margin="0,16,0,0" />
 
         <controls:OptionControl 
@@ -152,13 +110,6 @@
             Description="{Binding Source={x:Static resources:Strings.Menu_FastFlags_Presets_HideGuis_Description}, Converter={StaticResource StringFormatConverter}, ConverterParameter='https://github.com/bloxstraplabs/bloxstrap/wiki/A-guide-to-FastFlags#gui-hiding|https://www.roblox.com/groups/32380007/Bloxstrap'}" 
             HelpLink="https://github.com/bloxstraplabs/bloxstrap/wiki/A-guide-to-FastFlags#gui-hiding">
             <ui:ToggleSwitch IsChecked="{Binding GuiHidingEnabled, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            x:Name="FontPaddingOption"
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_FontPadding_Title}" 
-            Description="{Binding Source={x:Static resources:Strings.Menu_FastFlags_Presets_FontPadding_Description}, Converter={StaticResource StringFormatConverter}, ConverterParameter='https://github.com/bloxstraplabs/bloxstrap/wiki/A-guide-to-FastFlags#gui-hiding|https://www.roblox.com/groups/32380007/Bloxstrap'}">
-            <ui:TextBox Width="200" Padding="10,5,10,5" Text="{Binding FontSize, Mode=TwoWay}" PreviewTextInput="ValidateInt32" />
         </controls:OptionControl>
 
         <!--<controls:OptionControl 
@@ -188,6 +139,11 @@
         <controls:OptionControl
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_DisableVC_Title}">
             <ui:ToggleSwitch IsChecked="{Binding DisableVC, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_DisableBetaBadge_Title}">
+            <ui:ToggleSwitch IsChecked="{Binding DisableBetaBadge, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <controls:OptionControl 
