@@ -1267,12 +1267,6 @@ Please close any applications that may be using Roblox's files, and relaunch.</v
   <data name="Menu.FastFlags.Presets.HyperThreading.Title" xml:space="preserve">
     <value>Use hyperthreading</value>
   </data>
-  <data name="Menu.FastFlags.Presets.BetterPreloading.Title" xml:space="preserve">
-    <value>Better asset preloading</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.BetterPreloading.Description" xml:space="preserve">
-    <value>Removes the limit of preloaded assets causing faster load times if the game has already been loaded once.</value>
-  </data>
   <data name="Menu.FastFlags.Presets.UseGPUForLighting.Title" xml:space="preserve">
     <value>Use GPU for lighting</value>
   </data>

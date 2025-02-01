@@ -76,12 +76,6 @@
         </controls:OptionControl>
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_BetterPreloading_Title}" 
-            Description="{x:Static resources:Strings.Menu_FastFlags_Presets_BetterPreloading_Description}">
-            <ui:ToggleSwitch IsChecked="{Binding BetterPreloadingEnabled, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_MovePrerender_Title}">
             <ui:ToggleSwitch IsChecked="{Binding MovePrerender, Mode=TwoWay}" />
         </controls:OptionControl>

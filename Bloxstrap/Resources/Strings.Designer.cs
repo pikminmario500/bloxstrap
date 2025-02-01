@@ -3317,24 +3317,6 @@ namespace Bloxstrap.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Better asset preloading.
-        /// </summary>
-        public static string Menu_FastFlags_Presets_BetterPreloading_Title {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.BetterPreloading.Title", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Removes the limit of preloaded assets causing faster load times if the game has already been loaded once..
-        /// </summary>
-        public static string Menu_FastFlags_Presets_BetterPreloading_Description {
-            get {
-                return ResourceManager.GetString("Menu.FastFlags.Presets.BetterPreloading.Description", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Use GPU for lighting.
         /// </summary>
         public static string Menu_FastFlags_Presets_UseGPUForLighting_Title {

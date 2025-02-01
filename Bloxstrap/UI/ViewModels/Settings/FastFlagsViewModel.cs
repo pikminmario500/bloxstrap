@@ -161,12 +161,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
             }
         }
 
-        public bool BetterPreloadingEnabled
-        {
-            get => App.FastFlags.GetPreset("Rendering.BetterPreloading") == "2147483647";
-            set => App.FastFlags.SetPreset("Rendering.BetterPreloading", value ? "2147483647" : null);
-        }
-
         public bool UseGPUForLightingEnabled
         {
             get => App.FastFlags.GetPreset("Rendering.Lighting.UseGPU") == "True";
