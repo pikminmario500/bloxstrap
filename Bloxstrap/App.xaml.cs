@@ -41,7 +41,6 @@ namespace Bloxstrap
         public static string? ShortCommitHash;
 
         public static bool IsActionBuild => !string.IsNullOrEmpty(BuildMetadata.CommitRef);
-
         public static bool IsStudioVisible => !string.IsNullOrEmpty(RobloxState.Prop.Studio.VersionGuid);
 
         public static readonly MD5 MD5Provider = MD5.Create();
@@ -154,7 +153,7 @@ namespace Bloxstrap
         {
             // non developer mode always uses production
             if (!Settings.Prop.DeveloperMode || Settings.Prop.WebEnvironment == WebEnvironment.Production)
-                return IsProductionBuild;
+                return IsActionBuild;
 
             return true;
         }
