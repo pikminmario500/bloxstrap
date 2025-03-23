@@ -5,7 +5,7 @@
         public static IBootstrapperDialog GetNew(this BootstrapperStyle bootstrapperStyle) => Frontend.GetBootstrapperDialog(bootstrapperStyle);
 
         public static IReadOnlyCollection<BootstrapperStyle> Selections =>
-        [
+        {
             BootstrapperStyle.FluentDialog,
             BootstrapperStyle.FluentAeroDialog,
             BootstrapperStyle.ClassicFluentDialog,
