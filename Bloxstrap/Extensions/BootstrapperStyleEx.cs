@@ -15,6 +15,6 @@
             BootstrapperStyle.LegacyDialog2008,
             BootstrapperStyle.VistaDialog,
             BootstrapperStyle.CustomDialog
-        ];
+        };
     }
 }

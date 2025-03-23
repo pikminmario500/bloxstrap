@@ -27,21 +27,21 @@ namespace Bloxstrap
 
             string? watcherDataArg = App.LaunchSettings.WatcherFlag.Data;
 
-#if DEBUG
             if (string.IsNullOrEmpty(watcherDataArg))
             {
+#if DEBUG
                 string path = new RobloxPlayerData().ExecutablePath;
                 using var gameClientProcess = Process.Start(path);
 
                 _watcherData = new() { ProcessId = gameClientProcess.Id };
-            }
 #else
-            if (string.IsNullOrEmpty(watcherDataArg))
                 throw new Exception("Watcher data not specified");
 #endif
-
-            if (!string.IsNullOrEmpty(watcherDataArg))
+            }
+            else
+            {
                 _watcherData = JsonSerializer.Deserialize<WatcherData>(Encoding.UTF8.GetString(Convert.FromBase64String(watcherDataArg)));
+            }
 
             if (_watcherData is null)
                 throw new Exception("Watcher data is invalid");

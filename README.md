@@ -64,3 +64,6 @@ Bloxstrap uses the [WPF UI](https://github.com/lepoco/wpfui) library for the use
 [repo-license]:  https://github.com/bloxstraplabs/bloxstrap/blob/main/LICENSE
 [repo-actions]:  https://github.com/pikminmario500/bloxstrap/actions
 [repo-releases]: https://github.com/pikminmario500/bloxstrap/releases
+## Code signing policy
+
+Thanks to [SignPath.io](https://signpath.io/) for providing a free code signing service, and the [SignPath Foundation](https://signpath.org/) for providing the free code signing certificate.

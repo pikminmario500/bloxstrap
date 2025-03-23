@@ -11,12 +11,16 @@
 				"Width": "double",
 				"HorizontalAlignment": "HorizontalAlignment",
 				"VerticalAlignment": "VerticalAlignment",
-				"ZIndex": "int",
 				"RenderTransform": "Transform",
 				"LayoutTransform": "Transform",
 				"Opacity": "double",
 				"OpacityMask": "Brush",
-				"RenderTransformOrigin": "Point"
+				"RenderTransformOrigin": "Point",
+				"Panel.ZIndex": "int",
+				"Grid.Row": "int",
+				"Grid.RowSpan": "int",
+				"Grid.Column": "int",
+				"Grid.ColumnSpan": "int"
 			}
 		},
 		"Control": {
@@ -38,8 +42,11 @@
 			"SuperClass": "Control",
 			"IsCreatable": true,
 			"Attributes": {
+				"Version": "int",
 				"Theme": "Theme",
-				"Title": "string"
+				"Title": "string",
+				"IgnoreTitleBarInset": "bool",
+				"WindowCornerPreference": "WindowCornerPreference"
 			}
 		},
 		"TitleBar": {
@@ -117,6 +124,48 @@
 				"StretchDirection": "StretchDirection",
 				"Source": "ImageSource",
 				"IsAnimated": "bool"
+			}
+		},
+		"Grid": {
+			"SuperClass": "FrameworkElement",
+			"IsCreatable": true,
+			"Attributes": {
+				"RowDefinitions": "object",
+				"ColumnDefinitions": "object"
+			}
+		},
+		"StackPanel": {
+			"SuperClass": "FrameworkElement",
+			"IsCreatable": true,
+			"Attributes": {
+				"Orientation": "Orientation"
+			}
+		},
+		"Border": {
+			"SuperClass": "FrameworkElement",
+			"IsCreatable": true,
+			"Attributes": {
+				"Background": "Brush",
+				"BorderBrush": "Brush",
+				"BorderThickness": "Thickness",
+				"Padding": "Thickness",
+				"CornerRadius": "CornerRadius"
+			}
+		},
+		"RowDefinition": {
+			"IsCreatable": true,
+			"Attributes": {
+				"Height": "GridLength",
+				"MinHeight": "double",
+				"MaxHeight": "double"
+			}
+		},
+		"ColumnDefinition": {
+			"IsCreatable": true,
+			"Attributes": {
+				"Width": "GridLength",
+				"MinWidth": "double",
+				"MaxWidth": "double"
 			}
 		},
 		"ScaleTransform": {
@@ -277,6 +326,7 @@
 		"ImageSource": {},
 		"Transform": { "CanHaveElement": true },
 		"FontFamily": {},
+		"GridLength": {},
 		"Visibility": {
 			"Values": [
 				"Visible",
@@ -451,6 +501,20 @@
 			"Values": [
 				"Performance",
 				"Quality"
+			]
+		},
+		"Orientation": {
+			"Values": [
+				"Horizontal",
+				"Vertical"
+			]
+		},
+		"WindowCornerPreference": {
+			"Values": [
+				"Default",
+				"DoNotRound",
+				"Round",
+				"RoundSmall"
 			]
 		}
 	}
