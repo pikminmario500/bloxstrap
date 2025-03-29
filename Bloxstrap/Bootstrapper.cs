@@ -1494,7 +1494,7 @@ namespace Bloxstrap
                 var regexList = new List<string>();
 
                 foreach (string file in files)
-                    regexList.Add("^" + file.Replace("\\", "\\\\") + "$");
+                    regexList.Add("^" + file.Replace("\\", "\\\\").Replace("(", "\\(").Replace(")", "\\)") + "$");
 
                 fileFilter = string.Join(';', regexList);
             }
