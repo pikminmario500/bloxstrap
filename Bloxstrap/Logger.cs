@@ -101,7 +101,7 @@
 
         private void WriteLine(string message)
         {
-            string timestamp = DateTime.UtcNow.ToShortTimeString();
+            string timestamp = DateTime.UtcNow.ToLongTimeString();
             string outcon = $"{timestamp} {message}";
             string outlog = outcon.Replace(Paths.UserProfile, "%UserProfile%", StringComparison.InvariantCultureIgnoreCase);
 
