@@ -76,25 +76,30 @@
 
             FileLocation = location;
 
-            // clean up any logs older than a week
+            // delete older logs if there are more than 10
             if (Paths.Initialized && Directory.Exists(Paths.Logs))
             {
-                foreach (FileInfo log in new DirectoryInfo(Paths.Logs).GetFiles())
+                int index = 0;
+
+                foreach (FileInfo log in new DirectoryInfo(Paths.Logs).GetFiles().OrderByDescending(log => log.CreationTime))
                 {
-                    if (log.LastWriteTimeUtc.AddDays(7) > DateTime.UtcNow)
-                        continue;
+                    index++;
 
-                    WriteLine(LOG_IDENT, $"Cleaning up old log file '{log.Name}'");
+                    if (index > 10)
+                    {
+                        WriteLine(LOG_IDENT, $"Cleaning up old log file '{log.Name}'");
 
-                    try
-                    {
-                       log.Delete();
+                        try
+                        {
+                            log.Delete();
+                        }
+                        catch (Exception ex)
+                        {
+                            WriteLine(LOG_IDENT, "Failed to delete log!");
+                            WriteException(LOG_IDENT, ex);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        WriteLine(LOG_IDENT, "Failed to delete log!");
-                        WriteException(LOG_IDENT, ex);
-                    }
+
                 }
             }
         }
