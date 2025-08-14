@@ -54,7 +54,7 @@ Bloxstrap uses the [WPF UI](https://github.com/lepoco/wpfui) library for the use
 
 
 [shield-repo-license]:  https://img.shields.io/github/license/bloxstraplabs/bloxstrap
-[shield-repo-workflow]: https://img.shields.io/github/actions/workflow/status/pikminmario500/bloxstrap/ci-release.yml?branch=main&label=builds
+[shield-repo-workflow]: https://img.shields.io/github/actions/workflow/status/pikminmario500/bloxstrap/ci.yml?branch=main&label=builds
 [shield-repo-releases]: https://img.shields.io/github/downloads/pikminmario500/bloxstrap/latest/total?color=981bfe
 
 [repo-license]:  https://github.com/bloxstraplabs/bloxstrap/blob/main/LICENSE
