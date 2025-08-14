@@ -20,10 +20,6 @@ jobs:
       with:
         dotnet-version: '10.0.x'
 
-    - name: Build
-      run: |
-        dotnet build -c ${{ matrix.configuration }} --no-restore
-
     - name: Publish
       run: |
         dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -r win-x64 -c ${{ matrix.configuration }} --self-contained false .\Bloxstrap\Bloxstrap.csproj
