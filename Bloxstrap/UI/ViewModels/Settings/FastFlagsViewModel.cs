@@ -26,8 +26,12 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
         public int FramerateLimit
         {
-            get => int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate"), out int x) ? x : 0;
-            set => App.FastFlags.SetPreset("Rendering.Framerate", value == 0 ? null : value);
+            get => int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate1"), out int x) ? x : 0;
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.Framerate1", value == 0 ? null : value);
+                App.FastFlags.SetPreset("Rendering.Framerate2", value == 0 ? null : "False");
+            }
         }
 
         public IReadOnlyDictionary<MSAAMode, string?> MSAALevels => FastFlagManager.MSAAModes;
@@ -50,48 +54,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
         {
             get => App.FastFlags.GetPreset("Rendering.DisableScaling") == "True";
             set => App.FastFlags.SetPreset("Rendering.DisableScaling", value ? "True" : null);
-        }
-
-        //public IReadOnlyDictionary<InGameMenuVersion, Dictionary<string, string?>> IGMenuVersions => FastFlagManager.IGMenuVersions;
-
-        //public InGameMenuVersion SelectedIGMenuVersion
-        //{
-        //    get
-        //    {
-        //        // yeah this kinda sucks
-        //        foreach (var version in IGMenuVersions)
-        //        {
-        //            bool flagsMatch = true;
-
-        //            foreach (var flag in version.Value)
-        //            {
-        //                foreach (var presetFlag in FastFlagManager.PresetFlags.Where(x => x.Key.StartsWith($"UI.Menu.Style.{flag.Key}")))
-        //                { 
-        //                    if (App.FastFlags.GetValue(presetFlag.Value) != flag.Value)
-        //                        flagsMatch = false;
-        //                }
-        //            }
-
-        //            if (flagsMatch)
-        //                return version.Key;
-        //        }
-
-        //        return IGMenuVersions.First().Key;
-        //    }
-
-        //    set
-        //    {
-        //        foreach (var flag in IGMenuVersions[value])
-        //            App.FastFlags.SetPreset($"UI.Menu.Style.{flag.Key}", flag.Value);
-        //    }
-        //}
-
-        public IReadOnlyDictionary<LightingMode, string> LightingModes => FastFlagManager.LightingModes;
-
-        public LightingMode SelectedLightingMode
-        {
-            get => App.FastFlags.GetPresetEnum(LightingModes, "Rendering.Lighting", "True");
-            set => App.FastFlags.SetPresetEnum("Rendering.Lighting", LightingModes[value], "True");
         }
 
         public bool FullscreenTitlebarDisabled

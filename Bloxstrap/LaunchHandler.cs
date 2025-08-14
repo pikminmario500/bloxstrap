@@ -59,11 +59,6 @@ namespace Bloxstrap
                 App.Logger.WriteLine(LOG_IDENT, "Opening watcher");
                 LaunchWatcher();
             }
-            else if (App.LaunchSettings.MultiInstanceWatcherFlag.Active)
-            {
-                App.Logger.WriteLine(LOG_IDENT, "Opening multi-instance watcher");
-                LaunchMultiInstanceWatcher();
-            }
             else if (App.LaunchSettings.BackgroundUpdaterFlag.Active)
             {
                 App.Logger.WriteLine(LOG_IDENT, "Opening background updater");
@@ -122,8 +117,6 @@ namespace Bloxstrap
 #if QA_BUILD
                 Frontend.ShowMessageBox("You are about to install a QA build of Bloxstrap. The red window border indicates that this is a QA build.\n\nQA builds are handled completely separately of your standard installation, like a virtual environment.", MessageBoxImage.Information);
 #endif
-
-                new LanguageSelectorDialog().ShowDialog();
 
                 var installer = new UI.Elements.Installer.MainWindow();
                 installer.ShowDialog();
@@ -228,7 +221,7 @@ namespace Bloxstrap
                 App.Terminate(ErrorCode.ERROR_FILE_NOT_FOUND);
             }
 
-            if (App.Settings.Prop.ConfirmLaunches && Mutex.TryOpenExisting("ROBLOX_singletonMutex", out var _) && !App.Settings.Prop.MultiInstanceLaunching)
+            if (App.Settings.Prop.ConfirmLaunches && Mutex.TryOpenExisting("ROBLOX_singletonMutex", out var _))
             {
                 // this currently doesn't work very well since it relies on checking the existence of the singleton mutex
                 // which often hangs around for a few seconds after the window closes
@@ -298,28 +291,6 @@ namespace Bloxstrap
                 if (t.IsFaulted)
                 {
                     App.Logger.WriteLine(LOG_IDENT, "An exception occurred when running the watcher");
-
-                    if (t.Exception is not null)
-                        App.FinalizeExceptionHandling(t.Exception);
-                }
-
-                App.Terminate();
-            });
-        }
-
-        public static void LaunchMultiInstanceWatcher()
-        {
-            const string LOG_IDENT = "LaunchHandler::LaunchMultiInstanceWatcher";
-
-            App.Logger.WriteLine(LOG_IDENT, "Starting multi-instance watcher");
-
-            Task.Run(MultiInstanceWatcher.Run).ContinueWith(t =>
-            {
-                App.Logger.WriteLine(LOG_IDENT, "Multi instance watcher task has finished");
-
-                if (t.IsFaulted)
-                {
-                    App.Logger.WriteLine(LOG_IDENT, "An exception occurred when running the multi-instance watcher");
 
                     if (t.Exception is not null)
                         App.FinalizeExceptionHandling(t.Exception);
