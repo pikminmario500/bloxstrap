@@ -22,7 +22,7 @@ jobs:
 
     - name: Publish
       run: |
-        dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -r win-x64 -c ${{ matrix.configuration }} --self-contained false .\Bloxstrap\Bloxstrap.csproj
+        dotnet publish Bloxstrap /p:PublishProfile=Publish-x64-${{ matrix.configuration }} -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@main
