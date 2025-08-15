@@ -56,23 +56,18 @@
         </controls:OptionControl>
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_DisableTerrainTextures_Title}">
-            <ui:ToggleSwitch IsChecked="{Binding DisableTerrainTextures, Mode=TwoWay}" />
-        </controls:OptionControl>
-
-        <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_NoGrass_Title}">
             <ui:ToggleSwitch IsChecked="{Binding DisableGrass, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_GPULightCulling_Title}">
-            <ui:ToggleSwitch IsChecked="{Binding EnableGPULightCulling, Mode=TwoWay}" />
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_DisableTerrainTextures_Title}">
+            <ui:ToggleSwitch IsChecked="{Binding DisableTerrainTextures, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_DisableVC_Title}">
-            <ui:ToggleSwitch IsChecked="{Binding DisableVC, Mode=TwoWay}" />
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_GPULightCulling_Title}">
+            <ui:ToggleSwitch IsChecked="{Binding EnableGPULightCulling, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <controls:OptionControl 
@@ -83,16 +78,27 @@
         </controls:OptionControl>
 
         <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_FixDisplayScaling_Title}" 
-            Description="{x:Static resources:Strings.Menu_FastFlags_Presets_FixDisplayScaling_Description}" 
-            HelpLink="https://github.com/bloxstraplabs/bloxstrap/wiki/A-guide-to-FastFlags#dpi-scaling-fixes">
-            <ui:ToggleSwitch IsChecked="{Binding FixDisplayScaling, Mode=TwoWay}" />
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_GraphicsQuality_Title}">
+            <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" ItemsSource="{Binding GraphicsQualities.Keys, Mode=OneTime}" Text="{Binding SelectedGraphicsQuality, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumNameConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </controls:OptionControl>
 
         <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_MovePrerender_Title}" 
             Description="{x:Static resources:Strings.Menu_FastFlags_Presets_MovePrerender_Description}">
             <ui:ToggleSwitch IsChecked="{Binding MovePrerender, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_FixDisplayScaling_Title}" 
+            Description="{x:Static resources:Strings.Menu_FastFlags_Presets_FixDisplayScaling_Description}" 
+            HelpLink="https://github.com/bloxstraplabs/bloxstrap/wiki/A-guide-to-FastFlags#dpi-scaling-fixes">
+            <ui:ToggleSwitch IsChecked="{Binding FixDisplayScaling, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <controls:OptionControl 
@@ -109,17 +115,6 @@
         <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_TextureQuality_Title}">
             <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" ItemsSource="{Binding TextureQualities.Keys, Mode=OneTime}" Text="{Binding SelectedTextureQuality, Mode=TwoWay}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumNameConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </controls:OptionControl>
-
-        <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_GraphicsQuality_Title}">
-            <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" ItemsSource="{Binding GraphicsQualities.Keys, Mode=OneTime}" Text="{Binding SelectedGraphicsQuality, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=., Converter={StaticResource EnumNameConverter}}" />
@@ -148,6 +143,13 @@
             Header="{x:Static resources:Strings.Menu_FastFlags_Presets_FontPadding_Title}" 
             Description="{Binding Source={x:Static resources:Strings.Menu_FastFlags_Presets_FontPadding_Description}, Converter={StaticResource StringFormatConverter}, ConverterParameter='https://github.com/bloxstraplabs/bloxstrap/wiki/A-guide-to-FastFlags#gui-hiding|https://www.roblox.com/groups/32380007/Bloxstrap'}">
             <ui:TextBox Width="200" Padding="10,5,10,5" Text="{Binding FontSize, Mode=TwoWay}" PreviewTextInput="ValidateInt32" />
+        </controls:OptionControl>
+
+        <TextBlock Text="{x:Static resources:Strings.Common_Miscellaneous}" FontSize="16" FontWeight="Medium" Margin="0,16,0,0" />
+
+        <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_FastFlags_Presets_DisableVC_Title}">
+            <ui:ToggleSwitch IsChecked="{Binding DisableVC, Mode=TwoWay}" />
         </controls:OptionControl>
 
         <controls:OptionControl 
