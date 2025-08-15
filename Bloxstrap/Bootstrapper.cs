@@ -187,11 +187,11 @@ namespace Bloxstrap
             if (connectionResult is not null)
                 HandleConnectionError(connectionResult);
             
-#if (!DEBUG || DEBUG_UPDATER) && !QA_BUILD
+#if !QA_BUILD
             if (App.Settings.Prop.CheckForUpdates && !App.LaunchSettings.UpgradeFlag.Active && App.IsActionBuild)
             {
                 bool updatePresent = await CheckForUpdates();
-                
+
                 if (updatePresent)
                     return;
             }
@@ -742,7 +742,11 @@ namespace Bloxstrap
 
                 File.Copy(Paths.Process, downloadLocation, true);
 #else
+#if !DEBUG
                 var asset = releaseInfo.Assets![1];
+#else
+                var asset = releaseInfo.Assets![0];
+#endif
 
                 string downloadLocation = Path.Combine(Paths.TempUpdates, asset.Name);
 

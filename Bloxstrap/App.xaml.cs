@@ -165,7 +165,7 @@ namespace Bloxstrap
 
             try
             {
-                var releaseInfo = await Http.GetJson<GithubRelease>($"https://api.github.com/repos/${ProjectOwner}/bloxstrap/releases/latest");
+                var releaseInfo = await Http.GetJson<GithubRelease>($"https://api.github.com/repos/{ProjectOwner}/bloxstrap/releases/latest");
 
                 if (releaseInfo is null || releaseInfo.Assets is null)
                 {
