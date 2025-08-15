@@ -76,14 +76,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
             }
         }
 
-        public static List<string> Languages => Locale.GetLanguages();
-
-        public string SelectedLanguage 
-        { 
-            get => Locale.SupportedLocales[App.Settings.Prop.Locale]; 
-            set => App.Settings.Prop.Locale = Locale.GetIdentifierFromName(value);
-        }
-
         public IEnumerable<BootstrapperStyle> Dialogs { get; } = BootstrapperStyleEx.Selections;
 
         public BootstrapperStyle Dialog

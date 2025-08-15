@@ -75,7 +75,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             {
                 Icon = new TaskDialogIcon(App.Settings.Prop.BootstrapperIcon.GetIcon()),
                 Caption = App.Settings.Prop.BootstrapperTitle,
-                RightToLeftLayout = Locale.RightToLeft,
+                RightToLeftLayout = false,
 
                 Buttons = { TaskDialogButton.Cancel },
                 ProgressBar = new TaskDialogProgressBar()

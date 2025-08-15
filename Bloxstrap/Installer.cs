@@ -506,9 +506,9 @@ namespace Bloxstrap
                     if (App.Settings.Prop.BootstrapperStyle == BootstrapperStyle.ClassicFluentDialog)
                         App.Settings.Prop.BootstrapperStyle = BootstrapperStyle.FluentDialog;
 
-                    _ = int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate"), out int x);
+                    _ = int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate1"), out int x);
                     if (x == 0)
-                        App.FastFlags.SetPreset("Rendering.Framerate", null);
+                        App.FastFlags.SetPreset("Rendering.Framerate1", null);
                 }
 
                 if (Utilities.CompareVersions(existingVer, "2.8.0") == VersionComparison.LessThan)
@@ -611,21 +611,11 @@ namespace Bloxstrap
 
             App.SendStat("installAction", "upgrade");
 
-            if (isAutoUpgrade)
-            {
-#pragma warning disable CS0162 // Unreachable code detected
-                if (OpenReleaseNotes)
-                    Utilities.ShellExecute($"https://github.com/{App.ProjectRepository}/wiki/Release-notes-for-Bloxstrap-v{currentVer}");
-#pragma warning restore CS0162 // Unreachable code detected
-            }
-            else
-            {
-                Frontend.ShowMessageBox(
-                    string.Format(Strings.InstallChecker_Updated, currentVer),
-                    MessageBoxImage.Information,
-                    MessageBoxButton.OK
-                );
-            }
+            Frontend.ShowMessageBox(
+                string.Format(Strings.InstallChecker_Updated, App.ShortCommitHash),
+                MessageBoxImage.Information,
+                MessageBoxButton.OK
+            );
         }
     }
 }

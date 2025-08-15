@@ -1,12 +1,11 @@
 ﻿namespace Bloxstrap.Enums.FlagPresets
 {
-    public enum RenderingMode
+    public enum GraphicsQuality
     {
         [EnumName(FromTranslation = "Common.Automatic")]
         Default,
-        D3D11,
-        D3D10,
-        OpenGL,
-        Vulkan
+        Low,
+        Medium,
+        High
     }
 }
