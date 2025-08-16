@@ -1505,4 +1505,7 @@ Defaulting to {1}.</value>
   <data name="Enums.FlagPresets.GraphicsQuality.High" xml:space="preserve">
     <value>High</value>
   </data>
+  <data name="Menu.Appearance.UseAero.Title" xml:space="preserve">
+    <value>Use Aero</value>
+  </data>
 </root>

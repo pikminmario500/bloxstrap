@@ -18,9 +18,11 @@
     Background="{ui:ThemeResource ApplicationBackgroundBrush}"
     Closing="OnClosing"
     ExtendsContentIntoTitleBar="True"
+    WindowBackdropType="{Binding Path=WindowBackdropType, Mode=OneTime}"
     WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Background="{Binding Path=BackgroundColourBrush, Mode=OneTime}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

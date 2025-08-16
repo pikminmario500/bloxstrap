@@ -14,9 +14,10 @@
              Width="800"
              Height="440"
              ExtendsContentIntoTitleBar="True"
-             WindowBackdropType="Mica"
-             WindowStartupLocation="CenterScreen">
-    <Grid>
+             WindowBackdropType="{Binding Path=WindowBackdropType, Mode=OneTime}"
+             WindowStartupLocation="CenterScreen"
+             WindowStyle="None">
+    <Grid Background="{Binding Path=BackgroundColourBrush, Mode=OneTime}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

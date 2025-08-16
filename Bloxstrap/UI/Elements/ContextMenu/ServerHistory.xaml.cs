@@ -15,6 +15,10 @@ namespace Bloxstrap.UI.Elements.ContextMenu
             viewModel.RequestCloseEvent += (_, _) => Close();
 
             DataContext = viewModel;
+
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
         }
     }

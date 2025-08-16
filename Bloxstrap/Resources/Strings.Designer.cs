@@ -4818,5 +4818,16 @@ namespace Bloxstrap.Resources {
                 return ResourceManager.GetString("Enums.FlagPresets.GraphicsQuality.High", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Use Aero.
+        /// </summary>
+        public static string Menu_Appearance_UseAero_Title
+        {
+            get
+            {
+                return ResourceManager.GetString("Menu.Appearance.UseAero.Title", resourceCulture);
+            }
+        }
     }
 }

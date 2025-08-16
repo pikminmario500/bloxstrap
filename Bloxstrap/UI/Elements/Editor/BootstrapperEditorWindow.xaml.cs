@@ -151,6 +151,10 @@ namespace Bloxstrap.UI.Elements.Editor
             _viewModel.Code = themeContents;
 
             DataContext = _viewModel;
+
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
 
             UIXML.Text = _viewModel.Code;

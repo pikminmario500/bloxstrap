@@ -23,6 +23,7 @@ namespace Bloxstrap.Models.Persistable
         public string? SelectedCustomTheme { get; set; } = null;
         public WebEnvironment WebEnvironment { get; set; } = WebEnvironment.Production;
         public string CustomChannel { get; set; } = "";
+        public bool UseAero { get; set; } = false;
 
         // integration configuration
         public bool EnableActivityTracking { get; set; } = true;
