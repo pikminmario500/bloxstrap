@@ -35,6 +35,9 @@ namespace Bloxstrap.UI.Elements.Dialogs
 
             DataContext = viewModel;
 
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
         }
     }

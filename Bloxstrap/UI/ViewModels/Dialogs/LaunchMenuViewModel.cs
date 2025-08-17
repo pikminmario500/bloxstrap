@@ -1,6 +1,8 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Wpf.Ui.Appearance;
 
 using Bloxstrap.UI.Elements.About;
 
@@ -8,6 +10,20 @@ namespace Bloxstrap.UI.ViewModels.Installer
 {
     public class LaunchMenuViewModel
     {
+        public BackgroundType WindowBackdropType { get; } = App.Settings.Prop.UseAero ? BackgroundType.Aero : BackgroundType.Mica;
+
+        public SolidColorBrush BackgroundColourBrush { get; set; } = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+
+        public LaunchMenuViewModel()
+        {
+            if (App.Settings.Prop.UseAero)
+            {
+                BackgroundColourBrush = App.Settings.Prop.Theme.GetFinal() == Enums.Theme.Light ?
+                    new SolidColorBrush(Color.FromArgb(128, 225, 225, 225)) :
+                    new SolidColorBrush(Color.FromArgb(128, 30, 30, 30));
+            }
+        }
+
         public string Version => string.Format(Strings.Menu_About_Version, App.Version);
 
         public Visibility RobloxStudioOptionVisibility => App.IsStudioVisible ? Visibility.Visible : Visibility.Collapsed;

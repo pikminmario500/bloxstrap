@@ -16,11 +16,12 @@
              Height="580"
              Background="{ui:ThemeResource ApplicationBackgroundBrush}"
              ExtendsContentIntoTitleBar="True"
-             WindowBackdropType="Mica"
+             WindowBackdropType="{Binding Path=WindowBackdropType, Mode=OneTime}"
              WindowStartupLocation="CenterScreen"
+             WindowStyle="None"
              Closing="WpfUiWindow_Closing"
              Closed="WpfUiWindow_Closed">
-    <Grid>
+    <Grid Name="Grid" Background="{Binding Path=BackgroundColourBrush, Mode=OneTime}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

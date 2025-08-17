@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Windows;
 using Bloxstrap.Resources;
+using Bloxstrap.UI.ViewModels.Dialogs;
 
 namespace Bloxstrap.UI.Elements.Dialogs
 {
@@ -13,6 +14,13 @@ namespace Bloxstrap.UI.Elements.Dialogs
 
         public AddFastFlagDialog()
         {
+            var viewModel = new MainViewModel();
+            
+            DataContext = viewModel;
+
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
         }
 

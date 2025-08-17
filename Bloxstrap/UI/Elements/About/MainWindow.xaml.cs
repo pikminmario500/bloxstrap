@@ -2,6 +2,8 @@
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 
+using Bloxstrap.UI.ViewModels.About;
+
 namespace Bloxstrap.UI.Elements.About
 {
     /// <summary>
@@ -11,6 +13,13 @@ namespace Bloxstrap.UI.Elements.About
     {
         public MainWindow()
         {
+            var viewModel = new MainWindowViewModel();
+            
+            DataContext = viewModel;
+
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
 
             App.Logger.WriteLine("MainWindow", "Initializing about window");

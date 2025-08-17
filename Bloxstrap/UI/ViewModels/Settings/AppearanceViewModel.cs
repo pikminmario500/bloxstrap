@@ -11,6 +11,7 @@ using Microsoft.Win32;
 using Bloxstrap.UI.Elements.Settings;
 using Bloxstrap.UI.Elements.Editor;
 using Bloxstrap.UI.Elements.Dialogs;
+using System.Windows.Media;
 
 namespace Bloxstrap.UI.ViewModels.Settings
 {
@@ -72,7 +73,34 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set
             {
                 App.Settings.Prop.Theme = value;
-                ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
+
+                if (!App.Settings.Prop.UseAero)
+                {
+                    ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
+                }
+                else
+                {
+                    // TODO: fix this ugly mess, figure out how
+                    // to change the backgroundcolorbrush correctly without restarting
+                    App.Settings.Save();
+                    Process.Start(Paths.Process, "-menu");
+                    App.Terminate();
+                }
+            }
+        }
+
+        // this should reload itself like Theme
+        // there's no good way to do it or im just dumb
+        public bool UseAero
+        {
+            get => App.Settings.Prop.UseAero;
+            set
+            {
+                App.Settings.Prop.UseAero = value;
+
+                App.Settings.Save();
+                Process.Start(Paths.Process, "-menu");
+                App.Terminate();
             }
         }
 

@@ -6,6 +6,8 @@ using System.Windows.Interop;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 
+using Bloxstrap.UI.ViewModels.Dialogs;
+
 namespace Bloxstrap.UI.Elements.Dialogs
 {
     // hmm... do i use MVVM for this?
@@ -20,6 +22,13 @@ namespace Bloxstrap.UI.Elements.Dialogs
 
         public ExceptionDialog(Exception exception)
         {
+            var viewModel = new MainViewModel();
+
+            DataContext = viewModel;
+
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
             AddException(exception);
 

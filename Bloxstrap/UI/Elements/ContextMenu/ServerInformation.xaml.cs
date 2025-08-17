@@ -25,6 +25,10 @@ namespace Bloxstrap.UI.Elements.ContextMenu
         public ServerInformation(Watcher watcher)
         {
             DataContext = new ServerInformationViewModel(watcher);
+
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
         }
     }

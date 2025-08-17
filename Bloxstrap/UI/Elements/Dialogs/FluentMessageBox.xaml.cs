@@ -8,6 +8,7 @@ using Windows.Win32;
 using Windows.Win32.Foundation;
 
 using Bloxstrap.UI.Utility;
+using Bloxstrap.UI.ViewModels.Dialogs;
 
 namespace Bloxstrap.UI.Elements.Dialogs
 {
@@ -22,6 +23,13 @@ namespace Bloxstrap.UI.Elements.Dialogs
 
         public FluentMessageBox(string message, MessageBoxImage image, MessageBoxButton buttons)
         {
+            var viewModel = new MainViewModel();
+
+            DataContext = viewModel;
+
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
 
             Title = App.ProjectName;

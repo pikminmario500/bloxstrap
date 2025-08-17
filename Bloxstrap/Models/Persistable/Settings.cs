@@ -24,6 +24,7 @@ namespace Bloxstrap.Models.Persistable
         public bool DebugDisableVersionPackageCleanup { get; set; } = false;
         public string? SelectedCustomTheme { get; set; } = null;
         public WebEnvironment WebEnvironment { get; set; } = WebEnvironment.Production;
+        public bool UseAero { get; set; } = false;
 
         // integration configuration
         public bool EnableActivityTracking { get; set; } = true;

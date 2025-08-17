@@ -14,13 +14,14 @@
     MinHeight="0"
     d:DataContext="{d:DesignInstance viewmodels:AddCustomThemeViewModel,
                                      IsDesignTimeCreatable=True}"
-    Background="{ui:ThemeResource ApplicationBackgroundBrush}"
     ExtendsContentIntoTitleBar="True"
     ResizeMode="NoResize"
     SizeToContent="Height"
+    WindowBackdropType="{Binding Path=WindowBackdropType, Mode=OneTime}"
     WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Background="{Binding Path=BackgroundColourBrush, Mode=OneTime}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

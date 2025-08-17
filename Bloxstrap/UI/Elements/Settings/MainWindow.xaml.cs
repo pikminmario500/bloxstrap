@@ -25,6 +25,9 @@ namespace Bloxstrap.UI.Elements.Settings
 
             DataContext = viewModel;
             
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
 
             App.Logger.WriteLine("MainWindow", "Initializing settings window");
