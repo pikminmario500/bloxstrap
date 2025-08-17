@@ -16,7 +16,7 @@
     
   <ItemGroup>
     <Resource Include="Bloxstrap.ico" />
-    <Resource Include="Resources\Fonts\Rubik-VariableFont_wght.ttf" />
+    <Resource Include="Resources\Fonts\Rubik-VariableFont_wght.woff2" />
     <Resource Include="Resources\BootstrapperStyles\ByfronDialog\ByfronLogoDark.jpg" />
     <Resource Include="Resources\BootstrapperStyles\ByfronDialog\ByfronLogoLight.jpg" />
     <Resource Include="Resources\BootstrapperStyles\ByfronDialog\Matt.png" />
@@ -44,7 +44,6 @@
     <EmbeddedResource Include="Resources\Mods\Cursor\From2006\ArrowFarCursor.png" />
     <EmbeddedResource Include="Resources\Mods\Cursor\From2013\ArrowCursor.png" />
     <EmbeddedResource Include="Resources\Mods\Cursor\From2013\ArrowFarCursor.png" />
-    <EmbeddedResource Include="Resources\Mods\Sounds\OldDeath.ogg" />
     <EmbeddedResource Include="Resources\Mods\Sounds\OldGetUp.mp3" />
     <EmbeddedResource Include="Resources\Mods\Sounds\OldJump.mp3" />
     <EmbeddedResource Include="Resources\Mods\Sounds\OldWalk.mp3" />

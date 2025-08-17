@@ -74,15 +74,14 @@ namespace Bloxstrap.UI.ViewModels.Settings
             {
                 App.Settings.Prop.Theme = value;
 
-                ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
                 if (!App.Settings.Prop.UseAero)
                 {
                     ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
                 }
                 else
                 {
-                    // TODO: fix this ugly mess, figure out
-                    // how to change the backgroundcolorbrush without restarting
+                    // TODO: fix this ugly mess, figure out how
+                    // to change the backgroundcolorbrush correctly without restarting
                     App.Settings.Save();
                     Process.Start(Paths.Process, "-menu");
                     App.Terminate();
@@ -90,7 +89,7 @@ namespace Bloxstrap.UI.ViewModels.Settings
             }
         }
 
-        // Otsako: i want this to reload itself like Theme
+        // this should reload itself like Theme
         // there's no good way to do it or im just dumb
         public bool UseAero
         {
