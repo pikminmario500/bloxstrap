@@ -16,6 +16,8 @@ namespace Bloxstrap.UI.Elements.Settings
     {
         private Models.Persistable.WindowState _state => App.State.Prop.SettingsWindow;
 
+        private bool Terminate = true;
+
         public MainWindow(bool showAlreadyRunningWarning)
         {
             var viewModel = new MainWindowViewModel();
@@ -24,7 +26,7 @@ namespace Bloxstrap.UI.Elements.Settings
             viewModel.RequestCloseWindowEvent += (_, _) => Close();
 
             DataContext = viewModel;
-            
+
             if (App.Settings.Prop.UseAero)
                 AllowsTransparency = true;
 
@@ -86,6 +88,13 @@ namespace Bloxstrap.UI.Elements.Settings
 
         #endregion INavigationWindow methods
 
+        public void RestartWindow()
+        {
+            Terminate = false;
+
+            Close();
+        }
+
         private void WpfUiWindow_Closing(object sender, CancelEventArgs e)
         {
             if (App.FastFlags.Changed || App.PendingSettingTasks.Any())
@@ -95,7 +104,7 @@ namespace Bloxstrap.UI.Elements.Settings
                 if (result != MessageBoxResult.Yes)
                     e.Cancel = true;
             }
-            
+
             _state.Width = this.Width;
             _state.Height = this.Height;
 
@@ -109,7 +118,7 @@ namespace Bloxstrap.UI.Elements.Settings
         {
             if (App.LaunchSettings.TestModeFlag.Active)
                 LaunchHandler.LaunchRoblox(LaunchMode.Player);
-            else
+            else if (Terminate)
                 App.SoftTerminate();
         }
     }

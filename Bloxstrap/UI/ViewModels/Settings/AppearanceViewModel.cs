@@ -80,17 +80,17 @@ namespace Bloxstrap.UI.ViewModels.Settings
                 }
                 else
                 {
-                    // TODO: fix this ugly mess, figure out how
-                    // to change the backgroundcolorbrush correctly without restarting
-                    App.Settings.Save();
-                    Process.Start(Paths.Process, "-menu");
-                    App.Terminate();
+                    // It's better than restarting the entire program.
+                    // I dont think there's a better way to do this.
+                    MainWindow newWindow = new MainWindow(false);
+                    newWindow.Show();
+                    ((MainWindow)Window.GetWindow(_page)!).RestartWindow();
+                    newWindow.LoadState();
+                    newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
                 }
             }
         }
-
-        // this should reload itself like Theme
-        // there's no good way to do it or im just dumb
+        
         public bool UseAero
         {
             get => App.Settings.Prop.UseAero;
@@ -98,9 +98,11 @@ namespace Bloxstrap.UI.ViewModels.Settings
             {
                 App.Settings.Prop.UseAero = value;
 
-                App.Settings.Save();
-                Process.Start(Paths.Process, "-menu");
-                App.Terminate();
+                MainWindow newWindow = new MainWindow(false);
+                newWindow.Show();
+                ((MainWindow)Window.GetWindow(_page)!).RestartWindow();
+                newWindow.LoadState();
+                newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
             }
         }
 
