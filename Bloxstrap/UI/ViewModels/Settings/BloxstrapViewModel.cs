@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
-using ICSharpCode.SharpZipLib.Zip;
+using SharpSevenZip;
 using Microsoft.Win32;
 
 namespace Bloxstrap.UI.ViewModels.Settings
@@ -49,8 +49,10 @@ namespace Bloxstrap.UI.ViewModels.Settings
             if (dialog.ShowDialog() != true)
                 return;
 
-            using var memStream = new MemoryStream();
-            using var zipStream = new ZipOutputStream(memStream);
+            var zip = new SharpSevenZipCompressor
+            {
+                ArchiveFormat = OutArchiveFormat.Zip
+            };
 
             if (ShouldExportConfig)
             {
@@ -61,7 +63,9 @@ namespace Bloxstrap.UI.ViewModels.Settings
                     App.FastFlags.FileLocation
                 };
 
-                AddFilesToZipStream(zipStream, files, "Config/");
+                Directory.CreateDirectory($"{Paths.Temp}/Export/Config");
+                foreach (string file in files)
+                    File.Copy(file, $"{Paths.Temp}/Export/Config/{Path.GetFileName(file)}");
             }
 
             if (ShouldExportLogs && Directory.Exists(Paths.Logs))
@@ -69,34 +73,16 @@ namespace Bloxstrap.UI.ViewModels.Settings
                 var files = Directory.GetFiles(Paths.Logs)
                     .Where(x => !x.Equals(App.Logger.FileLocation, StringComparison.OrdinalIgnoreCase));
 
-                AddFilesToZipStream(zipStream, files, "Logs/");
+                Directory.CreateDirectory($"{Paths.Temp}/Export/Logs");
+                foreach (string file in files)
+                    File.Copy(file, $"{Paths.Temp}/Export/Logs/{Path.GetFileName(file)}");
             }
-
-            zipStream.CloseEntry();
-            zipStream.Finish();
-            memStream.Position = 0;
 
             using var outputStream = File.OpenWrite(dialog.FileName);
-            memStream.CopyTo(outputStream);
+            zip.CompressDirectory($"{Paths.Temp}/Export", outputStream);
+            Directory.Delete($"{Paths.Temp}/Export", true);
 
             Process.Start("explorer.exe", $"/select,\"{dialog.FileName}\"");
-        }
-
-        private void AddFilesToZipStream(ZipOutputStream zipStream, IEnumerable<string> files, string directory)
-        {
-            foreach (string file in files)
-            {
-                if (!File.Exists(file))
-                    continue;
-
-                var entry = new ZipEntry(directory + Path.GetFileName(file));
-                entry.DateTime = DateTime.Now;
-
-                zipStream.PutNextEntry(entry);
-
-                using var fileStream = File.OpenRead(file);
-                fileStream.CopyTo(zipStream);
-            }
         }
     }
 }

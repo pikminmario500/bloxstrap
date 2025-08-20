@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.Input;
-using ICSharpCode.SharpZipLib.Zip;
+using SharpSevenZip;
 
 using Microsoft.Win32;
 
@@ -278,28 +278,14 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
             string themeDir = Path.Combine(Paths.CustomThemes, SelectedCustomTheme);
 
-            using var memStream = new MemoryStream();
-            using var zipStream = new ZipOutputStream(memStream);
-
-            foreach (var filePath in Directory.EnumerateFiles(themeDir, "*.*", SearchOption.AllDirectories))
+            var zip = new SharpSevenZipCompressor
             {
-                string relativePath = filePath[(themeDir.Length + 1)..];
-
-                var entry = new ZipEntry(relativePath);
-                entry.DateTime = DateTime.Now;
-
-                zipStream.PutNextEntry(entry);
-
-                using var fileStream = File.OpenRead(filePath);
-                fileStream.CopyTo(zipStream);
-            }
-
-            zipStream.CloseEntry();
-            zipStream.Finish();
-            memStream.Position = 0;
+                ArchiveFormat = OutArchiveFormat.Zip
+            };
 
             using var outputStream = File.OpenWrite(dialog.FileName);
-            memStream.CopyTo(outputStream);
+
+            zip.CompressDirectory(themeDir, outputStream);
 
             Process.Start("explorer.exe", $"/select,\"{dialog.FileName}\"");
         }

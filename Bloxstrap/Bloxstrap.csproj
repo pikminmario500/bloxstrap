@@ -63,7 +63,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="securifybv.ShellLink" Version="0.1.0" />
-    <PackageReference Include="SharpZipLib" Version="1.4.2" />
+    <PackageReference Include="SharpSevenZip" Version="2.0.27" />
     <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
     <PackageReference Include="XamlAnimatedGif" Version="2.3.0" />
   </ItemGroup>

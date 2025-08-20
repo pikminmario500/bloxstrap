@@ -1,6 +1,7 @@
 ﻿using Bloxstrap.UI.Elements.Base;
 using Bloxstrap.UI.ViewModels.Dialogs;
 using Microsoft.Win32;
+using SharpSevenZip;
 using System.IO.Compression;
 using System.Windows;
 
@@ -130,7 +131,7 @@ namespace Bloxstrap.UI.Elements.Dialogs
         {
             const string LOG_IDENT = "AddCustomThemeDialog::ValidateImport";
 
-            if (!_viewModel.FilePath.EndsWith(".zip"))
+            if (!_viewModel.FilePath.EndsWith(".zip") && !_viewModel.FilePath.EndsWith(".7z") && !_viewModel.FilePath.EndsWith(".rar"))
             {
                 _viewModel.FileError = Strings.CustomTheme_Add_Errors_FileNotZip;
                 return false;
@@ -138,14 +139,14 @@ namespace Bloxstrap.UI.Elements.Dialogs
 
             try
             {
-                using var zipFile = ZipFile.OpenRead(_viewModel.FilePath);
-                var entries = zipFile.Entries;
+                var zipFile = new SharpSevenZipExtractor(_viewModel.FilePath);
+                var entries = zipFile.ArchiveFileNames;
 
                 bool foundThemeFile = false;
 
                 foreach (var entry in entries)
                 {
-                    if (entry.FullName == "Theme.xml")
+                    if (entry == "Theme.xml")
                     {
                         foundThemeFile = true;
                         break;
@@ -197,8 +198,8 @@ namespace Bloxstrap.UI.Elements.Dialogs
                 Directory.Delete(directory, true);
             Directory.CreateDirectory(directory);
 
-            var fastZip = new ICSharpCode.SharpZipLib.Zip.FastZip();
-            fastZip.ExtractZip(_viewModel.FilePath, directory, null);
+            var zip = new SharpSevenZipExtractor(_viewModel.FilePath);
+            zip.ExtractArchive(directory);
 
             Created = true;
             ThemeName = name;
@@ -219,7 +220,7 @@ namespace Bloxstrap.UI.Elements.Dialogs
         {
             var dialog = new OpenFileDialog
             {
-                Filter = $"{Strings.FileTypes_ZipArchive}|*.zip"
+                Filter = $"{Strings.FileTypes_ZipArchive}|*.zip;*.7z;*.rar"
             };
 
             if (dialog.ShowDialog() != true)
