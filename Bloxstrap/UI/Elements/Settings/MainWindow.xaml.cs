@@ -16,7 +16,7 @@ namespace Bloxstrap.UI.Elements.Settings
     {
         private Models.Persistable.WindowState _state => App.State.Prop.SettingsWindow;
 
-        private bool Terminate = true;
+        public bool Terminate = true;
 
         public MainWindow(bool showAlreadyRunningWarning)
         {
@@ -88,15 +88,32 @@ namespace Bloxstrap.UI.Elements.Settings
 
         #endregion INavigationWindow methods
 
-        public void RestartWindow()
+        public void PrepareRestartWindow()
         {
-            Terminate = false;
+            if (App.FastFlags.Changed || App.PendingSettingTasks.Any())
+            {
+                var result = Frontend.ShowMessageBox(Strings.Menu_UnsavedChanges, MessageBoxImage.Warning, MessageBoxButton.YesNo);
 
-            Close();
+                if (result != MessageBoxResult.Yes)
+                    return;
+            }
+
+            _state.Width = this.Width;
+            _state.Height = this.Height;
+
+            _state.Top = this.Top;
+            _state.Left = this.Left;
+
+            App.State.Save();
+
+            Terminate = false;
         }
 
         private void WpfUiWindow_Closing(object sender, CancelEventArgs e)
         {
+            if (!Terminate)
+                return;
+
             if (App.FastFlags.Changed || App.PendingSettingTasks.Any())
             {
                 var result = Frontend.ShowMessageBox(Strings.Menu_UnsavedChanges, MessageBoxImage.Warning, MessageBoxButton.YesNo);

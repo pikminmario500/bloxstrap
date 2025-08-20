@@ -72,21 +72,29 @@ namespace Bloxstrap.UI.ViewModels.Settings
             get => App.Settings.Prop.Theme;
             set
             {
-                App.Settings.Prop.Theme = value;
+                MainWindow mainWindow = (MainWindow)Window.GetWindow(_page)!;
 
                 if (!App.Settings.Prop.UseAero)
                 {
-                    ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
+                    App.Settings.Prop.Theme = value;
+
+                    mainWindow.ApplyTheme();
                 }
                 else
                 {
                     // It's better than restarting the entire program.
                     // I dont think there's a better way to do this.
-                    MainWindow newWindow = new MainWindow(false);
-                    newWindow.Show();
-                    ((MainWindow)Window.GetWindow(_page)!).RestartWindow();
-                    newWindow.LoadState();
-                    newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
+                    mainWindow.PrepareRestartWindow();
+                    if (!mainWindow.Terminate)
+                    {
+                        App.Settings.Prop.Theme = value;
+
+                        MainWindow newWindow = new MainWindow(false);
+                        newWindow.Show();
+                        newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
+
+                        mainWindow.CloseWindow();
+                    }
                 }
             }
         }
@@ -96,13 +104,19 @@ namespace Bloxstrap.UI.ViewModels.Settings
             get => App.Settings.Prop.UseAero;
             set
             {
-                App.Settings.Prop.UseAero = value;
+                MainWindow mainWindow = (MainWindow)Window.GetWindow(_page)!;
 
-                MainWindow newWindow = new MainWindow(false);
-                newWindow.Show();
-                ((MainWindow)Window.GetWindow(_page)!).RestartWindow();
-                newWindow.LoadState();
-                newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
+                mainWindow.PrepareRestartWindow();
+                if (!mainWindow.Terminate)
+                {
+                    App.Settings.Prop.UseAero = value;
+
+                    MainWindow newWindow = new MainWindow(false);
+                    newWindow.Show();
+                    newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
+
+                    mainWindow.CloseWindow();
+                }
             }
         }
 
