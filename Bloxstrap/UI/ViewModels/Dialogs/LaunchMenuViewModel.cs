@@ -24,7 +24,7 @@ namespace Bloxstrap.UI.ViewModels.Installer
             }
         }
 
-        public string Version => string.Format(Strings.Menu_About_Version, App.Version);
+        public string Version => string.Format(Strings.Menu_About_Version, App.ShortCommitHash);
 
         public Visibility RobloxStudioOptionVisibility => App.IsStudioVisible ? Visibility.Visible : Visibility.Collapsed;
 

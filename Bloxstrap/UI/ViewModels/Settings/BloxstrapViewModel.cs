@@ -12,7 +12,7 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
         public bool UpdateCheckingEnabled
         {
-            get => App.Settings.Prop.CheckForUpdates;
+            get => App.Settings.Prop.CheckForUpdates || App.BuildMetadata.CommitRef == "branch/main";
             set => App.Settings.Prop.CheckForUpdates = value;
         }
 

@@ -26,8 +26,12 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
         public int FramerateLimit
         {
-            get => int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate"), out int x) ? x : 0;
-            set => App.FastFlags.SetPreset("Rendering.Framerate", value == 0 ? null : value);
+            get => int.TryParse(App.FastFlags.GetPreset("Rendering.Framerate1"), out int x) ? x : 0;
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.Framerate1", value == 0 ? null : value);
+                App.FastFlags.SetPreset("Rendering.Framerate2", value == 0 ? null : "False");
+            }
         }
 
         public IReadOnlyDictionary<MSAAMode, string?> MSAALevels => FastFlagManager.MSAAModes;
@@ -50,48 +54,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
         {
             get => App.FastFlags.GetPreset("Rendering.DisableScaling") == "True";
             set => App.FastFlags.SetPreset("Rendering.DisableScaling", value ? "True" : null);
-        }
-
-        //public IReadOnlyDictionary<InGameMenuVersion, Dictionary<string, string?>> IGMenuVersions => FastFlagManager.IGMenuVersions;
-
-        //public InGameMenuVersion SelectedIGMenuVersion
-        //{
-        //    get
-        //    {
-        //        // yeah this kinda sucks
-        //        foreach (var version in IGMenuVersions)
-        //        {
-        //            bool flagsMatch = true;
-
-        //            foreach (var flag in version.Value)
-        //            {
-        //                foreach (var presetFlag in FastFlagManager.PresetFlags.Where(x => x.Key.StartsWith($"UI.Menu.Style.{flag.Key}")))
-        //                { 
-        //                    if (App.FastFlags.GetValue(presetFlag.Value) != flag.Value)
-        //                        flagsMatch = false;
-        //                }
-        //            }
-
-        //            if (flagsMatch)
-        //                return version.Key;
-        //        }
-
-        //        return IGMenuVersions.First().Key;
-        //    }
-
-        //    set
-        //    {
-        //        foreach (var flag in IGMenuVersions[value])
-        //            App.FastFlags.SetPreset($"UI.Menu.Style.{flag.Key}", flag.Value);
-        //    }
-        //}
-
-        public IReadOnlyDictionary<LightingMode, string> LightingModes => FastFlagManager.LightingModes;
-
-        public LightingMode SelectedLightingMode
-        {
-            get => App.FastFlags.GetPresetEnum(LightingModes, "Rendering.Lighting", "True");
-            set => App.FastFlags.SetPresetEnum("Rendering.Lighting", LightingModes[value], "True");
         }
 
         public bool FullscreenTitlebarDisabled
@@ -125,6 +87,20 @@ namespace Bloxstrap.UI.ViewModels.Settings
             }
         }
 
+        public IReadOnlyDictionary<GraphicsQuality, string?> GraphicsQualities => FastFlagManager.GraphicsQualityLevels;
+
+        public GraphicsQuality SelectedGraphicsQuality
+        {
+            get => GraphicsQualities.Where(x => x.Value == App.FastFlags.GetPreset("Rendering.GraphicsQuality")).FirstOrDefault().Key;
+            set
+            {
+                if (value == GraphicsQuality.Default)
+                    App.FastFlags.SetPreset("Rendering.GraphicsQuality", null);
+                else
+                    App.FastFlags.SetPreset("Rendering.GraphicsQuality", GraphicsQualities[value]);
+            }
+        }
+
         public bool DisablePostFX
         {
             get => App.FastFlags.GetPreset("Rendering.DisablePostFX") == "True";
@@ -149,6 +125,34 @@ namespace Bloxstrap.UI.ViewModels.Settings
             set => App.FastFlags.SetPreset("Rendering.TerrainTextureQuality", value ? "0" : null);
         }
 
+        public bool DisableGrass
+        {
+            get => App.FastFlags.GetPreset("Rendering.Grass1") == "0";
+            set
+            {
+                App.FastFlags.SetPreset("Rendering.Grass1", value ? "0" : null);
+                App.FastFlags.SetPreset("Rendering.Grass2", value ? "0" : null);
+                App.FastFlags.SetPreset("Rendering.Grass3", value ? "0" : null);
+            }
+        }
+
+        public bool MovePrerender
+        {
+            get => App.FastFlags.GetPreset("Rendering.MovePrerender") == "True";
+            set => App.FastFlags.SetPreset("Rendering.MovePrerender", value ? "True" : null);
+        }
+
+        public bool EnableGPULightCulling
+        {
+            get => App.FastFlags.GetPreset("Rendering.GPULightCulling") == "True";
+            set => App.FastFlags.SetPreset("Rendering.GPULightCulling", value ? "True" : null);
+        }
+
+        public bool DisableVC
+        {
+            get => App.FastFlags.GetPreset("Audio.VC") == "False";
+            set => App.FastFlags.SetPreset("Audio.VC", value ? "False" : null);
+        }
 
         public bool ResetConfiguration
         {

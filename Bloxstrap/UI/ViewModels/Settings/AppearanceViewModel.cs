@@ -120,12 +120,19 @@ namespace Bloxstrap.UI.ViewModels.Settings
             }
         }
 
-        public static List<string> Languages => Locale.GetLanguages();
+        // this should reload itself like Theme
+        // there's no good way to do it or im just dumb
+        public bool UseAero
+        {
+            get => App.Settings.Prop.UseAero;
+            set
+            {
+                App.Settings.Prop.UseAero = value;
 
-        public string SelectedLanguage 
-        { 
-            get => Locale.SupportedLocales[App.Settings.Prop.Locale]; 
-            set => App.Settings.Prop.Locale = Locale.GetIdentifierFromName(value);
+                App.Settings.Save();
+                Process.Start(Paths.Process, "-menu");
+                App.Terminate();
+            }
         }
 
         public IEnumerable<BootstrapperStyle> Dialogs { get; } = BootstrapperStyleEx.Selections;
