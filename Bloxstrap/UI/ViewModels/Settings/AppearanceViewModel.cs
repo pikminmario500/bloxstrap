@@ -72,19 +72,50 @@ namespace Bloxstrap.UI.ViewModels.Settings
             get => App.Settings.Prop.Theme;
             set
             {
-                App.Settings.Prop.Theme = value;
+                MainWindow mainWindow = (MainWindow)Window.GetWindow(_page)!;
 
                 if (!App.Settings.Prop.UseAero)
                 {
-                    ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
+                    App.Settings.Prop.Theme = value;
+
+                    mainWindow.ApplyTheme();
                 }
                 else
                 {
-                    // TODO: fix this ugly mess, figure out how
-                    // to change the backgroundcolorbrush correctly without restarting
-                    App.Settings.Save();
-                    Process.Start(Paths.Process, "-menu");
-                    App.Terminate();
+                    // It's better than restarting the entire program.
+                    // I dont think there's a better way to do this.
+                    mainWindow.PrepareRestartWindow();
+                    if (!mainWindow.Terminate)
+                    {
+                        App.Settings.Prop.Theme = value;
+
+                        MainWindow newWindow = new MainWindow(false);
+                        newWindow.Show();
+                        newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
+
+                        mainWindow.CloseWindow();
+                    }
+                }
+            }
+        }
+        
+        public bool UseAero
+        {
+            get => App.Settings.Prop.UseAero;
+            set
+            {
+                MainWindow mainWindow = (MainWindow)Window.GetWindow(_page)!;
+
+                mainWindow.PrepareRestartWindow();
+                if (!mainWindow.Terminate)
+                {
+                    App.Settings.Prop.UseAero = value;
+
+                    MainWindow newWindow = new MainWindow(false);
+                    newWindow.Show();
+                    newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
+
+                    mainWindow.CloseWindow();
                 }
             }
         }
