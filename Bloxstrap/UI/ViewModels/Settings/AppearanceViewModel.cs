@@ -120,21 +120,6 @@ namespace Bloxstrap.UI.ViewModels.Settings
             }
         }
 
-        // this should reload itself like Theme
-        // there's no good way to do it or im just dumb
-        public bool UseAero
-        {
-            get => App.Settings.Prop.UseAero;
-            set
-            {
-                App.Settings.Prop.UseAero = value;
-
-                App.Settings.Save();
-                Process.Start(Paths.Process, "-menu");
-                App.Terminate();
-            }
-        }
-
         public IEnumerable<BootstrapperStyle> Dialogs { get; } = BootstrapperStyleEx.Selections;
 
         public BootstrapperStyle Dialog
