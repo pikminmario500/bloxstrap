@@ -30,11 +30,6 @@
             <ui:ToggleSwitch IsChecked="{Binding UseAero, Mode=TwoWay}" />
         </controls:OptionControl>
 
-        <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_Appearance_UseAero_Title}">
-            <ui:ToggleSwitch IsChecked="{Binding UseAero, Mode=TwoWay}" />
-        </controls:OptionControl>
-
         <Grid Margin="0,8,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
