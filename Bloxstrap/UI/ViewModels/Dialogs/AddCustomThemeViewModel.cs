@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using Wpf.Ui.Appearance;
 
 namespace Bloxstrap.UI.ViewModels.Dialogs
 {
@@ -12,6 +14,20 @@ namespace Bloxstrap.UI.ViewModels.Dialogs
         public static CustomThemeTemplate[] Templates => Enum.GetValues<CustomThemeTemplate>();
 
         public CustomThemeTemplate Template { get; set; } = CustomThemeTemplate.Simple;
+
+        public BackgroundType WindowBackdropType { get; } = App.Settings.Prop.UseAero ? BackgroundType.Aero : BackgroundType.Mica;
+
+        public SolidColorBrush BackgroundColourBrush { get; set; } = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+
+        public AddCustomThemeViewModel()
+        {
+            if (App.Settings.Prop.UseAero)
+            {
+                BackgroundColourBrush = App.Settings.Prop.Theme.GetFinal() == Enums.Theme.Light ?
+                    new SolidColorBrush(Color.FromArgb(128, 225, 225, 225)) :
+                    new SolidColorBrush(Color.FromArgb(128, 30, 30, 30));
+            }
+        }
 
         public string Name { get; set; } = "";
 

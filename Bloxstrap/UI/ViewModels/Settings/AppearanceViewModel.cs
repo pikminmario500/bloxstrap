@@ -11,6 +11,7 @@ using Microsoft.Win32;
 using Bloxstrap.UI.Elements.Settings;
 using Bloxstrap.UI.Elements.Editor;
 using Bloxstrap.UI.Elements.Dialogs;
+using System.Windows.Media;
 
 namespace Bloxstrap.UI.ViewModels.Settings
 {
@@ -71,17 +72,52 @@ namespace Bloxstrap.UI.ViewModels.Settings
             get => App.Settings.Prop.Theme;
             set
             {
-                App.Settings.Prop.Theme = value;
-                ((MainWindow)Window.GetWindow(_page)!).ApplyTheme();
+                MainWindow mainWindow = (MainWindow)Window.GetWindow(_page)!;
+
+                if (!App.Settings.Prop.UseAero)
+                {
+                    App.Settings.Prop.Theme = value;
+
+                    mainWindow.ApplyTheme();
+                }
+                else
+                {
+                    // It's better than restarting the entire program.
+                    // I dont think there's a better way to do this.
+                    mainWindow.PrepareRestartWindow();
+                    if (!mainWindow.Terminate)
+                    {
+                        App.Settings.Prop.Theme = value;
+
+                        MainWindow newWindow = new MainWindow(false);
+                        newWindow.Show();
+                        newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
+
+                        mainWindow.CloseWindow();
+                    }
+                }
             }
         }
+        
+        public bool UseAero
+        {
+            get => App.Settings.Prop.UseAero;
+            set
+            {
+                MainWindow mainWindow = (MainWindow)Window.GetWindow(_page)!;
 
-        public static List<string> Languages => Locale.GetLanguages();
+                mainWindow.PrepareRestartWindow();
+                if (!mainWindow.Terminate)
+                {
+                    App.Settings.Prop.UseAero = value;
 
-        public string SelectedLanguage 
-        { 
-            get => Locale.SupportedLocales[App.Settings.Prop.Locale]; 
-            set => App.Settings.Prop.Locale = Locale.GetIdentifierFromName(value);
+                    MainWindow newWindow = new MainWindow(false);
+                    newWindow.Show();
+                    newWindow.Navigate(typeof(Elements.Settings.Pages.AppearancePage));
+
+                    mainWindow.CloseWindow();
+                }
+            }
         }
 
         public IEnumerable<BootstrapperStyle> Dialogs { get; } = BootstrapperStyleEx.Selections;

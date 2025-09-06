@@ -11,7 +11,7 @@ namespace Bloxstrap.UI.ViewModels.Installer
 
         public bool NextButtonEnabled { get; private set; } = false;
 
-        public int ButtonWidth { get; } = Locale.CurrentCulture.Name.StartsWith("bg") ? 112 : 96;
+        public int ButtonWidth { get; } = 96;
 
         public ICommand BackPageCommand => new RelayCommand(BackPage);
         

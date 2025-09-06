@@ -1,6 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System.Windows.Media;
+using System.Windows.Input;
 using Bloxstrap.Integrations;
 using CommunityToolkit.Mvvm.Input;
+using Wpf.Ui.Appearance;
 
 namespace Bloxstrap.UI.ViewModels.ContextMenu
 {
@@ -18,8 +20,19 @@ namespace Bloxstrap.UI.ViewModels.ContextMenu
         
         public EventHandler? RequestCloseEvent;
 
+        public BackgroundType WindowBackdropType { get; } = App.Settings.Prop.UseAero ? BackgroundType.Aero : BackgroundType.Mica;
+
+        public SolidColorBrush BackgroundColourBrush { get; set; } = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+
         public ServerHistoryViewModel(ActivityWatcher activityWatcher)
         {
+            if (App.Settings.Prop.UseAero)
+            {
+                BackgroundColourBrush = App.Settings.Prop.Theme.GetFinal() == Enums.Theme.Light ?
+                    new SolidColorBrush(Color.FromArgb(128, 225, 225, 225)) :
+                    new SolidColorBrush(Color.FromArgb(128, 30, 30, 30));
+            }
+
             _activityWatcher = activityWatcher;
 
             _activityWatcher.OnGameLeave += (_, _) => LoadData();

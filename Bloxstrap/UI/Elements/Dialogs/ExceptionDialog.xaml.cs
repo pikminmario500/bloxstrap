@@ -6,6 +6,8 @@ using System.Windows.Interop;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 
+using Bloxstrap.UI.ViewModels.Dialogs;
+
 namespace Bloxstrap.UI.Elements.Dialogs
 {
     // hmm... do i use MVVM for this?
@@ -20,36 +22,40 @@ namespace Bloxstrap.UI.Elements.Dialogs
 
         public ExceptionDialog(Exception exception)
         {
+            var viewModel = new MainViewModel();
+
+            DataContext = viewModel;
+
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
             AddException(exception);
 
             if (!App.Logger.Initialized)
                 LocateLogFileButton.Content = Strings.Dialog_Exception_CopyLogContents;
 
-            string repoUrl = $"https://github.com/{App.ProjectRepository}";
-            string wikiUrl = $"{repoUrl}/wiki";
-
             string title = HttpUtility.UrlEncode($"[BUG] {exception.GetType()}: {exception.Message}");
             string log = HttpUtility.UrlEncode(App.Logger.AsDocument);
 
-            string issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&title={title}&log={log}";
+            string issueUrl = $"{App.ProjectSupportLink}?template=bug_report.yaml&title={title}&log={log}&version={App.ShortCommitHash}";
 
             if (issueUrl.Length > MAX_GITHUB_URL_LENGTH)
             {
                 // url is way too long for github. remove the log parameter.
-                issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml&title={title}";
+                issueUrl = $"{App.ProjectSupportLink}?template=bug_report.yaml&title={title}&version={App.ShortCommitHash}";
 
                 if (issueUrl.Length > MAX_GITHUB_URL_LENGTH)
-                    issueUrl = $"{repoUrl}/issues/new?template=bug_report.yaml"; // bruh
+                    issueUrl = $"{App.ProjectSupportLink}?template=bug_report.yaml&version={App.ShortCommitHash}"; // bruh
             }
 
-            string helpMessage = String.Format(Strings.Dialog_Exception_Info_2, wikiUrl, issueUrl);
+            string helpMessage = String.Format(Strings.Dialog_Exception_Info_2, App.ProjectHelpLink, issueUrl);
 
-            if (!App.IsActionBuild && !App.BuildMetadata.Machine.Contains("pizzaboxer", StringComparison.Ordinal))
-                helpMessage = String.Format(Strings.Dialog_Exception_Info_2_Alt, wikiUrl);
+            if (!App.IsActionBuild)
+                helpMessage = String.Format(Strings.Dialog_Exception_Info_2_Alt, App.ProjectHelpLink);
 
             HelpMessageMDTextBlock.MarkdownText = helpMessage;
-            VersionText.Text = String.Format(Strings.Dialog_Exception_Version, App.Version);
+            VersionText.Text = String.Format(Strings.Dialog_Exception_Version, App.ShortCommitHash);
 
             ReportExceptionButton.Click += (_, _) => Utilities.ShellExecute(issueUrl);
 

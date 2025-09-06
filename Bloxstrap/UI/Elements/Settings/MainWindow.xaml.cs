@@ -16,6 +16,8 @@ namespace Bloxstrap.UI.Elements.Settings
     {
         private Models.Persistable.WindowState _state => App.State.Prop.SettingsWindow;
 
+        public bool Terminate = true;
+
         public MainWindow(bool showAlreadyRunningWarning)
         {
             var viewModel = new MainWindowViewModel();
@@ -24,7 +26,10 @@ namespace Bloxstrap.UI.Elements.Settings
             viewModel.RequestCloseWindowEvent += (_, _) => Close();
 
             DataContext = viewModel;
-            
+
+            if (App.Settings.Prop.UseAero)
+                AllowsTransparency = true;
+
             InitializeComponent();
 
             App.Logger.WriteLine("MainWindow", "Initializing settings window");
@@ -83,8 +88,32 @@ namespace Bloxstrap.UI.Elements.Settings
 
         #endregion INavigationWindow methods
 
+        public void PrepareRestartWindow()
+        {
+            if (App.FastFlags.Changed || App.PendingSettingTasks.Any())
+            {
+                var result = Frontend.ShowMessageBox(Strings.Menu_UnsavedChanges, MessageBoxImage.Warning, MessageBoxButton.YesNo);
+
+                if (result != MessageBoxResult.Yes)
+                    return;
+            }
+
+            _state.Width = this.Width;
+            _state.Height = this.Height;
+
+            _state.Top = this.Top;
+            _state.Left = this.Left;
+
+            App.State.Save();
+
+            Terminate = false;
+        }
+
         private void WpfUiWindow_Closing(object sender, CancelEventArgs e)
         {
+            if (!Terminate)
+                return;
+
             if (App.FastFlags.Changed || App.PendingSettingTasks.Any())
             {
                 var result = Frontend.ShowMessageBox(Strings.Menu_UnsavedChanges, MessageBoxImage.Warning, MessageBoxButton.YesNo);
@@ -92,7 +121,7 @@ namespace Bloxstrap.UI.Elements.Settings
                 if (result != MessageBoxResult.Yes)
                     e.Cancel = true;
             }
-            
+
             _state.Width = this.Width;
             _state.Height = this.Height;
 
@@ -106,7 +135,7 @@ namespace Bloxstrap.UI.Elements.Settings
         {
             if (App.LaunchSettings.TestModeFlag.Active)
                 LaunchHandler.LaunchRoblox(LaunchMode.Player);
-            else
+            else if (Terminate)
                 App.SoftTerminate();
         }
     }

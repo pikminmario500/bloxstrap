@@ -44,7 +44,7 @@ namespace Bloxstrap.UI.Elements.ContextMenu
             if (_watcher.RichPresence is not null)
                 RichPresenceMenuItem.Visibility = Visibility.Visible;
 
-            VersionTextBlock.Text = $"{App.ProjectName} v{App.Version}";
+            VersionTextBlock.Text = $"{App.ProjectName} {App.ShortCommitHash}";
         }
 
         public void ShowServerInformationWindow()
@@ -104,7 +104,9 @@ namespace Bloxstrap.UI.Elements.ContextMenu
 
         private void RichPresenceMenuItem_Click(object sender, RoutedEventArgs e) => _watcher.RichPresence?.SetVisibility(((MenuItem)sender).IsChecked);
 
+#pragma warning disable CS8604 // Possible null reference argument.
         private void InviteDeeplinkMenuItem_Click(object sender, RoutedEventArgs e) => Clipboard.SetDataObject(_activityWatcher?.Data.GetInviteDeeplink());
+#pragma warning restore CS8604 // Possible null reference argument.
 
         private void ServerDetailsMenuItem_Click(object sender, RoutedEventArgs e) => ShowServerInformationWindow();
 

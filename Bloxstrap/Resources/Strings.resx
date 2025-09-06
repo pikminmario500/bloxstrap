@@ -356,18 +356,6 @@ If not, then please report this exception through a [GitHub issue]({1}) along wi
   <data name="Enums.FlagPresets.InGameMenuVersion.V4" xml:space="preserve">
     <value>2023 (V4)</value>
   </data>
-  <data name="Enums.FlagPresets.LightingMode.Default" xml:space="preserve">
-    <value>Chosen by game</value>
-  </data>
-  <data name="Enums.FlagPresets.LightingMode.Future" xml:space="preserve">
-    <value>Future (Phase 3)</value>
-  </data>
-  <data name="Enums.FlagPresets.LightingMode.ShadowMap" xml:space="preserve">
-    <value>Shadow Map (Phase 2)</value>
-  </data>
-  <data name="Enums.FlagPresets.LightingMode.Voxel" xml:space="preserve">
-    <value>Voxel (Phase 1)</value>
-  </data>
   <data name="Enums.FlagPresets.RenderingMode.D3D10" xml:space="preserve">
     <value>Direct3D 10</value>
   </data>
@@ -390,7 +378,7 @@ If not, then please report this exception through a [GitHub issue]({1}) along wi
     <value>Light</value>
   </data>
   <data name="InstallChecker.Updated" xml:space="preserve">
-    <value>Bloxstrap has been upgraded to v{0}</value>
+    <value>Bloxstrap has been upgraded to {0}</value>
   </data>
   <data name="InstallChecker.VersionDifferentThanInstalled" xml:space="preserve">
     <value>The version of Bloxstrap you've launched is different to the version you currently have installed.
@@ -634,12 +622,6 @@ Do NOT use this to import large "flag lists" made by other people that promise t
   <data name="Menu.FastFlags.Presets.HideGuis.Title" xml:space="preserve">
     <value>Enable ability to hide GUIs</value>
   </data>
-  <data name="Menu.FastFlags.Presets.LightingTechnology.Description" xml:space="preserve">
-    <value>Chosen one will be force enabled in all games. [Beware, may cause lighting issues!]({0})</value>
-  </data>
-  <data name="Menu.FastFlags.Presets.LightingTechnology.Title" xml:space="preserve">
-    <value>Preferred lighting technology</value>
-  </data>
   <data name="Menu.FastFlags.Presets.RenderingMode.Title" xml:space="preserve">
     <value>Rendering mode</value>
   </data>
@@ -795,12 +777,6 @@ Selecting 'No' will ignore this warning and continue installation.</value>
   <data name="Menu.Mods.Presets.OldCharacterSounds.Title" xml:space="preserve">
     <value>Emulate old character sounds</value>
   </data>
-  <data name="Menu.Mods.Presets.OldDeathSound.Description" xml:space="preserve">
-    <value>Bring back the classic 'oof' death sound.</value>
-  </data>
-  <data name="Menu.Mods.Presets.OldDeathSound.Title" xml:space="preserve">
-    <value>Use old death sound</value>
-  </data>
   <data name="Menu.Mods.Title" xml:space="preserve">
     <value>Mods</value>
   </data>
@@ -818,18 +794,6 @@ Selecting 'No' will ignore this warning and continue installation.</value>
   </data>
   <data name="Menu.Title" xml:space="preserve">
     <value>Bloxstrap Settings</value>
-  </data>
-  <data name="Dialog.LanguageSelector.Header" xml:space="preserve">
-    <value>Choose preferred language</value>
-  </data>
-  <data name="Dialog.LanguageSelector.Subtext" xml:space="preserve">
-    <value>Choose a language before continuing with installation.</value>
-  </data>
-  <data name="Menu.Appearance.Language.Title" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="Menu.Appearance.Language.Description" xml:space="preserve">
-    <value>A relaunch is required for changes to take effect.</value>
   </data>
   <data name="Menu.Behaviour.ForceRobloxLanguage.Title" xml:space="preserve">
     <value>Allow use of unsupported Roblox languages</value>
@@ -1487,16 +1451,55 @@ Defaulting to {1}.</value>
     <value>Custom Theme {0}</value>
     <comment>{0} is a string (e.g. '1', '1-1234')</comment>
   </data>
-  <data name="Menu.Integrations.MultiInstanceLaunching.Title" xml:space="preserve">
-    <value>Allow multi-instance launching</value>
-  </data>
-  <data name="Menu.Integrations.MultiInstanceLaunching.Description" xml:space="preserve">
-    <value>Allows for having more than one Roblox game client instance open simultaneously.</value>
-  </data>
   <data name="CustomTheme.Editor.Save.Success.Description" xml:space="preserve">
     <value>Your theme has been saved!</value>
   </data>
   <data name="CustomTheme.Editor.Errors.PreviewFailed" xml:space="preserve">
     <value>Failed to preview theme: {0}</value>
+  </data>
+  <data name="Enums.FlagPresets.RenderingMode.OpenGL" xml:space="preserve">
+    <value>OpenGL</value>
+  </data>
+  <data name="Enums.FlagPresets.RenderingMode.Vulkan" xml:space="preserve">
+    <value>Vulkan</value>
+  </data>
+  <data name="Menu.Behaviour.SoftwareRendering.Title" xml:space="preserve">
+    <value>Software Rendering</value>
+  </data>
+  <data name="Menu.Behaviour.CustomChannel.Title" xml:space="preserve">
+    <value>Channel</value>
+  </data>
+  <data name="Menu.Behaviour.CustomChannel.Description" xml:space="preserve">
+    <value>Choose which deployment channel Roblox should be downloaded from.</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.GPULightCulling.Title" xml:space="preserve">
+    <value>Enable GPU light culling</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.DisableVC.Title" xml:space="preserve">
+    <value>Disable voice chat</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.NoGrass.Title" xml:space="preserve">
+    <value>Disable terrain grass</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.MovePrerender.Description" xml:space="preserve">
+    <value>Can cause issues!</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.MovePrerender.Title" xml:space="preserve">
+    <value>Move prerender</value>
+  </data>
+  <data name="Menu.FastFlags.Presets.GraphicsQuality.Title" xml:space="preserve">
+    <value>Force graphics quality</value>
+  </data>
+  <data name="Enums.FlagPresets.GraphicsQuality.Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Enums.FlagPresets.GraphicsQuality.Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="Enums.FlagPresets.GraphicsQuality.High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Menu.Appearance.UseAero.Title" xml:space="preserve">
+    <value>Use Aero</value>
   </data>
 </root>

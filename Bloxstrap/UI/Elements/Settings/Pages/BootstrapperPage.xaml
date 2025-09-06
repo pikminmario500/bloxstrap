@@ -37,6 +37,11 @@
         </controls:OptionControl>
 
         <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_Behaviour_SoftwareRendering_Title}">
+            <ui:ToggleSwitch IsChecked="{Binding WPFSoftwareRenderEnabled, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_Behaviour_ForceRobloxReinstall_Title}"
             Description="{x:Static resources:Strings.Menu_Behaviour_ForceRobloxReinstall_Description}">
             <controls:OptionControl.Style>
@@ -50,5 +55,15 @@
             </controls:OptionControl.Style>
             <ui:ToggleSwitch IsChecked="{Binding ForceRobloxReinstallation, Mode=TwoWay}" />
         </controls:OptionControl>
+
+        <StackPanel>
+            <TextBlock Text="{x:Static resources:Strings.Common_Miscellaneous}" FontSize="16" FontWeight="Medium" Margin="0,16,0,0" />
+
+            <controls:OptionControl 
+                Header="{x:Static resources:Strings.Menu_Behaviour_CustomChannel_Title}" 
+                Description="{x:Static resources:Strings.Menu_Behaviour_CustomChannel_Description}" >
+                <ui:TextBox Margin="5,0,0,0" Padding="10,5,10,5" Width="200" Text="{Binding SelectedChannel, Mode=TwoWay}" />
+            </controls:OptionControl>
+        </StackPanel>
     </StackPanel>
 </ui:UiPage>

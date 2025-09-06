@@ -17,8 +17,10 @@
         ResizeMode="NoResize"
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"
         ExtendsContentIntoTitleBar="True"
-        WindowStartupLocation="CenterScreen">
-    <Grid>
+        WindowBackdropType="{Binding Path=WindowBackdropType, Mode=OneTime}"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <Grid Background="{Binding Path=BackgroundColourBrush, Mode=OneTime}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

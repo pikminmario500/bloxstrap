@@ -16,8 +16,10 @@
         SizeToContent="Height"
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"
         ExtendsContentIntoTitleBar="True"
-        WindowStartupLocation="CenterScreen">
-    <Grid>
+        WindowBackdropType="{Binding Path=WindowBackdropType, Mode=OneTime}"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None">
+    <Grid Background="{Binding Path=BackgroundColourBrush, Mode=OneTime}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -39,7 +41,7 @@
             </StackPanel>
         </Grid>
 
-        <Border Grid.Row="2" Padding="15" Background="{ui:ThemeResource SolidBackgroundFillColorSecondaryBrush}">
+        <Border Grid.Row="2" Padding="15">
             <Grid>
                 <TextBlock x:Name="VersionText" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="Version 2.8.0" />
                 

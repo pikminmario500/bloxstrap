@@ -187,11 +187,11 @@ namespace Bloxstrap
             if (connectionResult is not null)
                 HandleConnectionError(connectionResult);
             
-#if (!DEBUG || DEBUG_UPDATER) && !QA_BUILD
-            if (App.Settings.Prop.CheckForUpdates && !App.LaunchSettings.UpgradeFlag.Active)
+#if !QA_BUILD
+            if (App.Settings.Prop.CheckForUpdates && !App.LaunchSettings.UpgradeFlag.Active && App.IsActionBuild)
             {
                 bool updatePresent = await CheckForUpdates();
-                
+
                 if (updatePresent)
                     return;
             }
@@ -474,26 +474,6 @@ namespace Bloxstrap
             }
         }
 
-        private static void LaunchMultiInstanceWatcher()
-        {
-            const string LOG_IDENT = "Bootstrapper::LaunchMultiInstanceWatcher";
-
-            if (Utilities.DoesMutexExist("ROBLOX_singletonMutex"))
-            {
-                App.Logger.WriteLine(LOG_IDENT, "Roblox singleton mutex already exists");
-                return;
-            }
-
-            using EventWaitHandle initEventHandle = new EventWaitHandle(false, EventResetMode.AutoReset, "Bloxstrap-MultiInstanceWatcherInitialisationFinished");
-            Process.Start(Paths.Process, "-multiinstancewatcher");
-
-            bool initSuccess = initEventHandle.WaitOne(TimeSpan.FromSeconds(2));
-            if (initSuccess)
-                App.Logger.WriteLine(LOG_IDENT, "Initialisation finished signalled, continuing.");
-            else
-                App.Logger.WriteLine(LOG_IDENT, "Did not receive the initialisation finished signal, continuing.");
-        }
-
         private void StartRoblox()
         {
             const string LOG_IDENT = "Bootstrapper::StartRoblox";
@@ -502,10 +482,6 @@ namespace Bloxstrap
 
             if (_launchMode == LaunchMode.Player)
             {
-                // this needs to be done before roblox launches
-                if (App.Settings.Prop.MultiInstanceLaunching)
-                    LaunchMultiInstanceWatcher();
-
                 if (App.Settings.Prop.ForceRobloxLanguage)
                 {
                     var match = Regex.Match(_launchCommandLine, "gameLocale:([a-z_]+)", RegexOptions.CultureInvariant);
@@ -740,10 +716,10 @@ namespace Bloxstrap
             if (releaseInfo is null)
                 return false;
 
-            var versionComparison = Utilities.CompareVersions(App.Version, releaseInfo.TagName);
+            string version = releaseInfo.TagName;
 
             // check if we aren't using a deployed build, so we can update to one if a new version comes out
-            if (App.IsProductionBuild && versionComparison == VersionComparison.Equal || versionComparison == VersionComparison.GreaterThan)
+            if (App.IsActionBuild && App.ShortCommitHash == version)
             {
                 App.Logger.WriteLine(LOG_IDENT, "No updates found");
                 return false;
@@ -751,10 +727,8 @@ namespace Bloxstrap
 
             if (Dialog is not null)
                 Dialog.CancelEnabled = false;
-
-            string version = releaseInfo.TagName;
 #else
-            string version = App.Version;
+            string version = App.ShortCommitHash;
 #endif
 
             SetStatus(Strings.Bootstrapper_Status_UpgradingBloxstrap);
@@ -768,13 +742,17 @@ namespace Bloxstrap
 
                 File.Copy(Paths.Process, downloadLocation, true);
 #else
+#if !DEBUG
+                var asset = releaseInfo.Assets![1];
+#else
                 var asset = releaseInfo.Assets![0];
+#endif
 
                 string downloadLocation = Path.Combine(Paths.TempUpdates, asset.Name);
 
                 Directory.CreateDirectory(Paths.TempUpdates);
 
-                App.Logger.WriteLine(LOG_IDENT, $"Downloading {releaseInfo.TagName}...");
+                App.Logger.WriteLine(LOG_IDENT, $"Downloading {version}...");
                 
                 if (!File.Exists(downloadLocation))
                 {
