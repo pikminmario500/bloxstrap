@@ -152,6 +152,13 @@
 				"CornerRadius": "CornerRadius"
 			}
 		},
+		"Sound": {
+			"SuperClass": "FrameworkElement",
+			"IsCreatable": true,
+			"Attributes": {
+				"Source": "ImageSource"
+			}
+		},
 		"RowDefinition": {
 			"IsCreatable": true,
 			"Attributes": {

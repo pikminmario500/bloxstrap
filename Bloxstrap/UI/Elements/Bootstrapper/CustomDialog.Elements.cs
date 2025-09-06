@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using NAudio.Wave;
+
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -766,6 +768,17 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             }
 
             return border;
+        }
+
+        private static UIElement? HandleXmlElement_Sound(CustomDialog dialog, XElement xmlElement)
+        {
+            string? path = xmlElement.Attribute("Source")?.Value.ToString();
+
+            var waveOut = new WasapiOut();
+            waveOut.Init(new MediaFoundationReader(@path?.Replace("theme://", $"{dialog.ThemeDir}\\")));
+            waveOut.Play();
+
+            return null;
         }
         #endregion
     }

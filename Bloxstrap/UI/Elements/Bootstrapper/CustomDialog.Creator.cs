@@ -33,6 +33,9 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             ["Grid"] = HandleXmlElement_Grid,
             ["StackPanel"] = HandleXmlElement_StackPanel,
             ["Border"] = HandleXmlElement_Border,
+#pragma warning disable CS8621
+            ["Sound"] = HandleXmlElement_Sound,
+#pragma warning restore CS8621
 
             ["SolidColorBrush"] = HandleXmlElement_SolidColorBrush,
             ["ImageBrush"] = HandleXmlElement_ImageBrush,
@@ -62,7 +65,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
                 throw new CustomThemeException("CustomTheme.Errors.UnknownElement", xmlElement.Name);
 
             var element = _elementHandlerMap[xmlElement.Name.ToString()](dialog, xmlElement);
-            if (element is not T)
+            if (element is not T && xmlElement.Name.ToString() != "Sound")
                 throw new CustomThemeException("CustomTheme.Errors.ElementInvalidChild", xmlElement.Parent!.Name, xmlElement.Name);
 
             return (T)element;
@@ -74,7 +77,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
                 return; // not an xml element
 
             var uiElement = HandleXml<UIElement>(dialog, xmlElement);
-            if (uiElement is not DummyFrameworkElement)
+            if (uiElement is not DummyFrameworkElement && xmlElement.Name.ToString() != "Sound")
                 dialog.ElementGrid.Children.Add(uiElement);
         }
 
