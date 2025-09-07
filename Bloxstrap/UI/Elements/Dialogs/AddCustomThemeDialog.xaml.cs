@@ -4,6 +4,9 @@ using Microsoft.Win32;
 using System.IO.Compression;
 using System.Windows;
 
+using SharpCompress.Readers;
+using SharpCompress.Archives;
+
 namespace Bloxstrap.UI.Elements.Dialogs
 {
     /// <summary>
@@ -15,6 +18,19 @@ namespace Bloxstrap.UI.Elements.Dialogs
         private const int ImportTabId = 1;
 
         private readonly AddCustomThemeViewModel _viewModel;
+
+        private readonly string[] supportedArchives = [
+            ".zip",
+            ".rar",
+            ".7z",
+            ".tar",
+            ".tar.gz",
+            ".tar.bz2",
+            ".tar.lz",
+            ".tar.xz",
+            ".gz",
+            ".arc"
+        ];
 
         public bool Created { get; private set; } = false;
         public string ThemeName { get; private set; } = "";
@@ -133,7 +149,7 @@ namespace Bloxstrap.UI.Elements.Dialogs
         {
             const string LOG_IDENT = "AddCustomThemeDialog::ValidateImport";
 
-            if (!_viewModel.FilePath.EndsWith(".zip"))
+            if (!supportedArchives.Any(_viewModel.FilePath.EndsWith))
             {
                 _viewModel.FileError = Strings.CustomTheme_Add_Errors_FileNotZip;
                 return false;
@@ -141,14 +157,13 @@ namespace Bloxstrap.UI.Elements.Dialogs
 
             try
             {
-                using var zipFile = ZipFile.OpenRead(_viewModel.FilePath);
-                var entries = zipFile.Entries;
+                using var zipFile = ReaderFactory.Open(File.OpenRead(_viewModel.FilePath));
 
                 bool foundThemeFile = false;
 
-                foreach (var entry in entries)
+                while (zipFile.MoveToNextEntry())
                 {
-                    if (entry.FullName == "Theme.xml")
+                    if (zipFile.Entry.Key == "Theme.xml")
                     {
                         foundThemeFile = true;
                         break;
@@ -200,8 +215,7 @@ namespace Bloxstrap.UI.Elements.Dialogs
                 Directory.Delete(directory, true);
             Directory.CreateDirectory(directory);
 
-            var fastZip = new ICSharpCode.SharpZipLib.Zip.FastZip();
-            fastZip.ExtractZip(_viewModel.FilePath, directory, null);
+            ArchiveFactory.Open(_viewModel.FilePath).ExtractToDirectory(directory);
 
             Created = true;
             ThemeName = name;
@@ -220,9 +234,18 @@ namespace Bloxstrap.UI.Elements.Dialogs
 
         private void OnImportButtonClicked(object sender, RoutedEventArgs e)
         {
+            string Filter = $"{Strings.FileTypes_ZipArchive}|";
+
+            foreach (string type in supportedArchives)
+            {
+                Filter += $"*{type}; ";
+            }
+
+            Filter = Filter[..^2];
+
             var dialog = new OpenFileDialog
             {
-                Filter = $"{Strings.FileTypes_ZipArchive}|*.zip"
+                Filter = Filter
             };
 
             if (dialog.ShowDialog() != true)

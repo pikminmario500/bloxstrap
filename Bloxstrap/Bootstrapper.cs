@@ -23,7 +23,8 @@ using Bloxstrap.AppData;
 using Bloxstrap.RobloxInterfaces;
 using Bloxstrap.UI.Elements.Bootstrapper.Base;
 
-using ICSharpCode.SharpZipLib.Zip;
+using SharpCompress.Archives;
+using SharpCompress.Archives.Zip;
 
 namespace Bloxstrap
 {
@@ -42,7 +43,6 @@ namespace Bloxstrap
             "	<BaseUrl>http://www.roblox.com</BaseUrl>\r\n" +
             "</Settings>\r\n";
 
-        private readonly FastZipEvents _fastZipEvents = new();
         private readonly CancellationTokenSource _cancelTokenSource = new();
 
         private IAppData AppData = default!;
@@ -80,20 +80,6 @@ namespace Bloxstrap
         public Bootstrapper(LaunchMode launchMode)
         {
             _launchMode = launchMode;
-
-            // https://github.com/icsharpcode/SharpZipLib/blob/master/src/ICSharpCode.SharpZipLib/Zip/FastZip.cs/#L669-L680
-            // exceptions don't get thrown if we define events without actually binding to the failure events. probably a bug. ¯\_(ツ)_/¯
-            _fastZipEvents.FileFailure += (_, e) =>
-            {
-                // only give a pass to font files (no idea whats wrong with them)
-                if (!e.Name.EndsWith(".ttf"))
-                    throw e.Exception;
-
-                App.Logger.WriteLine("FastZipEvents::OnFileFailure", $"Failed to extract {e.Name}");
-                _packageExtractionSuccess = false;
-            };
-            _fastZipEvents.DirectoryFailure += (_, e) => throw e.Exception;
-            _fastZipEvents.ProcessFile += (_, e) => e.ContinueRunning = !_cancelTokenSource.IsCancellationRequested;
 
             SetupAppData();
         }
@@ -1495,24 +1481,24 @@ namespace Bloxstrap
             }
 
             string packageFolder = Path.Combine(_latestVersionDirectory, packageDir);
-            string? fileFilter = null;
 
-            // for sharpziplib, each file in the filter needs to be a regex
+            using var archive = ZipArchive.Open(package.DownloadPath);
+
             if (files is not null)
             {
-                var regexList = new List<string>();
-
-                foreach (string file in files)
-                    regexList.Add("^" + file.Replace("\\", "\\\\").Replace("(", "\\(").Replace(")", "\\)") + "$");
-
-                fileFilter = String.Join(';', regexList);
+#pragma warning disable CS8604
+                foreach (var entry in archive.Entries.Where(e => files.Contains(e.Key) && !e.IsDirectory))
+                {
+                    string filePath = Path.Combine(packageFolder, entry.Key);
+                    using var fileStream = File.Create(filePath);
+                    entry.WriteTo(fileStream);
+                }
+#pragma warning restore CS8604
             }
-
-            App.Logger.WriteLine(LOG_IDENT, $"Extracting {package.Name}...");
-
-            var fastZip = new FastZip(_fastZipEvents);
-
-            fastZip.ExtractZip(package.DownloadPath, packageFolder, fileFilter);
+            else
+            {
+                archive.ExtractToDirectory(packageFolder);
+            }
 
             App.Logger.WriteLine(LOG_IDENT, $"Finished extracting {package.Name}");
         }

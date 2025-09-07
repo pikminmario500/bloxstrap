@@ -1213,8 +1213,8 @@ Please close any applications that may be using Roblox's files, and relaunch.</v
     <comment>This is *not* for when Roblox is still running when trying to upgrade. This applies to files being open (i.e. image assets)</comment>
   </data>
   <data name="FileTypes.ZipArchive" xml:space="preserve">
-    <value>Zip archive</value>
-    <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. "Zip archive (*.zip)"</comment>
+    <value>Archive</value>
+    <comment>Shown in the save file dialog, where the file type selection dropdown is, e.g. "Archive (*.zip)"</comment>
   </data>
   <data name="Common.Export" xml:space="preserve">
     <value>Export</value>
@@ -1401,13 +1401,13 @@ Please close any applications that may be using Roblox's files, and relaunch.</v
     <value>Name is already in use</value>
   </data>
   <data name="CustomTheme.Add.Errors.FileNotZip" xml:space="preserve">
-    <value>File must be a ZIP</value>
+    <value>File must be a supported archive</value>
   </data>
   <data name="CustomTheme.Add.Errors.ZipMissingThemeFile" xml:space="preserve">
-    <value>Theme file could not be found in the ZIP file</value>
+    <value>Theme file could not be found in the archive</value>
   </data>
   <data name="CustomTheme.Add.Errors.ZipInvalidData" xml:space="preserve">
-    <value>Invalid or corrupted ZIP file</value>
+    <value>Invalid or corrupted archive</value>
   </data>
   <data name="CustomTheme.Errors.NoThemeSelected" xml:space="preserve">
     <value>No custom theme selected</value>

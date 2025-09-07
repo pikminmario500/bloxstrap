@@ -1085,7 +1085,7 @@ namespace Bloxstrap.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to File must be a ZIP.
+        ///   Looks up a localized string similar to File must be a supported archive.
         /// </summary>
         public static string CustomTheme_Add_Errors_FileNotZip
         {
@@ -1151,7 +1151,7 @@ namespace Bloxstrap.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Invalid or corrupted ZIP file.
+        ///   Looks up a localized string similar to Invalid or corrupted archive.
         /// </summary>
         public static string CustomTheme_Add_Errors_ZipInvalidData
         {
@@ -1162,7 +1162,7 @@ namespace Bloxstrap.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Theme file could not be found in the ZIP file.
+        ///   Looks up a localized string similar to Theme file could not be found in the archive.
         /// </summary>
         public static string CustomTheme_Add_Errors_ZipMissingThemeFile
         {
@@ -2293,7 +2293,7 @@ namespace Bloxstrap.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Zip archive.
+        ///   Looks up a localized string similar to Archive.
         /// </summary>
         public static string FileTypes_ZipArchive
         {

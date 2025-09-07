@@ -57,9 +57,9 @@
                     <TextBlock Margin="0,2,0,0" FontSize="12" Text="{x:Static resources:Strings.Menu_About_Licenses_MIT}" Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
                 </StackPanel>
             </ui:CardAction>
-            <ui:CardAction Grid.Row="1" Grid.Column="2" Margin="0,8,0,0" Command="models:GlobalViewModel.OpenWebpageCommand" CommandParameter="https://github.com/icsharpcode/SharpZipLib/blob/master/LICENSE.txt">
+            <ui:CardAction Grid.Row="1" Grid.Column="2" Margin="0,8,0,0" Command="models:GlobalViewModel.OpenWebpageCommand" CommandParameter="https://github.com/adamhathcock/sharpcompress/blob/master/LICENSE.txt">
                 <StackPanel>
-                    <TextBlock FontSize="13" Text="SharpZipLib" />
+                    <TextBlock FontSize="13" Text="SharpCompress" />
                     <TextBlock Margin="0,2,0,0" FontSize="12" Text="{x:Static resources:Strings.Menu_About_Licenses_MIT}" Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
                 </StackPanel>
             </ui:CardAction>
@@ -83,7 +83,7 @@
                 </StackPanel>
             </ui:CardAction>
 
-            <ui:CardAction Grid.Row="3" Margin="0,8,8,0" Command="models:GlobalViewModel.OpenWebpageCommand" CommandParameter="https://github.com/naudio/NAudio/blob/master/license.txt">
+            <ui:CardAction Grid.Row="3" Grid.ColumnSpan="3" Margin="0,8,0,0" Command="models:GlobalViewModel.OpenWebpageCommand" CommandParameter="https://github.com/naudio/NAudio/blob/master/license.txt">
                 <StackPanel>
                     <TextBlock FontSize="14" Text="NAudio" />
                     <TextBlock Margin="0,2,0,0" FontSize="12" Text="{x:Static resources:Strings.Menu_About_Licenses_MIT}" Foreground="{DynamicResource TextFillColorTertiaryBrush}" />

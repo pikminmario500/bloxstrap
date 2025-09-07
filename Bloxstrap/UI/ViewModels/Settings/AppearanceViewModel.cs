@@ -4,20 +4,27 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.Input;
-using ICSharpCode.SharpZipLib.Zip;
+using SharpCompress.Archives;
+using SharpCompress.Common;
+using SharpCompress.Writers;
 
 using Microsoft.Win32;
 
 using Bloxstrap.UI.Elements.Settings;
 using Bloxstrap.UI.Elements.Editor;
 using Bloxstrap.UI.Elements.Dialogs;
-using System.Windows.Media;
 
 namespace Bloxstrap.UI.ViewModels.Settings
 {
     public class AppearanceViewModel : NotifyPropertyChangedViewModel
     {
         private readonly Page _page;
+
+        private readonly string[] supportedArchives = [
+            ".zip",
+            ".tar",
+            ".gz"
+        ];
 
         public ICommand PreviewBootstrapperCommand => new RelayCommand(PreviewBootstrapper);
         public ICommand BrowseCustomIconLocationCommand => new RelayCommand(BrowseCustomIconLocation);
@@ -303,10 +310,19 @@ namespace Bloxstrap.UI.ViewModels.Settings
             if (SelectedCustomTheme is null)
                 return;
 
+            string Filter = $"{Strings.FileTypes_ZipArchive}|";
+
+            foreach (string type in supportedArchives)
+            {
+                Filter += $"*{type}; ";
+            }
+
+            Filter = Filter[..^2];
+
             var dialog = new SaveFileDialog
             {
                 FileName = $"{SelectedCustomTheme}.zip",
-                Filter = $"{Strings.FileTypes_ZipArchive}|*.zip"
+                Filter = Filter
             };
 
             if (dialog.ShowDialog() != true)
@@ -314,30 +330,41 @@ namespace Bloxstrap.UI.ViewModels.Settings
 
             string themeDir = Path.Combine(Paths.CustomThemes, SelectedCustomTheme);
 
-            using var memStream = new MemoryStream();
-            using var zipStream = new ZipOutputStream(memStream);
+            if (Path.GetExtension(dialog.FileName) == string.Empty)
+                dialog.FileName += ".zip";
 
-            foreach (var filePath in Directory.EnumerateFiles(themeDir, "*.*", SearchOption.AllDirectories))
-            {
-                string relativePath = filePath[(themeDir.Length + 1)..];
+            var options = new WriterOptions(GetCompressionType(Path.GetExtension(dialog.FileName)));
 
-                var entry = new ZipEntry(relativePath);
-                entry.DateTime = DateTime.Now;
-
-                zipStream.PutNextEntry(entry);
-
-                using var fileStream = File.OpenRead(filePath);
-                fileStream.CopyTo(zipStream);
-            }
-
-            zipStream.CloseEntry();
-            zipStream.Finish();
-            memStream.Position = 0;
-
-            using var outputStream = File.OpenWrite(dialog.FileName);
-            memStream.CopyTo(outputStream);
+            using var archive = ArchiveFactory.Create(GetArchiveType(Path.GetExtension(dialog.FileName)));
+            archive.AddAllFromDirectory(themeDir);
+            archive.SaveTo(dialog.FileName, options);
 
             Process.Start("explorer.exe", $"/select,\"{dialog.FileName}\"");
+        }
+
+        // this is ugly but whatever, too lazy to fix
+        private static ArchiveType GetArchiveType(string fileExtension)
+        {
+            if (fileExtension == ".zip")
+                return ArchiveType.Zip;
+            else if (fileExtension == ".tar")
+                return ArchiveType.Tar;
+            else if (fileExtension == ".gz")
+                return ArchiveType.GZip;
+            else
+                throw new NotImplementedException();
+        }
+
+        private static CompressionType GetCompressionType(string fileExtension)
+        {
+            if (fileExtension == ".zip")
+                return CompressionType.LZMA;
+            else if (fileExtension == ".tar")
+                return CompressionType.None;
+            else if (fileExtension == ".gz")
+                return CompressionType.Deflate;
+            else
+                throw new NotImplementedException();
         }
 
         private void PopulateCustomThemes()
