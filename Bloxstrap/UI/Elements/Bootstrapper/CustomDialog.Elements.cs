@@ -775,8 +775,16 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             string? path = xmlElement.Attribute("Source")?.Value.ToString();
 
             var waveOut = new WasapiOut();
-            waveOut.Init(new MediaFoundationReader(@path?.Replace("theme://", $"{dialog.ThemeDir}\\")));
+            var reader = new MediaFoundationReader(@path?.Replace("theme://", $"{dialog.ThemeDir}\\"));
+            waveOut.Init(reader);
             waveOut.Play();
+
+            dialog.Closing += (s, e) =>
+            {
+                waveOut.Stop();
+                waveOut.Dispose();
+                reader.Dispose();
+            };
 
             return new DummyFrameworkElement();
         }
