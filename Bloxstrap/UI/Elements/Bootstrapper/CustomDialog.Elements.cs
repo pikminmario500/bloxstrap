@@ -770,7 +770,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return border;
         }
 
-        private static UIElement? HandleXmlElement_Sound(CustomDialog dialog, XElement xmlElement)
+        private static DummyFrameworkElement HandleXmlElement_Sound(CustomDialog dialog, XElement xmlElement)
         {
             string? path = xmlElement.Attribute("Source")?.Value.ToString();
 
@@ -778,7 +778,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             waveOut.Init(new MediaFoundationReader(@path?.Replace("theme://", $"{dialog.ThemeDir}\\")));
             waveOut.Play();
 
-            return null;
+            return new DummyFrameworkElement();
         }
         #endregion
     }

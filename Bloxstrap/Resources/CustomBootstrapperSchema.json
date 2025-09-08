@@ -153,10 +153,10 @@
 			}
 		},
 		"Sound": {
-			"SuperClass": "FrameworkElement",
+			"SuperClass": "Control",
 			"IsCreatable": true,
 			"Attributes": {
-				"Source": "ImageSource"
+				"Source": "string"
 			}
 		},
 		"RowDefinition": {
