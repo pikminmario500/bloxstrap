@@ -448,6 +448,25 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return new DummyFrameworkElement(); // dont add anything
         }
 
+        private static DummyFrameworkElement HandleXmlElement_Sound(CustomDialog dialog, XElement xmlElement)
+        {
+            string? filePath = xmlElement.Attribute("Source")?.Value.ToString();
+
+            var waveOut = new NAudio.Wave.WasapiOut();
+            var reader = new NAudio.Wave.MediaFoundationReader(filePath?.Replace("theme://", $"{dialog.ThemeDir}\\"));
+
+            waveOut.Init(reader);
+            waveOut.Play();
+
+            dialog.Closing += (_, _) =>
+            {
+                waveOut.Dispose();
+                reader.Dispose();
+            };
+
+            return new DummyFrameworkElement();
+        }
+
         private static UIElement HandleXmlElement_Button(CustomDialog dialog, XElement xmlElement)
         {
             var button = new Button();

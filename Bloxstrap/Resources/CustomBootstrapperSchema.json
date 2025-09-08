@@ -58,6 +58,13 @@
 				"Title": "string"
 			}
 		},
+		"Sound": {
+			"SuperClass": "Control",
+			"IsCreatable": true,
+			"Attributes": {
+				"Source": "string"
+			}
+		},
 		"Button": {
 			"SuperClass": "Control",
 			"IsCreatable": true,

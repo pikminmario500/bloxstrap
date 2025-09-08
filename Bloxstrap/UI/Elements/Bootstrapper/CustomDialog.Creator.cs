@@ -24,6 +24,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
         {
             ["BloxstrapCustomBootstrapper"] = HandleXmlElement_BloxstrapCustomBootstrapper_Fake,
             ["TitleBar"] = HandleXmlElement_TitleBar,
+            ["Sound"] = HandleXmlElement_Sound,
             ["Button"] = HandleXmlElement_Button,
             ["ProgressBar"] = HandleXmlElement_ProgressBar,
             ["ProgressRing"] = HandleXmlElement_ProgressRing,
