@@ -25,8 +25,7 @@ namespace Bloxstrap.AppData
 
         public List<string> ModManifest => DistributionState.ModManifest;
 
-        public virtual IReadOnlyDictionary<string, string> PackageDirectoryMap { get; set; }
-
+        public virtual IReadOnlyDictionary<string, string> PackageDirectoryMap { get; set; } = null!;
 
         public async Task GetPackageMap()
         {
