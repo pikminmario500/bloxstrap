@@ -14,9 +14,6 @@
 
         public override JsonManager<DistributionState> DistributionStateManager => App.PlayerState;
 
-        public override IReadOnlyDictionary<string, string> PackageDirectoryMap { get; set; } = new Dictionary<string, string>()
-        {
-            { "RobloxApp.zip", @"" }
-        };
+        protected override string PackageMapUrl => "https://raw.githubusercontent.com/bloxstraplabs/config/refs/heads/main/package-maps/playerdata.json";
     }
 }

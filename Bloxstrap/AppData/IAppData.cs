@@ -23,5 +23,7 @@
         List<string> ModManifest { get; }
 
         IReadOnlyDictionary<string, string> PackageDirectoryMap { get; set; }
+
+        Task GetPackageMap();
     }
 }

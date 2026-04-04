@@ -461,6 +461,7 @@ namespace Bloxstrap
                     _launchMode = isPlayer ? LaunchMode.Player : LaunchMode.Studio;
 
                     SetupAppData(); // we need to set it up again
+                    await AppData.GetPackageMap();
 
                     // lets set the registry now
                     UpdateChannelRegistry();
@@ -469,6 +470,10 @@ namespace Bloxstrap
                 {
                     App.Logger.WriteLine(LOG_IDENT, "Could not identify launch mode as package manifest is empty");
                 }
+            }
+            else if (AppData.PackageDirectoryMap.Count == 0)
+            {
+                await AppData.GetPackageMap();
             }
         }
 
