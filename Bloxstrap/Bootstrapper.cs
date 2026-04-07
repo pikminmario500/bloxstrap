@@ -624,18 +624,36 @@ namespace Bloxstrap
 
             App.Logger.WriteLine(LOG_IDENT, $"Started Roblox (PID {_appPid}), waiting for log file");
 
-            logCreatedEvent.WaitOne(TimeSpan.FromSeconds(15));
+            var exitEvent = new AutoResetEvent(false);
 
-            if (String.IsNullOrEmpty(logFileName))
+            using var roblox = Process.GetProcessById(_appPid);
+            roblox.EnableRaisingEvents = true;
+            roblox.Exited += (_, _) => exitEvent.Set();
+
+            int triggered = WaitHandle.WaitAny(
+                new WaitHandle[] { logCreatedEvent, exitEvent },
+                TimeSpan.FromSeconds(30)
+            );
+
+            if (triggered != 0)
             {
                 App.Logger.WriteLine(LOG_IDENT, "Unable to identify log file");
+
+                if (triggered == WaitHandle.WaitTimeout)
+                {
+                    App.Logger.WriteLine(LOG_IDENT, "Killing Roblox...");
+                    roblox.Kill();
+                }
+                else
+                {
+                    App.Logger.WriteLine(LOG_IDENT, "Roblox exited before log file was created");
+                }
+
                 Frontend.ShowPlayerErrorDialog();
                 return;
             }
-            else
-            {
-                App.Logger.WriteLine(LOG_IDENT, $"Got log file as {logFileName}");
-            }
+
+            App.Logger.WriteLine(LOG_IDENT, $"Got log file as {logFileName}");
 
             _mutex?.ReleaseAsync();
 
