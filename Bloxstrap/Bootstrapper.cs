@@ -630,16 +630,16 @@ namespace Bloxstrap
             roblox.EnableRaisingEvents = true;
             roblox.Exited += (_, _) => exitEvent.Set();
 
-            int triggered = WaitHandle.WaitAny(
+            int result = WaitHandle.WaitAny(
                 new WaitHandle[] { logCreatedEvent, exitEvent },
                 TimeSpan.FromSeconds(30)
             );
 
-            if (triggered != 0)
+            if (result != 0)
             {
                 App.Logger.WriteLine(LOG_IDENT, "Unable to identify log file");
 
-                if (triggered == WaitHandle.WaitTimeout)
+                if (result == WaitHandle.WaitTimeout)
                 {
                     App.Logger.WriteLine(LOG_IDENT, "Killing Roblox...");
                     roblox.Kill();
