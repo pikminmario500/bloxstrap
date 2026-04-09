@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-using Microsoft.Win32;
-
 using Windows.Win32;
 using Windows.Win32.UI.Shell;
 using Windows.Win32.Foundation;
@@ -18,52 +16,36 @@ namespace Bloxstrap.UI.ViewModels.Settings
     {
         private void OpenModsFolder() => Process.Start("explorer.exe", Paths.Modifications);
 
-        private readonly Dictionary<string, byte[]> FontHeaders = new()
+        private IEnumerable<string>? _installedFonts;
+        public IEnumerable<string> InstalledFonts
         {
-            { "ttf", new byte[4] { 0x00, 0x01, 0x00, 0x00 } },
-            { "otf", new byte[4] { 0x4F, 0x54, 0x54, 0x4F } },
-            { "ttc", new byte[4] { 0x74, 0x74, 0x63, 0x66 } } 
-        };
+            get
+            {
+                if (_installedFonts is not null)
+                    return _installedFonts;
 
-        private void ManageCustomFont()
+                var fonts = System.Windows.Media.Fonts.SystemFontFamilies
+                    .Select(f => (f.FamilyNames.TryGetValue(System.Windows.Markup.XmlLanguage.GetLanguage("en-us"), out var n) ? n : f.FamilyNames.Values.FirstOrDefault())!)
+                    .Where(n => !String.IsNullOrWhiteSpace(n))
+                    .OrderBy(n => n)
+                    .ToList();
+
+                fonts.Insert(0, Strings.Common_Default);
+                return _installedFonts = fonts;
+            }
+        }
+
+        public string SelectedFont
         {
-            if (!String.IsNullOrEmpty(TextFontTask.NewState))
+            get => String.IsNullOrEmpty(App.Settings.Prop.CustomFontName) ? Strings.Common_Default : App.Settings.Prop.CustomFontName;
+            set
             {
-                TextFontTask.NewState = "";
+                App.Settings.Prop.CustomFontName = TextFontTask.NewState = value == Strings.Common_Default ? "" : value;
+                OnPropertyChanged(nameof(SelectedFont));
             }
-            else
-            {
-                var dialog = new OpenFileDialog
-                {
-                    Filter = $"{Strings.Menu_FontFiles}|*.ttf;*.otf;*.ttc"
-                };
-
-                if (dialog.ShowDialog() != true)
-                    return;
-
-                string type = dialog.FileName.Substring(dialog.FileName.Length-3, 3).ToLowerInvariant();
-
-                if (!FontHeaders.ContainsKey(type) 
-                    || !FontHeaders.Any(x => File.ReadAllBytes(dialog.FileName).Take(4).SequenceEqual(x.Value)))
-                {
-                    Frontend.ShowMessageBox(Strings.Menu_Mods_Misc_CustomFont_Invalid, MessageBoxImage.Error);
-                    return;
-                }
-
-                TextFontTask.NewState = dialog.FileName;
-            }
-
-            OnPropertyChanged(nameof(ChooseCustomFontVisibility));
-            OnPropertyChanged(nameof(DeleteCustomFontVisibility));
         }
 
         public ICommand OpenModsFolderCommand => new RelayCommand(OpenModsFolder);
-
-        public Visibility ChooseCustomFontVisibility => !String.IsNullOrEmpty(TextFontTask.NewState) ? Visibility.Collapsed : Visibility.Visible;
-
-        public Visibility DeleteCustomFontVisibility => !String.IsNullOrEmpty(TextFontTask.NewState) ? Visibility.Visible : Visibility.Collapsed;
-
-        public ICommand ManageCustomFontCommand => new RelayCommand(ManageCustomFont);
 
         public ICommand OpenCompatSettingsCommand => new RelayCommand(OpenCompatSettings);
 

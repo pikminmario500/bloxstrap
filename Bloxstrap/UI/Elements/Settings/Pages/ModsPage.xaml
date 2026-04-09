@@ -90,10 +90,7 @@
 
         <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_Mods_Misc_CustomFont_Title}">
-            <StackPanel>
-                <ui:Button Icon="DocumentAdd16" Content="{x:Static resources:Strings.Menu_Mods_Misc_CustomFont_Choose}" Command="{Binding ManageCustomFontCommand}" Visibility="{Binding ChooseCustomFontVisibility, Mode=OneWay}" />
-                <ui:Button Icon="Delete16" Content="{x:Static resources:Strings.Menu_Mods_Misc_CustomFont_Remove}" Appearance="Danger" Command="{Binding ManageCustomFontCommand}" Visibility="{Binding DeleteCustomFontVisibility, Mode=OneWay}" />
-            </StackPanel>
+            <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="220" ItemsSource="{Binding InstalledFonts, Mode=OneTime}" SelectedItem="{Binding SelectedFont, Mode=TwoWay}" />
         </controls:OptionControl>
     </StackPanel>
 </ui:UiPage>

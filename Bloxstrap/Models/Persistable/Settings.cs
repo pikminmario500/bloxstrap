@@ -33,5 +33,6 @@ namespace Bloxstrap.Models.Persistable
 
         // mod preset configuration
         public bool UseDisableAppPatch { get; set; } = false;
+        public string CustomFontName { get; set; } = "";
     }
 }
