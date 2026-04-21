@@ -90,7 +90,18 @@
 
         <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_Mods_Misc_CustomFont_Title}">
-            <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="220" ItemsSource="{Binding InstalledFonts, Mode=OneTime}" SelectedItem="{Binding SelectedFont, Mode=TwoWay}" />
+            <ComboBox Margin="5,0,0,0" Padding="10,5,10,5" Width="220" ItemsSource="{Binding InstalledFonts, Mode=OneTime}" SelectedItem="{Binding SelectedFont, Mode=TwoWay}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontFamily="{Binding}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </controls:OptionControl>
     </StackPanel>
 </ui:UiPage>
