@@ -114,9 +114,9 @@ namespace Bloxstrap.Models.Entities
 
             try
             {
-                string url = string.IsNullOrEmpty(App.Settings.Prop.IpInfoToken)
+                string url = string.IsNullOrEmpty(App.Settings.Prop.IPInfoToken)
                     ? $"https://ipinfo.io/{MachineAddress}/json"
-                    : $"https://ipinfo.io/{MachineAddress}/json?token={App.Settings.Prop.IpInfoToken}";
+                    : $"https://ipinfo.io/{MachineAddress}/json?token={App.Settings.Prop.IPInfoToken}";
 
                 var ipInfo = await Http.GetJson<IPInfoResponse>(url);
 

@@ -3165,18 +3165,18 @@ namespace Bloxstrap.Resources {
         /// <summary>
         ///   Looks up a localized string similar to This is optional and unneccessary unless you cannot query the server location..
         /// </summary>
-        public static string Menu_Integrations_IpInfoToken_Description {
+        public static string Menu_Integrations_IPInfoToken_Description {
             get {
-                return ResourceManager.GetString("Menu.Integrations.IpInfoToken.Description", resourceCulture);
+                return ResourceManager.GetString("Menu.Integrations.IPInfoToken.Description", resourceCulture);
             }
         }
 
         /// <summary>
         ///   Looks up a localized string similar to ipinfo.io API token.
         /// </summary>
-        public static string Menu_Integrations_IpInfoToken_Title {
+        public static string Menu_Integrations_IPInfoToken_Title {
             get {
-                return ResourceManager.GetString("Menu.Integrations.IpInfoToken.Title", resourceCulture);
+                return ResourceManager.GetString("Menu.Integrations.IPInfoToken.Title", resourceCulture);
             }
         }
         
