@@ -120,9 +120,6 @@ namespace Bloxstrap.Models.Entities
 
                 var ipInfo = await Http.GetJson<IPInfoResponse>(url);
 
-                if (ipInfo.Status == 403)
-                    throw new InvalidHTTPResponseException("Invalid API token");
-
                 if (string.IsNullOrEmpty(ipInfo.City))
                     throw new InvalidHTTPResponseException("Reported city was blank");
 
