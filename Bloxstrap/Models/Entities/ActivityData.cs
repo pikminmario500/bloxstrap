@@ -114,7 +114,14 @@ namespace Bloxstrap.Models.Entities
 
             try
             {
-                var ipInfo = await Http.GetJson<IPInfoResponse>($"https://ipinfo.io/{MachineAddress}/json");
+                string url = string.IsNullOrEmpty(App.Settings.Prop.IpInfoToken)
+                    ? $"https://ipinfo.io/{MachineAddress}/json"
+                    : $"https://ipinfo.io/{MachineAddress}/json?token={App.Settings.Prop.IpInfoToken}";
+
+                var ipInfo = await Http.GetJson<IPInfoResponse>(url);
+
+                if (ipInfo.Status == 403)
+                    throw new InvalidHTTPResponseException("Invalid API token");
 
                 if (string.IsNullOrEmpty(ipInfo.City))
                     throw new InvalidHTTPResponseException("Reported city was blank");

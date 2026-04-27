@@ -10,5 +10,8 @@ namespace Bloxstrap.Models.APIs
 
         [JsonPropertyName("region")]
         public string Region { get; set; } = null!;
+
+        [JsonPropertyName("status")]
+        public int Status { get; set; } = null!;
     }
 }

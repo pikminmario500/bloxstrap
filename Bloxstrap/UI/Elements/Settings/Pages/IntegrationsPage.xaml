@@ -25,13 +25,62 @@
             <ui:ToggleSwitch IsChecked="{Binding ActivityTrackingEnabled, Mode=TwoWay}" />
         </controls:OptionControl>
 
-        <controls:OptionControl 
-            Header="{x:Static resources:Strings.Menu_Integrations_QueryServerLocation_Title}" 
-            Description="{Binding Source={x:Static resources:Strings.Menu_Integrations_QueryServerLocation_Description}, Converter={StaticResource StringFormatConverter}, ConverterParameter='https://ipinfo.io'}"
-            HelpLink="https://bloxstraplabs.com/wiki/features/server-location-hints/"
-            IsEnabled="{Binding InnerContent.IsChecked, ElementName=ActivityTrackingOption, Mode=OneWay}">
-            <ui:ToggleSwitch IsChecked="{Binding ShowServerDetailsEnabled, Mode=TwoWay}" />
-        </controls:OptionControl>
+        <ui:CardExpander Margin="0,8,0,0" IsExpanded="False" IsEnabled="{Binding InnerContent.IsChecked, ElementName=ActivityTrackingOption, Mode=OneWay}">
+            <ui:CardExpander.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <!-- This sucks but it's the only way to get the help link here, taken from OptionControl. -->
+                        <!-- TODO: create a expander that supports this -->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="14" Text="{x:Static resources:Strings.Menu_Integrations_QueryServerLocation_Title}" />
+                            <TextBlock Margin="4,0,0,0">
+                                <Hyperlink TextDecorations="None" ToolTip="{x:Static resources:Strings.Menu_MoreInfo}" Command="models:GlobalViewModel.OpenWebpageCommand" CommandParameter="https://bloxstraplabs.com/wiki/features/server-location-hints">
+                                    <ui:SymbolIcon Symbol="QuestionCircle48" Margin="0,1,0,0">
+                                        <ui:SymbolIcon.Style>
+                                            <Style TargetType="ui:SymbolIcon" BasedOn="{StaticResource {x:Type ui:SymbolIcon}}">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Foreground">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="{DynamicResource SystemAccentColorTertiary}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                                <Setter Property="Foreground">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="{DynamicResource SystemAccentColorSecondary}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ui:SymbolIcon.Style>
+                                    </ui:SymbolIcon>
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                        <controls:MarkdownTextBlock FontSize="12" Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="{Binding Source={x:Static resources:Strings.Menu_Integrations_QueryServerLocation_Description}, Converter={StaticResource StringFormatConverter}, ConverterParameter='https://ipinfo.io'}" />
+                    </StackPanel>
+                    <ui:ToggleSwitch Grid.Column="1" Margin="0,0,16,0" IsChecked="{Binding ShowServerDetailsEnabled, Mode=TwoWay}" />
+                </Grid>
+            </ui:CardExpander.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static resources:Strings.Menu_Integrations_IpInfoToken_Title}" VerticalAlignment="Center" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                <ui:TextBox Grid.Row="0" Grid.Column="1" Text="{Binding IpInfoToken, Mode=TwoWay}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,4,0,0" FontSize="12" Foreground="{DynamicResource TextFillColorTertiaryBrush}" MarkdownText="{x:Static resources:Strings.Menu_Integrations_IpInfoToken_Description}" />
+            </Grid>
+        </ui:CardExpander>
 
         <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_Integrations_DesktopApp_Title}" 

@@ -29,6 +29,7 @@ namespace Bloxstrap.Models.Persistable
         public bool HideRPCButtons { get; set; } = true;
         public bool ShowAccountOnRichPresence { get; set; } = false;
         public bool ShowServerDetails { get; set; } = false;
+        public string IpInfoToken { get; set; } = "";
         public ObservableCollection<CustomIntegration> CustomIntegrations { get; set; } = new();
 
         // mod preset configuration

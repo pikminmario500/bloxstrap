@@ -124,6 +124,13 @@ namespace Bloxstrap.UI.ViewModels.Settings
             get => App.Settings.Prop.UseDisableAppPatch;
             set => App.Settings.Prop.UseDisableAppPatch = value;
         }
+
+        public string IpInfoToken
+        {
+            get => App.Settings.Prop.IpInfoToken;
+            set => App.Settings.Prop.IpInfoToken = value;
+        }
+
         public ObservableCollection<CustomIntegration> CustomIntegrations
         {
             get => App.Settings.Prop.CustomIntegrations;

@@ -3163,6 +3163,24 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This is optional and unneccessary unless you cannot query the server location..
+        /// </summary>
+        public static string Menu_Integrations_IpInfoToken_Description {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.IpInfoToken.Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to ipinfo.io API token.
+        /// </summary>
+        public static string Menu_Integrations_IpInfoToken_Title {
+            get {
+                return ResourceManager.GetString("Menu.Integrations.IpInfoToken.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to When in-game, you&apos;ll be able to see where your server is located via [ipinfo.io]({0})..
         /// </summary>
         public static string Menu_Integrations_QueryServerLocation_Description {
