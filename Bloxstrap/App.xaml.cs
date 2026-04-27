@@ -108,6 +108,13 @@ namespace Bloxstrap
         {
             e.Handled = true;
 
+            // is this a bandaid? who fucking knows. i cant figure out for the life of me how to fix this
+            // cant reproduce it myself nor do i have any log files as all the gh issues are on 2.10.0
+            // which is before the merge in 2.11.0
+            // TODO: try and fix this properly
+            if (e.Exception is NotImplementedException)
+                return;
+
             Logger.WriteLine("App::GlobalExceptionHandler", "An exception occurred");
 
             FinalizeExceptionHandling(e.Exception);
