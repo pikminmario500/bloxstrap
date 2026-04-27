@@ -1569,6 +1569,17 @@ namespace Bloxstrap
 
                         App.Terminate(ErrorCode.ERROR_CANCELLED);
                     }
+                    else if (ex.GetType() == typeof(HttpRequestException))
+                    {
+                        Frontend.ShowConnectivityDialog(
+                            String.Format(Strings.Dialog_Connectivity_UnableToConnect, "Roblox"),
+                            Strings.Dialog_Connectivity_BadConnection,
+                            MessageBoxImage.Error,
+                            ex
+                        );
+
+                        App.Terminate(ErrorCode.ERROR_CANCELLED)
+                    }
                     else if (i >= maxTries)
                         throw;
 
