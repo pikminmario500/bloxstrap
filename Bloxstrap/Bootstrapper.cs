@@ -1578,7 +1578,7 @@ namespace Bloxstrap
                             ex
                         );
 
-                        App.Terminate(ErrorCode.ERROR_CANCELLED)
+                        App.Terminate(ErrorCode.ERROR_CANCELLED);
                     }
                     else if (i >= maxTries)
                         throw;
