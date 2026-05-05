@@ -85,7 +85,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v8
         with:
-          name: ${{ needs.build.outputs.artifact-id }}
+          name: Bloxstrap (Release) (${{ github.sha }})
           path: release
 
       - name: Rename binaries
