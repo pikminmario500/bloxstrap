@@ -27,4 +27,4 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: Bloxstrap (Debug) (${{ github.sha }})
-        path: .\Bloxstrap\bin\Debug\net10.0-windows\win-x64\publish\*
+        path: .\Bloxstrap\bin\Debug\net10.0-windows\publish\win-x64\*
