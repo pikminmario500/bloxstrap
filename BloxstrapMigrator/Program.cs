@@ -65,7 +65,7 @@ internal class Program
 
         try
         {
-            var asset = releaseInfo?.Assets?[0];
+            var asset = releaseInfo?.Assets?[1];
             if (asset is null)
                 throw new HttpRequestException("Couldn't fetch assets from GitHub.");
 
