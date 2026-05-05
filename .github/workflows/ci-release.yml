@@ -26,7 +26,7 @@ jobs:
       run: dotnet build -c Release --no-restore
 
     - name: Publish Stub
-      run: dotnet publish -p:PublishSingleFile=true -c Release -r win-x64 --self-contained false .\BloxstrapStub\BloxstrapStub.csproj
+      run: dotnet publish -p:PublishSingleFile=true -c Release -r win-x64 --self-contained false .\BloxstrapMigrator\BloxstrapMigrator.csproj
 
     - name: Publish
       run: dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -r win-x64 -c Release --self-contained false .\Bloxstrap\Bloxstrap.csproj
@@ -37,7 +37,7 @@ jobs:
       with:
         name: Bloxstrap (Release) (${{ github.sha }})
         path: |
-          .\BloxstrapStub\bin\Release\net6.0-windows\win-x64\publish\BloxstrapMigrator.exe
+          .\BloxstrapMigrator\bin\Release\net6.0-windows\win-x64\publish\BloxstrapMigrator.exe
           .\Bloxstrap\bin\Release\net6.0-windows\win-x64\publish\*
 
   release:
