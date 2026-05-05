@@ -72,7 +72,7 @@ jobs:
         with:
           draft: true
           files: |
-            Migration-Handler.exe
+            Bloxstrap-Migration-Handler.exe
             Bloxstrap-${{ github.ref_name }}.exe
           name: Bloxstrap ${{ github.ref_name }}
 
@@ -96,7 +96,7 @@ jobs:
 
       - name: Rename binaries
         run: |
-          mv release/BloxstrapMigrator.exe Migration-Handler.exe
+          mv release/BloxstrapMigrator.exe Bloxstrap-Migration-Handler.exe
           mv release/Bloxstrap.exe Bloxstrap-${{ github.ref_name }}.exe
 
       - name: Create release
@@ -104,6 +104,6 @@ jobs:
         with:
           draft: true
           files: |
-            Migration-Handler.exe
+            Bloxstrap-Migration-Handler.exe
             Bloxstrap-${{ github.ref_name }}.exe
           name: Bloxstrap ${{ github.ref_name }}
