@@ -34,8 +34,8 @@ jobs:
     - name: Stage artifacts
       run: |
         mkdir staging
-        copy .\BloxstrapMigrator\bin\Release\net6.0-windows\win-x64\publish\ staging\
-        copy .\Bloxstrap\bin\Release\net10.0-windows\win-x64\publish\ staging\
+        xcopy /E /I /Y .\BloxstrapMigrator\bin\Release\net6.0-windows\win-x64\publish\ staging\
+        xcopy /E /I /Y .\Bloxstrap\bin\Release\net10.0-windows\win-x64\publish\ staging\
 
     - name: Upload Artifact
       id: upload-artifact
