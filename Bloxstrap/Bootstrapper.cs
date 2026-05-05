@@ -810,7 +810,7 @@ namespace Bloxstrap
 
                 File.Copy(Paths.Process, downloadLocation, true);
 #else
-                var asset = releaseInfo.Assets![0];
+                var asset = releaseInfo.Assets![1];
 
                 string downloadLocation = Path.Combine(Paths.TempUpdates, asset.Name);
 

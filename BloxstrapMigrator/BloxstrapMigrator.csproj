@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>True</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Bloxstrap\Models\APIs\GitHub\GithubRelease.cs" Link="Models\APIs\GitHub\GithubRelease.cs" />
+    <Compile Include="..\Bloxstrap\Models\APIs\GitHub\GitHubReleaseAsset.cs" Link="Models\APIs\GitHub\GitHubReleaseAsset.cs" />
+  </ItemGroup>
+
+</Project>

@@ -68,30 +68,6 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             return (T)parsed;
         }
 
-        private static void ValidateXmlElement(string elementName, string attributeName, int value, int? min = null, int? max = null)
-        {
-            if (min != null && value < min)
-                throw new CustomThemeException("CustomTheme.Errors.ElementAttributeMustBeLargerThanMin", elementName, attributeName, min);
-            if (max != null && value > max)
-                throw new CustomThemeException("CustomTheme.Errors.ElementAttributeMustBeSmallerThanMax", elementName, attributeName, max);
-        }
-
-        private static void ValidateXmlElement(string elementName, string attributeName, double value, double? min = null, double? max = null)
-        {
-            if (min != null && value < min)
-                throw new CustomThemeException("CustomTheme.Errors.ElementAttributeMustBeLargerThanMin", elementName, attributeName, min);
-            if (max != null && value > max)
-                throw new CustomThemeException("CustomTheme.Errors.ElementAttributeMustBeSmallerThanMax", elementName, attributeName, max);
-        }
-
-        // You can't do numeric only generics in .NET 6. The feature is exclusive to .NET 7+.
-        private static int ParseXmlAttributeClamped(XElement element, string attributeName, int? defaultValue = null, int? min = null, int? max = null)
-        {
-            int value = ParseXmlAttribute<int>(element, attributeName, defaultValue);
-            ValidateXmlElement(element.Name.ToString(), attributeName, value, min, max);
-            return value;
-        }
-
         private static FontWeight GetFontWeightFromXElement(XElement element)
         {
             string? value = element.Attribute("FontWeight")?.Value?.ToString();

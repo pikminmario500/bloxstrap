@@ -314,8 +314,7 @@ namespace Bloxstrap.UI.Elements.Bootstrapper
             if (renderTransformOrigin is Point)
                 uiElement.RenderTransformOrigin = (Point)renderTransformOrigin;
 
-            int zIndex = ParseXmlAttributeClamped(xmlElement, "Panel.ZIndex", defaultValue: 0, min: 0, max: 1000);
-            Panel.SetZIndex(uiElement, zIndex);
+            Panel.SetZIndex(uiElement, Math.Clamp(ParseXmlAttribute<int>(xmlElement, "Panel.ZIndex", 0), 0, 1000));
 
             int gridRow = ParseXmlAttribute<int>(xmlElement, "Grid.Row", 0);
             Grid.SetRow(uiElement, gridRow);

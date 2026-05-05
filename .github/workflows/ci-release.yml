@@ -15,13 +15,18 @@ jobs:
 
     - uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: |
+          10.0.x
+          6.0.x
 
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build
       run: dotnet build -c Release --no-restore
+
+    - name: Publish Stub
+      run: dotnet publish -p:PublishSingleFile=true -c Release -r win-x64 --self-contained false .\BloxstrapStub\BloxstrapStub.csproj
 
     - name: Publish
       run: dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -r win-x64 -c Release --self-contained false .\Bloxstrap\Bloxstrap.csproj
@@ -31,7 +36,9 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         name: Bloxstrap (Release) (${{ github.sha }})
-        path: .\Bloxstrap\bin\Release\net6.0-windows\win-x64\publish\*
+        path: |
+          .\BloxstrapStub\bin\Release\net6.0-windows\win-x64\publish\BloxstrapStub.exe
+          .\Bloxstrap\bin\Release\net6.0-windows\win-x64\publish\*
 
   release:
     needs: build
@@ -40,7 +47,7 @@ jobs:
 
     steps:
       - name: Sign and download artifact
-        uses: signpath/github-action-submit-signing-request@v2.0
+        uses: signpath/github-action-submit-signing-request@v2.2
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
           organization-id: '107b3de5-057b-42fc-a985-3546e4261775'
@@ -52,13 +59,17 @@ jobs:
           output-artifact-directory: 'release'
 
       - name: Rename binaries
-        run: mv release/Bloxstrap.exe Bloxstrap-${{ github.ref_name }}.exe
+        run: |
+          mv release/BloxstrapStub.exe Migration-Handler.exe
+          mv release/Bloxstrap.exe Bloxstrap-${{ github.ref_name }}.exe
 
       - name: Create release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           draft: true
-          files: Bloxstrap-${{ github.ref_name }}.exe
+          files: |
+            Migration-Handler.exe
+            Bloxstrap-${{ github.ref_name }}.exe
           name: Bloxstrap ${{ github.ref_name }}
 
   release-test:
@@ -68,7 +79,7 @@ jobs:
 
     steps:
       - name: Sign and download artifact
-        uses: signpath/github-action-submit-signing-request@v2.0
+        uses: signpath/github-action-submit-signing-request@v2.2
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
           organization-id: '107b3de5-057b-42fc-a985-3546e4261775'
@@ -80,11 +91,15 @@ jobs:
           output-artifact-directory: 'release'
 
       - name: Rename binaries
-        run: mv release/Bloxstrap.exe Bloxstrap-${{ github.ref_name }}.exe
+        run: |
+          mv release/BloxstrapStub.exe Migration-Handler.exe
+          mv release/Bloxstrap.exe Bloxstrap-${{ github.ref_name }}.exe
 
       - name: Create release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           draft: true
-          files: Bloxstrap-${{ github.ref_name }}.exe
+          files: |
+            Migration-Handler.exe
+            Bloxstrap-${{ github.ref_name }}.exe
           name: Bloxstrap ${{ github.ref_name }}
