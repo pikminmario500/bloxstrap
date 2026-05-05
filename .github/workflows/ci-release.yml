@@ -37,7 +37,7 @@ jobs:
       with:
         name: Bloxstrap (Release) (${{ github.sha }})
         path: |
-          .\BloxstrapStub\bin\Release\net6.0-windows\win-x64\publish\BloxstrapStub.exe
+          .\BloxstrapStub\bin\Release\net6.0-windows\win-x64\publish\BloxstrapMigrator.exe
           .\Bloxstrap\bin\Release\net6.0-windows\win-x64\publish\*
 
   release:
@@ -60,7 +60,7 @@ jobs:
 
       - name: Rename binaries
         run: |
-          mv release/BloxstrapStub.exe Migration-Handler.exe
+          mv release/BloxstrapMigrator.exe Migration-Handler.exe
           mv release/Bloxstrap.exe Bloxstrap-${{ github.ref_name }}.exe
 
       - name: Create release
@@ -92,7 +92,7 @@ jobs:
 
       - name: Rename binaries
         run: |
-          mv release/BloxstrapStub.exe Migration-Handler.exe
+          mv release/BloxstrapMigrator.exe Migration-Handler.exe
           mv release/Bloxstrap.exe Bloxstrap-${{ github.ref_name }}.exe
 
       - name: Create release
