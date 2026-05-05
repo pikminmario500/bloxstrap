@@ -61,7 +61,7 @@ internal class Program
 
     static async Task UpdateBloxstrap()
     {
-        var releaseInfo = await Http.GetJson<GithubRelease>("https://api.github.com/repos/bloxstraplabs/bloxstrap/releases/latest");
+        var releaseInfo = await Http.GetJson<GithubRelease>("https://api.github.com/repos/otsako-vpk/bloxstrap/releases/latest");
 
         try
         {
