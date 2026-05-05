@@ -30,15 +30,19 @@ jobs:
 
     - name: Publish
       run: dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -r win-x64 -c Release --self-contained false .\Bloxstrap\Bloxstrap.csproj
+    
+    - name: Stage artifacts
+      run: |
+        mkdir staging
+        copy .\BloxstrapMigrator\bin\Release\net6.0-windows\win-x64\publish\ staging\
+        copy .\Bloxstrap\bin\Release\net10.0-windows\win-x64\publish\ staging\
 
     - name: Upload Artifact
       id: upload-artifact
       uses: actions/upload-artifact@v7
       with:
         name: Bloxstrap (Release) (${{ github.sha }})
-        path: |
-          .\BloxstrapMigrator\bin\Release\net6.0-windows\win-x64\publish\BloxstrapMigrator.exe
-          .\Bloxstrap\bin\Release\net6.0-windows\win-x64\publish\*
+        path: staging\
 
   release:
     needs: build
