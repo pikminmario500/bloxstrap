@@ -11,13 +11,13 @@ internal class Program
         new HttpClientHandler { AutomaticDecompression = DecompressionMethods.All }
     );
 
-    static async Task Main()
+    static async Task Main(string[] args)
     {
         HttpClient.Timeout = TimeSpan.FromSeconds(30);
         HttpClient.DefaultRequestHeaders.Add("User-Agent", "BloxstrapStub");
 
         if (await EnsureNETVersion())
-            await UpdateBloxstrap();
+            await UpdateBloxstrap(args);
     }
 
     static async Task<bool> EnsureNETVersion()
@@ -59,7 +59,7 @@ internal class Program
         return true;
     }
 
-    static async Task UpdateBloxstrap()
+    static async Task UpdateBloxstrap(string[] args)
     {
         var releaseInfo = await Http.GetJson<GithubRelease>("https://api.github.com/repos/otsako-vpk/bloxstrap/releases/latest");
 
@@ -84,11 +84,8 @@ internal class Program
             Process.Start(new ProcessStartInfo
             {
                 FileName = path,
-                WorkingDirectory = AppContext.BaseDirectory,
-                UseShellExecute = true
-            })?.WaitForExit();
-
-            File.Delete(path);
+                Arguments = string.Join(' ', args)
+            });
         }
         catch (Exception ex)
         {
