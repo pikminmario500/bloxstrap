@@ -64,7 +64,7 @@ jobs:
 
       - name: Rename binaries
         run: |
-          mv release/BloxstrapMigrator.exe Migration-Handler.exe
+          mv release/BloxstrapMigrator.exe Bloxstrap-Migration-Handler.exe
           mv release/Bloxstrap.exe Bloxstrap-${{ github.ref_name }}.exe
 
       - name: Create release
