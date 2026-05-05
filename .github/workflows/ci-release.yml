@@ -25,17 +25,17 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
 
-    - name: Publish Stub
-      run: dotnet publish -p:PublishSingleFile=true -c Release -r win-x64 --self-contained false .\BloxstrapMigrator\BloxstrapMigrator.csproj
+    - name: Publish Migrator
+      run: dotnet publish .\BloxstrapMigrator\BloxstrapMigrator.csproj /p:PublishProfile=Publish-x64
 
     - name: Publish
-      run: dotnet publish -p:PublishSingleFile=true -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -r win-x64 -c Release --self-contained false .\Bloxstrap\Bloxstrap.csproj
+      run: dotnet publish -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} /p:PublishProfile=Publish-x64
     
     - name: Stage artifacts
       run: |
         mkdir staging
-        xcopy /E /I /Y .\BloxstrapMigrator\bin\Release\net6.0-windows\win-x64\publish\ staging\
-        xcopy /E /I /Y .\Bloxstrap\bin\Release\net10.0-windows\win-x64\publish\ staging\
+        xcopy /E /I /Y .\BloxstrapMigrator\bin\Release\net6.0-windows\publish\win-x64\ staging\
+        xcopy /E /I /Y .\Bloxstrap\bin\Release\net10.0-windows\publish\win-x64\ staging\
 
     - name: Upload Artifact
       id: upload-artifact
