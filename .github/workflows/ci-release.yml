@@ -29,7 +29,7 @@ jobs:
       run: dotnet publish .\BloxstrapMigrator\BloxstrapMigrator.csproj /p:PublishProfile=Publish-x64
 
     - name: Publish
-      run: dotnet publish -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} /p:PublishProfile=Publish-x64
+      run: dotnet publish -p:CommitHash=${{ github.sha }} -p:CommitRef=${{ github.ref_type }}/${{ github.ref_name }} -c Release /p:PublishProfile=Publish-x64
     
     - name: Stage artifacts
       run: |

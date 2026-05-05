@@ -82,11 +82,12 @@ internal class Program
             if (!File.Exists(path))
                 throw new HttpRequestException("Couldn't download the latest release.");
 
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = path,
-                Arguments = string.Join(' ', args)
-            });
+            var startInfo = new ProcessStartInfo { FileName = path };
+
+            foreach (var arg in args)
+                startInfo.ArgumentList.Add(arg);
+
+            Process.Start(startInfo);
         }
         catch (Exception ex)
         {
