@@ -2,7 +2,7 @@
 {
     public class ActivityWatcher : IDisposable
     {
-        private const string GameMessageEntry                = "[FLog::Output] [BloxstrapRPC]";
+        private const string GameMessageEntry                = "[FLog::Error] Asset (Image) \"rbxasset://textures/|.png";
         private const string GameJoiningEntry                = "[FLog::Output] ! Joining game";
 
         // these entries are technically volatile!
@@ -23,7 +23,7 @@
         private const string GameJoiningUniversePattern      = @"universeid:([0-9]+).*userid:([0-9]+)";
         private const string GameJoiningUDMUXPattern         = @"UDMUX Address = ([0-9\.]+), Port = [0-9]+ \| RCC Server Address = ([0-9\.]+), Port = [0-9]+";
         private const string GameJoinedEntryPattern          = @"serverId: ([0-9\.]+)\|[0-9]+";
-        private const string GameMessageEntryPattern         = @"\[BloxstrapRPC\] (.*)";
+        private const string GameMessageEntryPattern         = @"BLOXSTRAP_INFO=([A-Za-z0-9+/=]+)";
 
         private int _logEntriesRead = 0;
         private bool _teleportMarker = false;
@@ -305,6 +305,10 @@
                 }
                 else if (logMessage.StartsWith(GameMessageEntry))
                 {
+                    // this is needed as roblox logs it twice, causing the ratelimit to be hit
+                    if (logMessage.Contains("Invalid image or texture"))
+                        return;
+
                     var match = Regex.Match(logMessage, GameMessageEntryPattern);
 
                     if (match.Groups.Count != 2)
@@ -314,16 +318,29 @@
                         return;
                     }
 
-                    string messagePlain = match.Groups[1].Value;
+                    string messageEncoded = match.Groups[1].Value;
+                    string messagePlain;
                     Message? message;
 
-                    App.Logger.WriteLine(LOG_IDENT, $"Received message: '{messagePlain}'");
+                    App.Logger.WriteLine(LOG_IDENT, $"Received encoded message: '{messageEncoded}'");
 
                     if ((DateTime.Now - LastRPCRequest).TotalSeconds <= 1)
                     {
                         App.Logger.WriteLine(LOG_IDENT, "Dropping message as ratelimit has been hit");
                         return;
                     }
+
+                    try
+                    {
+                        messagePlain = Encoding.UTF8.GetString(Convert.FromBase64String(messageEncoded));
+                    }
+                    catch (Exception)
+                    {
+                        App.Logger.WriteLine(LOG_IDENT, "Failed to decode message!");
+                        return;
+                    }
+
+                    App.Logger.WriteLine(LOG_IDENT, $"Received message: '{messagePlain}'");
 
                     try
                     {
