@@ -10,6 +10,18 @@ namespace Bloxstrap.UI.ViewModels.Settings
     {
         public WebEnvironment[] WebEnvironments => Enum.GetValues<WebEnvironment>();
 
+        public ICommand UpdateBloxstrapCommand => new RelayCommand(UpdateBloxstrap);
+
+        private async void UpdateBloxstrap()
+        {
+            bool update = await App.CheckForUpdates();
+
+            if (update)
+                App.SoftTerminate();
+            else
+                Frontend.ShowMessageBox(Strings.Menu_Bloxstrap_ManualUpdate_NoUpdates, MessageBoxImage.Information);
+        }
+
         public bool UpdateCheckingEnabled
         {
             get => App.Settings.Prop.CheckForUpdates;

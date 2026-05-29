@@ -2654,6 +2654,24 @@ namespace Bloxstrap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update Bloxstrap.
+        /// </summary>
+        public static string Menu_Bloxstrap_ManualUpdate {
+            get {
+                return ResourceManager.GetString("Menu.Bloxstrap.ManualUpdate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No updates found. You are on the latest version..
+        /// </summary>
+        public static string Menu_Bloxstrap_ManualUpdate_NoUpdates {
+            get {
+                return ResourceManager.GetString("Menu.Bloxstrap.ManualUpdate.NoUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add new.
         /// </summary>
         public static string Menu_FastFlagEditor_AddNew {

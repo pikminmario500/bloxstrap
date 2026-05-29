@@ -367,19 +367,23 @@ namespace Bloxstrap
             if (!File.Exists(Paths.Application) || Paths.Process == Paths.Application)
                 return;
 
-            // 2.0.0 downloads updates to <BaseFolder>/Updates so lol
-            bool isAutoUpgrade = App.LaunchSettings.UpgradeFlag.Active
-                || Paths.Process.StartsWith(Path.Combine(Paths.Base, "Updates"))
-                || Paths.Process.StartsWith(Path.Combine(Paths.LocalAppData, "Temp"))
-                || Paths.Process.StartsWith(Paths.TempUpdates);
-
             var existingVer = FileVersionInfo.GetVersionInfo(Paths.Application).ProductVersion;
             var currentVer = FileVersionInfo.GetVersionInfo(Paths.Process).ProductVersion;
+            bool areVersionsNull = currentVer is not null && existingVer is not null;
+
+            // 2.0.0 downloads updates to <BaseFolder>/Updates so lol
+            // since we added a manual update button, we cant rely on the temp folder check. 2.8.0+ uses UpgradeFlag
+            bool isAutoUpgrade = App.LaunchSettings.UpgradeFlag.Active
+                || Paths.Process.StartsWith(Path.Combine(Paths.Base, "Updates"))
+                || (areVersionsNull && Utilities.CompareVersions(currentVer!, "2.8.0") == VersionComparison.LessThan && (
+                       Paths.Process.StartsWith(Path.Combine(Paths.LocalAppData, "Temp"))
+                    || Paths.Process.StartsWith(Paths.TempUpdates)
+                ));
 
             if (MD5Hash.FromFile(Paths.Process) == MD5Hash.FromFile(Paths.Application))
                 return;
 
-            if (currentVer is not null && existingVer is not null && Utilities.CompareVersions(currentVer, existingVer) == VersionComparison.LessThan)
+            if (areVersionsNull && Utilities.CompareVersions(currentVer!, existingVer!) == VersionComparison.LessThan)
             {
                 var result = Frontend.ShowMessageBox(
                     Strings.InstallChecker_VersionLessThanInstalled,

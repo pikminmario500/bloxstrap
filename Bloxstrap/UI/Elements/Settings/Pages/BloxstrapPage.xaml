@@ -15,7 +15,15 @@
       Scrollable="True">
 
     <StackPanel Margin="0,0,14,14">
-        <TextBlock Margin="0,0,0,8" Text="{x:Static resources:Strings.Menu_Bloxstrap_Description}" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+        <Grid Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="154" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{x:Static resources:Strings.Menu_Bloxstrap_Description}" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+            <!-- This version of the fluent icons font doesn't have a 28 version -->
+            <ui:Button Grid.Column="1" Icon="ArrowCounterclockwise24" Content="{x:Static resources:Strings.Menu_Bloxstrap_ManualUpdate}" HorizontalAlignment="Stretch" Command="{Binding UpdateBloxstrapCommand}" />
+        </Grid>
 
         <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_Behaviour_AutoUpdate_Title}"

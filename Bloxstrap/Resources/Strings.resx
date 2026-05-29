@@ -1386,4 +1386,10 @@ Defaulting to {1}.</value>
   <data name="Menu.FastFlagEditor.AllowlistInformation" xml:space="preserve">
     <value>Due to the [Fast Flag allowlist update]({0}), most custom Fast Flags will have no effect on the Roblox player.</value>
   </data>
+  <data name="Menu.Bloxstrap.ManualUpdate" xml:space="preserve">
+    <value>Update Bloxstrap</value>
+  </data>
+  <data name="Menu.Bloxstrap.ManualUpdate.NoUpdates" xml:space="preserve">
+    <value>No updates found. You are on the latest version.</value>
+  </data>
 </root>

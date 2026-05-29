@@ -1,4 +1,17 @@
-﻿using System.Reflection;
+﻿// To debug the automatic updater:
+// - Uncomment the definition below
+// - Publish the executable
+// - Launch the executable (click no when it asks you to upgrade)
+// - Launch Roblox (for testing web launches, run it from the command prompt)
+// - To re-test the same executable, delete it from the installation folder
+
+// #define DEBUG_UPDATER
+
+#if DEBUG_UPDATER
+#warning "Automatic updater debugging is enabled"
+#endif
+
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Shell;
@@ -234,6 +247,117 @@ namespace Bloxstrap
 
                 Terminate(ErrorCode.ERROR_INVALID_FUNCTION);
             }
+        }
+
+        public static async Task<bool> CheckForUpdates(bool IsBootstrapper = false)
+        {
+            const string LOG_IDENT = "App::CheckForUpdates";
+            
+            // don't update if there's another instance running (likely running in the background)
+            // i don't like this, but there isn't much better way of doing it /shrug
+            if (Process.GetProcessesByName(ProjectName).Length > 1)
+            {
+                Logger.WriteLine(LOG_IDENT, $"More than one Bloxstrap instance running, aborting update check");
+                return false;
+            }
+
+            Logger.WriteLine(LOG_IDENT, "Checking for updates...");
+
+#if !DEBUG_UPDATER
+            var releaseInfo = await GetLatestRelease();
+
+            if (releaseInfo is null)
+                return false;
+
+            var versionComparison = Utilities.CompareVersions(Version, releaseInfo.TagName);
+
+            // check if we aren't using a deployed build, so we can update to one if a new version comes out
+            if (IsProductionBuild && versionComparison == VersionComparison.Equal || versionComparison == VersionComparison.GreaterThan)
+            {
+                Logger.WriteLine(LOG_IDENT, "No updates found");
+                return false;
+            }
+
+            if (IsBootstrapper && Bootstrapper!.Dialog is not null)
+                Bootstrapper.Dialog.CancelEnabled = false;
+
+            string version = releaseInfo.TagName;
+#else
+            string version = Version;
+#endif
+
+            if (IsBootstrapper)
+                Bootstrapper!.SetStatus(Strings.Bootstrapper_Status_UpgradingBloxstrap);
+
+            try
+            {
+#if DEBUG_UPDATER
+                string downloadLocation = Path.Combine(Paths.TempUpdates, "Bloxstrap.exe");
+
+                Directory.CreateDirectory(Paths.TempUpdates);
+
+                File.Copy(Paths.Process, downloadLocation, true);
+#else
+                var asset = releaseInfo.Assets![0];
+
+                string downloadLocation = Path.Combine(Paths.TempUpdates, asset.Name);
+
+                Directory.CreateDirectory(Paths.TempUpdates);
+
+                Logger.WriteLine(LOG_IDENT, $"Downloading {releaseInfo.TagName}...");
+                
+                if (!File.Exists(downloadLocation))
+                {
+                    var response = await HttpClient.GetAsync(asset.BrowserDownloadUrl);
+
+                    await using var fileStream = new FileStream(downloadLocation, FileMode.OpenOrCreate, FileAccess.Write);
+                    await response.Content.CopyToAsync(fileStream);
+                }
+#endif
+
+                Logger.WriteLine(LOG_IDENT, $"Starting {version}...");
+
+                ProcessStartInfo startInfo = new()
+                {
+                    FileName = downloadLocation,
+                };
+
+                if (IsBootstrapper)
+                    startInfo.ArgumentList.Add("-upgrade");
+
+                foreach (string arg in LaunchSettings.Args)
+                    startInfo.ArgumentList.Add(arg);
+
+                if (IsBootstrapper)
+                {
+                    if (Bootstrapper!._launchMode == LaunchMode.Player && !startInfo.ArgumentList.Contains("-player"))
+                        startInfo.ArgumentList.Add("-player");
+                    else if (Bootstrapper._launchMode == LaunchMode.Studio && !startInfo.ArgumentList.Contains("-studio"))
+                        startInfo.ArgumentList.Add("-studio");
+                }
+
+                Settings.Save();
+
+                new InterProcessLock("AutoUpdater");
+                
+                Process.Start(startInfo);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLine(LOG_IDENT, "An exception occurred when running the auto-updater");
+                Logger.WriteException(LOG_IDENT, ex);
+
+                Frontend.ShowMessageBox(
+                    string.Format(Strings.Bootstrapper_AutoUpdateFailed, version),
+                    MessageBoxImage.Information
+                );
+
+                Utilities.ShellExecute(ProjectDownloadLink);
+            }
+
+            return false;
         }
 
         protected override void OnStartup(StartupEventArgs e)
