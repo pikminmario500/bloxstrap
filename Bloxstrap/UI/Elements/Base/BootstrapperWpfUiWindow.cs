@@ -27,7 +27,6 @@ namespace Bloxstrap.UI.Elements.Base
             else
                 Wpf.Ui.Appearance.Theme.RemoveDarkThemeFromWindow(this);
 
-            string name = type == ThemeType.Dark ? "Dark" : "Light";
             this.Resources.MergedDictionaries.Add(new ThemesDictionary { Theme =  type });
         }
     }
