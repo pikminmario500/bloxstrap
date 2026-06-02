@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Interop;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Markup;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 
@@ -27,10 +28,7 @@ namespace Bloxstrap.UI.Elements.Base
                 Wpf.Ui.Appearance.Theme.RemoveDarkThemeFromWindow(this);
 
             string name = type == ThemeType.Dark ? "Dark" : "Light";
-            this.Resources.MergedDictionaries.Insert(0, new ResourceDictionary
-            {
-                Source = new Uri($"pack://application:,,,/Wpf.Ui;component/Styles/Theme/{name}.xaml", UriKind.Absolute)
-            });
+            this.Resources.MergedDictionaries.Add(new ThemesDictionary { Theme =  type });
         }
     }
 }
